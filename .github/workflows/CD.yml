@@ -65,15 +65,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set docker-compose.prod.yml
-        uses: microsoft/variable-substitution@v1
-        with:
-          files: ./docker-compose.prod.yml
-        # env:
-        #   services.mysql.environment.MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-        #   services.mysql.environment.MYSQL_USER: ${{ secrets.MYSQL_USERNAME }}
-        #   services.mysql.environment.MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-        #   services.mysql.environment.MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+      # - name: Set docker-compose.prod.yml
+      #   uses: microsoft/variable-substitution@v1
+      #   with:
+      #     files: ./docker-compose.prod.yml
+      # env:
+      #   services.mysql.environment.MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+      #   services.mysql.environment.MYSQL_USER: ${{ secrets.MYSQL_USERNAME }}
+      #   services.mysql.environment.MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+      #   services.mysql.environment.MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
 
       - name: Copy docker compose & Scripts & Nginx
         uses: appleboy/scp-action@master
