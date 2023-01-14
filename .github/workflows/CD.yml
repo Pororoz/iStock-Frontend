@@ -83,7 +83,7 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
           source: "./docker-compose.prod.yml,./script,./nginx"
-          target: ${{ env.REPOSITORY }}
+          target: "iStock-Frontend"
 
       - name: Deploy
         uses: appleboy/ssh-action@v0.1.6
@@ -93,6 +93,6 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cp -r ~/${{ env.REPOSITORY }}/nginx ~/nginx && rm -rf ~/${{ env.REPOSITORY }}/nginx
-            cd ~/${{ env.REPOSITORY }}
+            cp -r ~/iStock-Frontend/nginx ~/nginx && rm -rf ~/iStock-Frontend/nginx
+            cd ~/iStock-Frontend
             sudo chmod +x ./script/deploy.sh && ./script/deploy.sh
