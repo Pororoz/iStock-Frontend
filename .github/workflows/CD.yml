@@ -23,7 +23,7 @@ jobs:
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.1
         with:
-          github_token: ${{ secrets.ACCESS_TOKEN }}
+          github_token: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
       - name: node_modules 폴더 캐싱
         uses: actions/cache@v2
