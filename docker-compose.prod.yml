@@ -14,8 +14,7 @@ services:
       - ~/nginx/conf.d/service-url.inc:/etc/nginx/conf.d/service-url.inc
     environment:
       - TZ=Asia/Seoul
-    depends_on:
-      - mysql
+
   react:
     container_name: react
     image: "ghcr.io/nagyeong-park/istock-client:latest"
