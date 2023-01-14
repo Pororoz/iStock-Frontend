@@ -18,7 +18,7 @@ services:
       - mysql
   react:
     container_name: react
-    image: "ghcr.io/nagyeong-park/test:latest"
+    image: "ghcr.io/nagyeong-park/istock-client:latest"
     restart: always
     ports:
       - "3000:3000"

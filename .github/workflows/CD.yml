@@ -53,8 +53,8 @@ jobs:
         with:
           push: true
           tags: |
-            ghcr.io/nagyeong-park/iStock-Client:latest
-            ghcr.io/nagyeong-park/iStock-Client:${{ steps.tag_version.outputs.new_tag }}
+            ghcr.io/nagyeong-park/istock-client:latest
+            ghcr.io/nagyeong-park/istock-client:${{ steps.tag_version.outputs.new_tag }}
           context: ./client
 
   deploy:
