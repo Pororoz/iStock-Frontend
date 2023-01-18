@@ -23,11 +23,11 @@ jobs:
         with:
           node-version: "18.x"
 
-      - name: Take tag version and push tag
-        id: tag_version
-        uses: mathieudutour/github-tag-action@v6.1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Take tag version and push tag
+      #   id: tag_version
+      #   uses: mathieudutour/github-tag-action@v6.1
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: node_modules 폴더 캐싱
         uses: actions/cache@v2
@@ -58,7 +58,7 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ env.ORGANIZATION }}/${{ env.REPOSITORY }}:latest
-            ghcr.io/${{ env.ORGANIZATION }}/${{ env.REPOSITORY }}:${{ steps.tag_version.outputs.new_tag }}
+          # ghcr.io/${{ env.ORGANIZATION }}/${{ env.REPOSITORY }}:${{ steps.tag_version.outputs.previous_tag }}
           context: ./client
 
   deploy:
@@ -76,7 +76,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            sudo docker pull ghcr.io/${{ env.ORGANIZATION }}/${{ env.REPOSITORY }}:latest
+            docker pull ghcr.io/${{ env.ORGANIZATION }}/${{ env.REPOSITORY }}:latest
             docker run -it -d -p 3000:3000 --name react
             docker image prune
             docker logout https://ghcr.io
