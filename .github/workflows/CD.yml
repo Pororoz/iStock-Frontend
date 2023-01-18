@@ -4,6 +4,10 @@ on:
     branches:
       - main
 
+env:
+  REPOSITORY: istock-frontend
+  ORGANIZATION: pororoz
+
 jobs:
   push-docker-image:
     runs-on: ubuntu-latest
@@ -23,7 +27,7 @@ jobs:
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.1
         with:
-          github_token: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: node_modules 폴더 캐싱
         uses: actions/cache@v2
@@ -45,16 +49,16 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: nagyeong-park
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          username: ${{ github.ORGANIZATION }}
+          password: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Docker images build 및 GitHub Container Registry로 push
         uses: docker/build-push-action@v3.2.0
         with:
           push: true
           tags: |
-            ghcr.io/nagyeong-park/istock-client:latest
-            ghcr.io/nagyeong-park/istock-client:${{ steps.tag_version.outputs.new_tag }}
+            ghcr.io/${{ env.ORGANIZATION }}/${{ env.REPOSITORY }}:latest
+            ghcr.io/${{ env.ORGANIZATION }}/${{ env.REPOSITORY }}:${{ steps.tag_version.outputs.new_tag }}
           context: ./client
 
   deploy:
@@ -65,44 +69,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # - name: Set docker-compose.prod.yml
-      #   uses: microsoft/variable-substitution@v1
-      #   with:
-      #     files: ./docker-compose.prod.yml
-      # env:
-      #   services.mysql.environment.MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-      #   services.mysql.environment.MYSQL_USER: ${{ secrets.MYSQL_USERNAME }}
-      #   services.mysql.environment.MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-      #   services.mysql.environment.MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
-
-      - name: Copy docker compose & Scripts & Nginx
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SSH_IP }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          port: ${{ secrets.SSH_PORT }}
-          source: "./docker-compose.prod.yml,./script,./nginx"
-          target: "iStock-Frontend" # env.REPOSITORY
-
       - name: Deploy
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.SSH_IP }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          port: ${{ secrets.SSH_PORT }}
           script: |
-            cp -r ~/iStock-Frontend/nginx ~/nginx && rm -rf ~/iStock-Frontend/nginx 
-            cd ~/iStock-Frontend
-            sudo chmod +x ./script/deploy.sh && ./script/deploy.sh
-          #        |
-          # if [ -f ~/nginx/conf.d/service-url.inc ]
-          # then
-          #   cp -f ~/nginx/conf.d/service-url.inc ~/${{ env.REPOSITORY }}/nginx/conf.d
-          # fi
-          # cp -r ~/${{ env.REPOSITORY }}/nginx ~ && rm -rf ~/${{ env.REPOSITORY }}/nginx
-          # cd ~/${{ env.REPOSITORY }}
-          # sudo chmod +x ./script/*.sh
-          # ./script/deploy.sh ${{ github.repository_owner }} ${{ env.REPOSITORY }}
-          # ./script/health.sh ${{ github.repository_owner }} ${{ env.REPOSITORY }}
+            sudo docker pull ghcr.io/${{ env.ORGANIZATION }}/${{ env.REPOSITORY }}:latest
+            docker run -it -d -p 3000:3000 --name react
+            docker image prune
+            docker logout https://ghcr.io
