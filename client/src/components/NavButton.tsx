@@ -1,6 +1,7 @@
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import Text from '@components/Text';
+import { ReactProps } from '@type/props';
 
 interface StyledProps {
   selected?: boolean;
@@ -18,15 +19,15 @@ const Wrapper = styled.button<StyledProps>`
 `;
 
 const StyledText = styled(Text)<StyledProps>`
-  size: 28px;
-  font-weight: 700px;
+  font-size: 20px;
+  font-weight: 700;
   color: ${({ selected }) => (selected === true ? 'var(--color-black)' : 'var(--color-light-gray)')};
 `;
 
-function NavButton({ content, selected }: StyledProps & { content: string }): ReactElement {
+function NavButton({ children, selected }: ReactProps<StyledProps>): ReactElement {
   return (
     <Wrapper selected={selected}>
-      <StyledText selected={selected}>{content}</StyledText>
+      <StyledText selected={selected}>{children}</StyledText>
     </Wrapper>
   );
 }
