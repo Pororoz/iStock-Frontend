@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-import ReactProps from '@type/props';
+import { ReactProps } from '@type/props';
 
 interface Props {
   color?: string;

@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
 
-type ReactProps<T> = T & { children?: ReactNode };
-
-export default ReactProps;
+export type ReactProps<T> = T & { children?: ReactNode };
+export type StyledProps<T> = T & { className?: string };
