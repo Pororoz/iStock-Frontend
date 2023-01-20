@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-import { ReactProps } from '@type/props';
+import { ReactProps, StyledProps } from '@type/props';
 
 interface Props {
   color?: string;
@@ -15,7 +15,7 @@ const StyledText = styled.span<Props>`
   font-size: ${({ size }) => size ?? 15}px;
 `;
 
-function Text({ children, ...props }: ReactProps<Props>): ReactElement {
+function Text({ children, ...props }: StyledProps<ReactProps<Props>>): ReactElement {
   return <StyledText {...props}>{children}</StyledText>;
 }
 
