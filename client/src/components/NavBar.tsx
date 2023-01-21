@@ -1,4 +1,5 @@
 import { ReactElement, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginButton from '@components/LoginButton';
 import NavButton from '@components/NavButton';
@@ -32,9 +33,15 @@ function NavBar(): ReactElement {
   return (
     <Wrapper>
       <Menus>
-        <NavButton selected={selectedPage === 'Products'}>Products</NavButton>
-        <NavButton selected={selectedPage === 'Parts'}>Parts</NavButton>
-        <NavButton selected={selectedPage === 'Accounts'}>Accounts</NavButton>
+        <Link to="/items">
+          <NavButton selected={selectedPage === 'Products'}>Products</NavButton>
+        </Link>
+        <Link to="/parts">
+          <NavButton selected={selectedPage === 'Parts'}>Parts</NavButton>
+        </Link>
+        <Link to="/accounts">
+          <NavButton selected={selectedPage === 'Accounts'}>Accounts</NavButton>
+        </Link>
       </Menus>
       <CenteredSearchInput />
       <LoginButton />

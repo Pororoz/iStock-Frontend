@@ -63,3 +63,6 @@ table {
 button {
 	cursor: pointer;
 }
+a {
+	all: unset;
+}

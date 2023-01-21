@@ -9,11 +9,13 @@ import PartsPage from '@pages/PartsPage';
 import PartLogPage from '@pages/PartLogPage';
 import AccountsPage from '@pages/AccountsPage';
 import NotFound from '@pages/NotFound';
+import Breadcrumb from '@components/Breadcrumb';
 
 function App(): ReactElement {
   return (
     <div className="App">
       <NavBar />
+      <Breadcrumb />
       <Routes>
         <Route path="/" />
         <Route path="/items" element={<ItemsPage />} />
