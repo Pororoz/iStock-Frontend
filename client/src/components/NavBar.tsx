@@ -1,5 +1,5 @@
 import { ReactElement, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginButton from '@components/LoginButton';
 import NavButton from '@components/NavButton';
@@ -26,21 +26,21 @@ const CenteredSearchInput = styled(SearchInput)`
   transform: translateX(-50%); */
 `;
 
-type PageTypes = 'Products' | 'Parts' | 'Accounts';
+// type PageTypes = 'Products' | 'Parts' | 'Accounts';
 
 function NavBar(): ReactElement {
-  const [selectedPage] = useState<PageTypes>('Products');
+  const selectedPage = useLocation().pathname.split('/')[1];
   return (
     <Wrapper>
       <Menus>
         <Link to="/items">
-          <NavButton selected={selectedPage === 'Products'}>Products</NavButton>
+          <NavButton selected={selectedPage === 'items'}>Products</NavButton>
         </Link>
         <Link to="/parts">
-          <NavButton selected={selectedPage === 'Parts'}>Parts</NavButton>
+          <NavButton selected={selectedPage === 'parts'}>Parts</NavButton>
         </Link>
         <Link to="/accounts">
-          <NavButton selected={selectedPage === 'Accounts'}>Accounts</NavButton>
+          <NavButton selected={selectedPage === 'accounts'}>Accounts</NavButton>
         </Link>
       </Menus>
       <CenteredSearchInput />
