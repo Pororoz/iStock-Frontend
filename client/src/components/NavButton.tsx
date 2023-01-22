@@ -15,7 +15,7 @@ const Wrapper = styled.button<StyledProps>`
   padding-block: 30px;
   background-color: transparent;
   border: none;
-  border-bottom: ${({ selected }) => (selected === true ? '4px solid var(--color-blue)' : 'none')};
+  border-bottom: ${({ selected }) => (selected === true ? '4px solid var(--color-blue)' : '4px solid transparent')};
 `;
 
 const StyledText = styled(Text)<StyledProps>`

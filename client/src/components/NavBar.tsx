@@ -34,7 +34,7 @@ function NavBar(): ReactElement {
     <Wrapper>
       <Menus>
         <Link to="/items">
-          <NavButton selected={selectedPage === 'items'}>Products</NavButton>
+          <NavButton selected={selectedPage === 'items'}>Items</NavButton>
         </Link>
         <Link to="/parts">
           <NavButton selected={selectedPage === 'parts'}>Parts</NavButton>
