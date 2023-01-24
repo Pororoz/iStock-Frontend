@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import LoginButton from '@components/LoginButton';
 import NavButton from '@components/NavButton';
 import SearchInput from '@components/SearchInput';
+import LoginModal from './LoginModal';
 
 const Wrapper = styled.div`
   position: relative;
@@ -30,6 +31,7 @@ const CenteredSearchInput = styled(SearchInput)`
 
 function NavBar(): ReactElement {
   const selectedPage = useLocation().pathname.split('/')[1];
+  const [showModal, setShowModal] = useState<boolean>(false);
   return (
     <Wrapper>
       <Menus>
@@ -44,7 +46,18 @@ function NavBar(): ReactElement {
         </Link>
       </Menus>
       <CenteredSearchInput />
-      <LoginButton />
+      <LoginButton
+        onClick={() => {
+          setShowModal(true);
+        }}
+      />
+      {showModal && (
+        <LoginModal
+          onCancel={() => {
+            setShowModal(false);
+          }}
+        />
+      )}
     </Wrapper>
   );
 }

@@ -2,12 +2,14 @@ import { ReactElement } from 'react';
 import styled from 'styled-components';
 import ModalInput from '@components/ModalInput';
 import Text from '@components/Text';
-import TextButton from '@components/TextButton';
+import TextButton from './TextButton';
 
 const Wrapper = styled.div`
   position: fixed;
   width: 100vw;
   height: 100vh;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,22 +39,26 @@ const InputWrapper = styled.div`
   box-shadow: 1px 1px 4px 4px var(--color-black);
 `;
 
-const ExitButton = styled(Text)`
+const ExitButton = styled(TextButton)`
   cursor: pointer;
   margin-top: 20px;
+  font-size: 18px;
+  font-weight: 500;
+  border: none;
+  background-color: transparent;
 `;
 
-function Modal(): ReactElement {
+function LoginModal({ onCancel }: { onCancel: () => void }): ReactElement {
   return (
     <Wrapper>
-      <Overlay />
+      <Overlay onClick={onCancel} />
       <InputWrapper>
         <Text size={24} weight={700}>
           로그인
         </Text>
         <ModalInput title="ID" placeholder={'ID를 입력하세요...'}></ModalInput>
         <ModalInput title="Password" placeholder={'비밀번호를 입력하세요...'}></ModalInput>
-        <ExitButton size={18} weight={500} color={'--color-red'}>
+        <ExitButton color={'--color-red'} onClick={onCancel}>
           돌아가기
         </ExitButton>
       </InputWrapper>
@@ -60,4 +66,4 @@ function Modal(): ReactElement {
   );
 }
 
-export default Modal;
+export default LoginModal;
