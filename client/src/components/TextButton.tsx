@@ -1,10 +1,11 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-import { ReactProps } from '@type/props';
+import { ReactProps, StyledProps } from '@type/props';
 
 interface Props {
   color?: string;
   backgroundColor?: string;
+  onClick?: () => void;
 }
 
 const StyledButton = styled.button<Props>`
@@ -12,13 +13,13 @@ const StyledButton = styled.button<Props>`
   color: var(${({ color }) => color ?? '--color-dark-gray'});
   background-color: var(${({ backgroundColor }) => backgroundColor ?? '--color-lightest-gray'});
   padding-inline: 12px;
-  padding-block: 6px;
-  border-radius: 10px;
+  padding-block: 3px;
+  border-radius: 5px;
   border: 1px solid var(${({ color }) => color ?? '--color-dark-gray'});
   box-sizing: border-box;
 `;
 
-function TextButton({ children, ...props }: ReactProps<Props>): ReactElement {
+function TextButton({ children, ...props }: StyledProps<ReactProps<Props>>): ReactElement {
   return <StyledButton {...props}>{children}</StyledButton>;
 }
 

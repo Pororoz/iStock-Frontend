@@ -1,28 +1,46 @@
+import { usePathArray } from '@utils/usePathArray';
 import { ReactElement } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-interface Props {
-  color?: string;
-  highlightColor?: string;
-}
-
-const Wrapper = styled.span<Props>`
+const Wrapper = styled.div`
   font-family: 'Noto Sans KR';
-  color: var(${({ color }) => color ?? '--color-gray'});
-  font-size: 18px;
+  color: var(--color-gray);
+  font-size: 28px;
   font-weight: 700;
+  display: flex;
+  gap: 10px;
+  margin: 15px;
 
-  :last-child {
-    color: var(${({ highlightColor }) => highlightColor ?? '--color-blue'});
+  a {
+    text-decoration: none;
+    &:link {
+      color: var(--color-gray);
+    }
+    &:visited {
+      color: var(--color-gray);
+    }
+    &:last-child {
+      color: var(--color-blue);
+    }
   }
 `;
 
-function Breadcrumb({ routes, ...props }: Props & { routes: string[] }): ReactElement {
+function Breadcrumb(): ReactElement {
+  const pathArray = usePathArray();
+
   return (
-    <Wrapper {...props}>
-      {routes.map((route, i) => (
-        <a key={route}>{`${i !== 0 ? '>' : ''} ${route}`}</a>
-      ))}
+    <Wrapper>
+      {pathArray.map((el) => {
+        return (
+          <>
+            <span>{'>'}</span>
+            <Link to={el.path} key={el.path}>
+              <span>{el.lastParam}</span>
+            </Link>
+          </>
+        );
+      })}
     </Wrapper>
   );
 }

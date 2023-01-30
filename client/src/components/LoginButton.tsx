@@ -10,9 +10,9 @@ const StyledButton = styled.button`
   border: none;
 `;
 
-function LoginButton(): ReactElement {
+function LoginButton({ onClick }: { onClick: () => void }): ReactElement {
   return (
-    <StyledButton>
+    <StyledButton onClick={onClick}>
       <img src={Login} />
     </StyledButton>
   );
