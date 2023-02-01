@@ -14,5 +14,13 @@ export default defineConfig({
       '@images': path.resolve(__dirname, './src/images'),
       '@utils': path.resolve(__dirname, './src/utils'),
     }
+  },
+  server: {
+    proxy: {
+      '/login': {
+        target: 'http://localhost:8080/v1/auth/',
+        changeOrigin: true,
+      }
+    }
   }
 })
