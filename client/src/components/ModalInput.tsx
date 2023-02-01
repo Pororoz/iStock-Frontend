@@ -1,4 +1,4 @@
-import { forwardRef, ReactElement } from 'react';
+import { forwardRef, ReactElement, Ref } from 'react';
 import Text from './Text';
 import Input from './Input';
 import styled from 'styled-components';
@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   gap: 10px;
 `;
 
-function ModalInput({ title, placeholder }: Props, ref): ReactElement {
+function ModalInput({ title, placeholder }: Props, ref: Ref<HTMLInputElement>): ReactElement {
   return (
     <Wrapper>
       <Text size={20} weight={700}>
