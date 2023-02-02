@@ -20,6 +20,10 @@ export default defineConfig({
       '/login': {
         target: 'http://localhost:8080/v1/auth/',
         changeOrigin: true,
+      },
+      '/users': {
+        target: 'http://localhost:8080/v1/',
+        changeOrigin: true,
       }
     }
   }
