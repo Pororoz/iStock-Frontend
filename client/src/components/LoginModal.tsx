@@ -1,12 +1,13 @@
 import { ReactElement, useRef } from 'react';
 import styled from 'styled-components';
-import { useMutation, useQueryClient } from 'react-query';
+import { useQueryClient } from 'react-query';
 import { toast } from 'react-toastify';
 
 import ModalInput from '@components/ModalInput';
 import Text from '@components/Text';
 import TextButton from './TextButton';
-import login from '@utils/useLogin';
+import login, { LoginResponse } from '@utils/useLogin';
+import useMutate from '@hooks/useMutate';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -61,33 +62,19 @@ const LoginButton = styled(TextButton)`
   background-color: transparent;
 `;
 
-const ERROR_MESSAGE = {
-  '401': 'id, password를 확인하세요.',
-  '204': 'NO CONTENTS',
-};
-
-interface ErrorResponse {
-  status: string;
-  statusText: string;
-}
-
 function LoginModal({ onCancel }: { onCancel: () => void }): ReactElement {
   const idInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation(login, {
-    onSuccess: ({ data }) => {
-      const { username, rolename } = data.data;
-      toast(`${username} 님 로그인되었습니다`);
-      queryClient.setQueryData('user', { username, rolename });
-      onCancel();
-    },
-    onError: ({ response }: { response: ErrorResponse }) => {
-      const { status } = response;
-      alert(ERROR_MESSAGE[status as keyof typeof ERROR_MESSAGE]);
-    },
-  });
+  const successCallback = async ({ data }: LoginResponse): Promise<void> => {
+    const { username, rolename } = data;
+    toast(`${username} 님 로그인되었습니다`);
+    queryClient.setQueryData('user', { username, rolename });
+    onCancel();
+  };
+
+  const { mutate } = useMutate({ action: login, callback: successCallback });
 
   const handleOnLogin = (): void => {
     if (idInput.current === null || passwordInput.current === null) {

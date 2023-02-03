@@ -1,14 +1,14 @@
 import axios, { AxiosResponse } from 'axios';
 
-interface LoginType {
-  username: string;
-  password: string;
-}
-
-interface LoginResponse {
+export interface LoginResponse {
   status: number;
   message?: string;
   data: AuthType;
+}
+
+interface LoginType {
+  username: string;
+  password: string;
 }
 
 interface AuthType {
