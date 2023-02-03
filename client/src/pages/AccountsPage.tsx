@@ -1,10 +1,11 @@
 import { ReactElement } from 'react';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
 
 import Table from '@components/Table';
 import { ErrorResponse } from '@utils/common';
 import { getUsers, createUser, deleteUser } from '@utils/useAccounts';
+import useMutate from '@hooks/useMutate';
 
 const ERROR_MESSAGE = {
   '400': '형식에 맞지 않는 ID 입니다.',
@@ -20,26 +21,13 @@ const handleOnError = ({ response }: { response: ErrorResponse }): void => {
 };
 
 function AccountsPage(): ReactElement {
-  const queryClient = useQueryClient();
   const { data, isLoading } = useQuery('users', getUsers, {
     onError: handleOnError,
   });
 
-  const createMutate = useMutation(createUser, {
-    onSuccess: async ({ data }) => {
-      toast.success('추가되었습니다.');
-      await queryClient.invalidateQueries('users');
-    },
-    onError: handleOnError,
-  });
-
-  const deleteMutate = useMutation(deleteUser, {
-    onSuccess: async ({ data }) => {
-      toast.success('삭제되었습니다.');
-      await queryClient.invalidateQueries('users');
-    },
-    onError: handleOnError,
-  });
+  const userParameter = { key: 'users' };
+  const createMutate = useMutate({ ...userParameter, action: createUser });
+  const deleteMutate = useMutate({ ...userParameter, action: deleteUser });
 
   return (
     <div>

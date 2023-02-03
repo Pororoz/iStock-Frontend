@@ -13,16 +13,17 @@ export default defineConfig({
       '@pages': path.resolve(__dirname, './src/pages'),
       '@images': path.resolve(__dirname, './src/images'),
       '@utils': path.resolve(__dirname, './src/utils'),
+      '@hooks': path.resolve(__dirname, './src/hooks'),
     }
   },
   server: {
     proxy: {
       '/login': {
-        target: 'http://localhost:8080/v1/auth/',
+        target: 'http://52.198.80.244/api/v1/auth',
         changeOrigin: true,
       },
       '/users': {
-        target: 'http://localhost:8080/v1/',
+        target: 'http://52.198.80.244/api/v1/',
         changeOrigin: true,
       }
     }
