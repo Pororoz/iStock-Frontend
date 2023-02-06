@@ -1,15 +1,16 @@
 import useMutate from '@hooks/useMutate';
-import { createUser } from '@utils/useAccounts';
-import { ReactElement, RefObject, useRef } from 'react';
+import { ReactElement, RefObject, useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
+
 import ModalButton from './ModalButton';
 import ModalInput from './ModalInput';
-
 import SelectInput from './SelectInput';
 
+import { createUser, updateUser } from '@utils/useAccounts';
 interface Props {
   close: () => void;
+  target: any;
 }
 
 type HtmlElement = HTMLInputElement | HTMLSelectElement;
@@ -63,35 +64,54 @@ const validationCheck = (...args: Array<RefObject<HtmlElement>>): boolean => {
 
 const ROLES = ['ROLE_ADMIN', 'ROLE_USER'];
 
-function AuthModal({ close }: Props): ReactElement {
-  const { mutate } = useMutate({ key: 'users', action: createUser });
+function AuthModal({ close, target }: Props): ReactElement {
+  const createMutate = useMutate({ key: 'users', action: createUser });
+  const updateMutate = useMutate({ key: 'users', action: updateUser });
   const idInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
   const roleInput = useRef<HTMLSelectElement>(null);
 
   const handleOnClick = (): void => {
     if (validationCheck(idInput, passwordInput, roleInput)) {
-      mutate(
-        {
-          username: idInput.current?.value,
-          password: passwordInput.current?.value,
-          roleName: roleInput.current?.value,
-        },
-        {
-          onSuccess: close,
-        },
-      );
+      if (target === undefined)
+        createMutate.mutate(
+          {
+            username: idInput.current?.value,
+            password: passwordInput.current?.value,
+            roleName: roleInput.current?.value,
+          },
+          { onSuccess: close },
+        );
+      else {
+        updateMutate.mutate(
+          {
+            id: target.id,
+            password: passwordInput.current?.value,
+            roleName: roleInput.current?.value,
+          },
+          { onSuccess: close },
+        );
+      }
     }
   };
+
+  useEffect(() => {
+    if (target === undefined || idInput.current == null || roleInput.current == null) {
+      return;
+    }
+    const { username, roleName } = target;
+    idInput.current.value = username;
+    roleInput.current.value = roleName;
+  }, [idInput.current, passwordInput.current, roleInput.current]);
 
   return (
     <Wrapper>
       <OverLay onClick={close} />
       <ModalWrapper>
-        <ModalInput ref={idInput} title="ID" placeholder="ID를 입력하세요..." />
+        <ModalInput ref={idInput} title="ID" placeholder="ID를 입력하세요..." readonly={target !== undefined} />
         <ModalInput ref={passwordInput} title="비밀번호" placeholder="비밀번호를 입력하세요..." />
         <SelectInput ref={roleInput} optionList={ROLES} title="권한" />
-        <ModalButton onCancel={close} action={handleOnClick} />
+        <ModalButton onCancel={close} action={handleOnClick} title={target !== undefined ? '수정하기' : '추가하기'} />
       </ModalWrapper>
     </Wrapper>
   );

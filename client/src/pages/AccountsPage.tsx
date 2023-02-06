@@ -20,6 +20,7 @@ const Wrapper = styled.div`
 
 function AccountsPage(): ReactElement {
   const [isOpen, setIsOpen] = useState(true);
+  const [selectedRow, setSelectedRow] = useState(undefined);
 
   const open = (): void => {
     setIsOpen(true);
@@ -32,9 +33,7 @@ function AccountsPage(): ReactElement {
     onError: handleOnError,
   });
 
-  const userParameter = { key: 'users' };
-  // const createMutate = useMutate({ ...userParameter, action: createUser });
-  const deleteMutate = useMutate({ ...userParameter, action: deleteUser });
+  const deleteMutate = useMutate({ key: 'users', action: deleteUser });
 
   return (
     <div>
@@ -42,15 +41,21 @@ function AccountsPage(): ReactElement {
         <div>loading</div>
       ) : (
         <Wrapper>
-          {isOpen && <AuthModal close={close} />}
+          {isOpen && <AuthModal close={close} target={selectedRow} />}
           <Table
             rows={data?.data.data.contents}
             headers={headers}
             rowKeys={rowKeys}
             onEdit={open}
             onDelete={deleteMutate.mutate}
+            setSelectedRow={setSelectedRow}
           />
-          <SideButton action={open} />
+          <SideButton
+            action={() => {
+              open();
+              setSelectedRow(undefined);
+            }}
+          />
         </Wrapper>
       )}
     </div>

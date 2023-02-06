@@ -1,12 +1,13 @@
 import { ReactElement } from 'react';
 import TextButton from '@components/TextButton';
 
-function EditButton({ onEdit }: { onEdit: any }): ReactElement {
+function EditButton({ onEdit, row, setSelectedRow }: { onEdit: any; row: any; setSelectedRow: any }): ReactElement {
   return (
     <TextButton
       color="--color-blue"
       onClick={() => {
-        onEdit({ username: 'pororo', password: '1q2w3e4r!', roleName: 'ROLE_USER' });
+        setSelectedRow(row);
+        onEdit();
       }}
     >
       수정

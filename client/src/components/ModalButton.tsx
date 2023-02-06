@@ -29,12 +29,13 @@ const Wrapper = styled.div`
 interface Props {
   action?: UseMutateFunction<AxiosResponse>;
   onCancel: () => void;
+  title?: string;
 }
 
-function ModalButton({ action, onCancel }: Props): ReactElement {
+function ModalButton({ action, onCancel, title }: Props): ReactElement {
   return (
     <Wrapper>
-      <ConfirmButton onClick={action}>추가하기</ConfirmButton>
+      <ConfirmButton onClick={action}>{title}</ConfirmButton>
       <ExitButton color={'--color-red'} onClick={onCancel}>
         돌아가기
       </ExitButton>
