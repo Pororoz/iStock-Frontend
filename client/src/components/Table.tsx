@@ -2,22 +2,24 @@ import { ReactElement } from 'react';
 import styled from 'styled-components';
 import EditButton from './AccountPage/EditButton';
 import DeleteButton from './AccountPage/DeleteButton';
-const headers = ['No.', 'ID', '권한', '생성일', '수정일', '수정', '삭제'];
+import { UseMutateFunction } from 'react-query';
+import { AxiosResponse } from 'axios';
+import { ErrorResponse } from '@utils/common';
 
-const rows = [
-  {
-    ID: '아이디',
-    권한: '관리자',
-    생성일: new Date().toDateString(),
-    수정일: new Date().toDateString(),
-  },
-  {
-    ID: '아이디',
-    권한: '관리자',
-    생성일: new Date().toDateString(),
-    수정일: new Date().toDateString(),
-  },
-];
+// const rows = [
+//   {
+//     ID: '아이디',
+//     권한: '관리자',
+//     생성일: new Date().toDateString(),
+//     수정일: new Date().toDateString(),
+//   },
+//   {
+//     ID: '아이디',
+//     권한: '관리자',
+//     생성일: new Date().toDateString(),
+//     수정일: new Date().toDateString(),
+//   },
+// ];
 
 const StyledTable = styled.table`
   width: 100%;
@@ -37,7 +39,14 @@ const StyledTable = styled.table`
   }
 `;
 
-function Table(): ReactElement {
+interface TableType {
+  rows: any[];
+  headers: string[];
+  rowKeys: string[];
+  onEdit: UseMutateFunction<AxiosResponse<any>, { response: ErrorResponse }, any, unknown>;
+  onDelete: UseMutateFunction<AxiosResponse<any>, { response: ErrorResponse }, any, unknown>;
+}
+function Table({ rows, headers, rowKeys, onEdit, onDelete }: TableType): ReactElement {
   return (
     <StyledTable>
       <thead>
@@ -50,23 +59,31 @@ function Table(): ReactElement {
       <tbody>
         {rows.map((row, i) => (
           <tr key={i}>
-            {headers.map((header) => {
-              if (header === 'No.') {
-                return <td key={`${header}${i}`}>{i + 1}</td>;
-              } else if (header === '수정') {
+            {rowKeys.map((rowKey: string) => {
+              if (rowKey === 'No.') {
+                return <td key={`${rowKey}${i}`}>{i + 1}</td>;
+              } else if (rowKey === '수정') {
                 return (
-                  <td key={`${header}${i}`}>
-                    <EditButton />
+                  <td key={`${rowKey}${i}`}>
+                    <EditButton
+                      onEdit={() => {
+                        onEdit(row.id); // modal 열기
+                      }}
+                    />
                   </td>
                 );
-              } else if (header === '삭제') {
+              } else if (rowKey === '삭제') {
                 return (
-                  <td key={`${header}${i}`}>
-                    <DeleteButton />
+                  <td key={`${rowKey}${i}`}>
+                    <DeleteButton
+                      onDelete={() => {
+                        onDelete(row.id);
+                      }}
+                    />
                   </td>
                 );
               } else {
-                return <td key={`${header}${i}`}>{row[header as keyof typeof row]}</td>;
+                return <td key={`${rowKey}${i}`}>{row[rowKey as keyof typeof row]}</td>;
               }
             })}
           </tr>

@@ -1,5 +1,5 @@
 import { ReactProps, StyledProps } from '@type/props';
-import { ReactElement } from 'react';
+import { forwardRef, ReactElement, Ref } from 'react';
 import styled from 'styled-components';
 
 interface Props {
@@ -35,13 +35,16 @@ const StyledInput = styled.input<Props>`
   width: ${({ width }) => (width !== undefined ? `${width}px` : 'max-content')};
 `;
 
-function Input({ className, children, ...props }: StyledProps<ReactProps<Props>>): ReactElement {
+function Input(
+  { className, children, ...props }: StyledProps<ReactProps<Props>>,
+  ref: Ref<HTMLInputElement>,
+): ReactElement {
   return (
     <Wrapper className={className} {...props}>
       {children}
-      <StyledInput {...props}></StyledInput>
+      <StyledInput ref={ref} {...props}></StyledInput>
     </Wrapper>
   );
 }
 
-export default Input;
+export default forwardRef<HTMLInputElement, Props>(Input);
