@@ -19,7 +19,7 @@ const Wrapper = styled.div`
 `;
 
 function AccountsPage(): ReactElement {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(undefined);
 
   const open = (): void => {
