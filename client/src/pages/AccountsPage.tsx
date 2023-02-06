@@ -1,10 +1,10 @@
-import Table from '@components/Table';
+import AccountTable from '@components/Table/AccountTable';
 import { ReactElement } from 'react';
 
 function AccountsPage(): ReactElement {
   return (
     <div>
-      <Table />
+      <AccountTable />
     </div>
   );
 }
