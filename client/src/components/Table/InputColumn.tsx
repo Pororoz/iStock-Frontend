@@ -29,14 +29,13 @@ function InputColumn({ children, onSubmit }: ReactProps<Props>): ReactElement {
   };
   return (
     <Column>
-      {children}
       <StyledInput
         type="number"
         onChange={(event) => {
           setInput(parseInt(event.target.value));
         }}
       />
-      <TextButton onClick={onClick}>입력</TextButton>
+      <TextButton onClick={onClick}>{children}</TextButton>
     </Column>
   );
 }

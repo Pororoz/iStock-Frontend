@@ -18,7 +18,7 @@ function App(): ReactElement {
       <Breadcrumb />
       <Routes>
         <Route path="/" />
-        <Route path="/items" element={<ItemsPage />} />
+        <Route path="/items" element={<CategoryPage />} />
         <Route path="/items/:category" element={<CategoryPage />} />
         <Route path="/items/:category/:product" element={<ProductPage />} />
         <Route path="/items/:category/:product/log" element={<ProductLogPage />} />
