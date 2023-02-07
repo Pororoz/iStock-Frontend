@@ -1,6 +1,8 @@
+import { ReactElement } from 'react';
+
 interface TableColumn<T> {
   key: string;
-  component: (row: T, i: number) => JSX.Element;
+  component: ({ row, i }: { row: T; i: number }) => ReactElement<{ row: T; i: number }>;
 }
 
 export default TableColumn;

@@ -35,7 +35,12 @@ function Table<T>({ rows, format }: { rows: T[]; format: Array<TableColumn<T>> }
       </thead>
       <tbody>
         {rows.map((row, i) => (
-          <tr key={i}>{format.map(({ component }) => component(row, i))}</tr>
+          <tr key={i}>
+            {format.map(({ key, component }) => {
+              const Component = component;
+              return <Component key={key} row={row} i={i} />;
+            })}
+          </tr>
         ))}
       </tbody>
     </StyledTable>
