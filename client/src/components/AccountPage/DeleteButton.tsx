@@ -3,13 +3,8 @@ import { UseMutateFunction } from 'react-query';
 import { AxiosResponse } from 'axios';
 
 import TextButton from '@components/TextButton';
-import { AccountResponse } from '@utils/useAccounts';
 
-function DeleteButton({
-  onDelete,
-}: {
-  onDelete: UseMutateFunction<AxiosResponse<AccountResponse>, any>;
-}): ReactElement {
+function DeleteButton({ onDelete }: { onDelete: UseMutateFunction<AxiosResponse, any> }): ReactElement {
   return (
     <TextButton color="--color-red" onClick={onDelete}>
       삭제

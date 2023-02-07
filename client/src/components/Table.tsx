@@ -45,8 +45,9 @@ interface TableType {
   rowKeys: string[];
   onEdit: UseMutateFunction<AxiosResponse<any>, { response: ErrorResponse }, any, unknown>;
   onDelete: UseMutateFunction<AxiosResponse<any>, { response: ErrorResponse }, any, unknown>;
+  setSelectedRow: any;
 }
-function Table({ rows, headers, rowKeys, onEdit, onDelete }: TableType): ReactElement {
+function Table({ rows, headers, rowKeys, onEdit, onDelete, setSelectedRow }: TableType): ReactElement {
   return (
     <StyledTable>
       <thead>
@@ -65,11 +66,7 @@ function Table({ rows, headers, rowKeys, onEdit, onDelete }: TableType): ReactEl
               } else if (rowKey === '수정') {
                 return (
                   <td key={`${rowKey}${i}`}>
-                    <EditButton
-                      onEdit={() => {
-                        onEdit(row.id); // modal 열기
-                      }}
-                    />
+                    <EditButton onEdit={onEdit} row={row} setSelectedRow={setSelectedRow} />
                   </td>
                 );
               } else if (rowKey === '삭제') {

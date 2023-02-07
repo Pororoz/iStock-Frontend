@@ -1,11 +1,13 @@
 import { forwardRef, ReactElement, Ref } from 'react';
+import styled from 'styled-components';
+
 import Text from './Text';
 import Input from './Input';
-import styled from 'styled-components';
 
 interface Props {
   title: string;
   placeholder?: string;
+  readonly?: boolean;
 }
 
 const Wrapper = styled.div`
@@ -15,13 +17,13 @@ const Wrapper = styled.div`
   gap: 10px;
 `;
 
-function ModalInput({ title, placeholder }: Props, ref: Ref<HTMLInputElement>): ReactElement {
+function ModalInput({ title, placeholder, readonly }: Props, ref: Ref<HTMLInputElement>): ReactElement {
   return (
     <Wrapper>
       <Text size={20} weight={700}>
         {title}
       </Text>
-      <Input ref={ref} placeholder={placeholder} />
+      <Input ref={ref} placeholder={placeholder} readonly={readonly} />
     </Wrapper>
   );
 }

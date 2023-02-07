@@ -8,6 +8,7 @@ interface Props {
   size?: number;
   width?: number;
   placeholder?: string;
+  readonly?: boolean;
 }
 
 const Wrapper = styled.div<Props>`
@@ -33,6 +34,10 @@ const StyledInput = styled.input<Props>`
   border: none;
   outline: none;
   width: ${({ width }) => (width !== undefined ? `${width}px` : 'max-content')};
+
+  &:read-only {
+    color: var(--color-gray);
+  }
 `;
 
 function Input(
@@ -42,7 +47,7 @@ function Input(
   return (
     <Wrapper className={className} {...props}>
       {children}
-      <StyledInput ref={ref} {...props}></StyledInput>
+      <StyledInput ref={ref} {...props} readOnly={props.readonly}></StyledInput>
     </Wrapper>
   );
 }
