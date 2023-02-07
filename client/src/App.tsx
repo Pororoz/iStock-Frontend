@@ -19,7 +19,7 @@ function App(): ReactElement {
       <Routes>
         <Route path="/" />
         <Route path="/items" element={<CategoryPage />} />
-        <Route path="/items/:category" element={<CategoryPage />} />
+        <Route path="/items/:category" element={<ProductPage />} />
         <Route path="/items/:category/:product" element={<ProductPage />} />
         <Route path="/items/:category/:product/log" element={<ProductLogPage />} />
         <Route path="/parts" element={<PartsPage />} />

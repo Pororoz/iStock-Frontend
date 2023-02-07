@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import TableColumn from './table.type';
+import TableColumn from '../../types/table';
 import ButtonColumn from './ButtonColumn';
 import NumberColumn from './NumberColumn';
 import TextColumn from './TextColumn';

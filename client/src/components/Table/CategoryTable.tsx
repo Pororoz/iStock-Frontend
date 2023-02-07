@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+import { Link } from 'react-router-dom';
 import TableColumn from '../../types/table';
 import ButtonColumn from './ButtonColumn';
 import NumberColumn from './NumberColumn';
@@ -8,7 +9,14 @@ import { CategoryData } from '@type/data';
 
 const categoryTableFormat: Array<TableColumn<CategoryData>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
-  { key: '카테고리 이름', component: ({ row }) => <TextColumn>{row.name}</TextColumn> },
+  {
+    key: '카테고리 이름',
+    component: ({ row }) => (
+      <TextColumn>
+        <Link to={`/items/${row.categoryId}`}>{row.name}</Link>
+      </TextColumn>
+    ),
+  },
   {
     key: '수정',
     component: ({ row }) => (

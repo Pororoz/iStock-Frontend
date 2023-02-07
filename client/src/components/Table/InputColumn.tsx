@@ -5,6 +5,10 @@ import TextButton from '@components/TextButton';
 
 const Column = styled.td`
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 `;
 
 interface Props {
@@ -17,9 +21,11 @@ const StyledInput = styled.input<{ color?: string; size?: number; width?: number
   font-weight: 500;
   font-size: ${({ size }) => size ?? 15}px;
   background-color: transparent;
-  border: none;
+  border: 1px solid var(--color-dark-gray);
+  border-radius: 5px;
   outline: none;
-  width: ${({ width }) => (width !== undefined ? `${width}px` : 'max-content')};
+  width: 150px;
+  text-align: right;
 `;
 
 function InputColumn({ children, onSubmit }: ReactProps<Props>): ReactElement {
