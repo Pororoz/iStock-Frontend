@@ -14,6 +14,12 @@ const rows = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
+  {
+    username: '아이디2',
+    role: '관리자',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
 ];
 
 function AccountsPage(): ReactElement {

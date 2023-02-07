@@ -4,13 +4,7 @@ import ButtonColumn from './ButtonColumn';
 import NumberColumn from './NumberColumn';
 import TextColumn from './TextColumn';
 import Table from '@components/Table/Table';
-
-interface AccountData {
-  username: string;
-  role: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { AccountData } from '@type/data';
 
 const accountTableFormat: Array<TableColumn<AccountData>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
