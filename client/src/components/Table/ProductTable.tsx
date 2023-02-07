@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import TableColumn from '../../types/table';
 import ButtonColumn from './ButtonColumn';
 import NumberColumn from './NumberColumn';
@@ -15,7 +16,7 @@ const productTableFormat: Array<TableColumn<ProductData>> = [
   { key: '코드번호', component: ({ row }) => <TextColumn>{row.codeNumber}</TextColumn> },
   { key: '재고', component: ({ row }) => <NumberColumn>{row.stock}</NumberColumn> },
   {
-    key: '출입고',
+    key: '입고(출고)',
     component: ({ row }) => (
       <InputColumn
         onSubmit={(input: number) => {
@@ -36,16 +37,35 @@ const productTableFormat: Array<TableColumn<ProductData>> = [
   },
   {
     key: 'BOM',
-    component: ({ row }) => (
-      <ButtonColumn
-        color="--color-blue"
-        onClick={() => {
-          console.log(`open the BOM of ${row.productId}`);
-        }}
-      >
-        BOM
-      </ButtonColumn>
-    ),
+    component: ({ row }) => {
+      const { pathname } = useLocation();
+      return (
+        <ButtonColumn
+          color="--color-blue"
+          onClick={() => {
+            console.log(`open the BOM of ${row.productId}`);
+          }}
+        >
+          <Link to={`${pathname}/${row.productId}`}>BOM</Link>
+        </ButtonColumn>
+      );
+    },
+  },
+  {
+    key: 'Log',
+    component: ({ row }) => {
+      const { pathname } = useLocation();
+      return (
+        <ButtonColumn
+          color="--color-blue"
+          onClick={() => {
+            console.log(`open the Log of ${row.productId}`);
+          }}
+        >
+          <Link to={`${pathname}/${row.productId}/log`}>Log</Link>
+        </ButtonColumn>
+      );
+    },
   },
   {
     key: '수정',
