@@ -10,6 +10,7 @@ import PartLogPage from '@pages/PartLogPage';
 import AccountsPage from '@pages/AccountsPage';
 import NotFound from '@pages/NotFound';
 import Breadcrumb from '@components/Breadcrumb';
+import MainPage from '@pages/MainPage';
 
 function App(): ReactElement {
   return (
@@ -17,7 +18,7 @@ function App(): ReactElement {
       <NavBar />
       <Breadcrumb />
       <Routes>
-        <Route path="/" />
+        <Route path="/" element={<MainPage />} />
         <Route path="/items" element={<ItemsPage />} />
         <Route path="/items/:category" element={<CategoryPage />} />
         <Route path="/items/:category/:product" element={<ProductPage />} />
