@@ -41,7 +41,7 @@ const productTableFormat: Array<TableColumn<ProductData>> = [
       const { pathname } = useLocation();
       return (
         <ButtonColumn
-          color="--color-blue"
+          color="--color-dark-gray"
           onClick={() => {
             console.log(`open the BOM of ${row.productId}`);
           }}
@@ -57,7 +57,7 @@ const productTableFormat: Array<TableColumn<ProductData>> = [
       const { pathname } = useLocation();
       return (
         <ButtonColumn
-          color="--color-blue"
+          color="--color-dark-gray"
           onClick={() => {
             console.log(`open the Log of ${row.productId}`);
           }}
