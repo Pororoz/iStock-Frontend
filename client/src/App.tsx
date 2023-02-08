@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NavBar from '@components/NavBar';
-import ItemsPage from '@pages/ItemsPage';
 import CategoryPage from '@pages/CategoryPage';
 import ProductPage from '@pages/ProductPage';
+import BomPage from '@pages/BomPage';
 import ProductLogPage from '@pages/ProductLogPage';
 import PartsPage from '@pages/PartsPage';
 import PartLogPage from '@pages/PartLogPage';
@@ -20,7 +20,7 @@ function App(): ReactElement {
         <Route path="/" />
         <Route path="/items" element={<CategoryPage />} />
         <Route path="/items/:category" element={<ProductPage />} />
-        <Route path="/items/:category/:product" element={<ProductPage />} />
+        <Route path="/items/:category/:product" element={<BomPage />} />
         <Route path="/items/:category/:product/log" element={<ProductLogPage />} />
         <Route path="/parts" element={<PartsPage />} />
         <Route path="/parts/:part/log" element={<PartLogPage />} />
