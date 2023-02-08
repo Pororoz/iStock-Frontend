@@ -6,7 +6,6 @@ import TextButton from './TextButton';
 
 const ExitButton = styled(TextButton)`
   cursor: pointer;
-  margin-top: 20px;
   font-size: 18px;
   font-weight: 500;
   border: none;
@@ -15,7 +14,6 @@ const ExitButton = styled(TextButton)`
 
 const ConfirmButton = styled(TextButton)`
   cursor: pointer;
-  margin-top: 20px;
   font-size: 18px;
   font-weight: 500;
   border: none;
