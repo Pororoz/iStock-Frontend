@@ -30,11 +30,11 @@ interface Props {
   title?: string;
 }
 
-function ModalButton({ action, onCancel, title }: Props): ReactElement {
+function ModalButton({ action, onCancel, title = '확인' }: Props): ReactElement {
   return (
     <Wrapper>
       <ConfirmButton onClick={action}>{title}</ConfirmButton>
-      <ExitButton color={'--color-red'} onClick={onCancel}>
+      <ExitButton color="--color-red" onClick={onCancel}>
         돌아가기
       </ExitButton>
     </Wrapper>

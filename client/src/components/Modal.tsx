@@ -1,13 +1,9 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-import { ReactProps, StyledProps } from '@type/props';
-import ModalButton from './ModalButton';
 
-interface Props {
-  isUpdate: boolean;
-  close: () => void;
-  action: () => void;
-}
+import ModalButton from './ModalButton';
+import { ModalType } from '@type/modal.type';
+import { ReactProps, StyledProps } from '@type/props';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -47,13 +43,13 @@ const OverLay = styled.div`
   z-index: 10000;
 `;
 
-const Modal = ({ children, ...props }: StyledProps<ReactProps<Props>>): ReactElement => {
+const Modal = ({ onClose, onSubmit, children }: StyledProps<ReactProps<ModalType>>): ReactElement => {
   return (
     <Wrapper>
-      <OverLay onClick={props.close} />
+      <OverLay onClick={onClose} />
       <ModalWrapper>
         {children}
-        <ModalButton onCancel={props.close} action={props.action} title={props.isUpdate ? '수정하기' : '추가하기'} />
+        <ModalButton onCancel={onClose} action={onSubmit} />
       </ModalWrapper>
     </Wrapper>
   );
