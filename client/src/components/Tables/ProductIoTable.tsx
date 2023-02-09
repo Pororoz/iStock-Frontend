@@ -6,6 +6,12 @@ import TextColumn from '../Columns/TextColumn';
 import Table from '@components/Tables/Table';
 import { ProductIoData } from '@type/data';
 import LinkColumn from '../Columns/LinkColumn';
+import { ProductIoStatus } from '@type/io';
+import { getIoStatus } from '@utils/getIoStatus';
+
+const calcDisabledProps = (status: ProductIoStatus): boolean => {
+  return getIoStatus(status) !== '대기';
+};
 
 const productIoTableFormat: Array<TableColumn<ProductIoData>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
@@ -23,6 +29,7 @@ const productIoTableFormat: Array<TableColumn<ProductIoData>> = [
     component: ({ row }) => (
       <ButtonColumn
         color="--color-blue"
+        disabled={calcDisabledProps(row.status)}
         onClick={() => {
           console.log(`confirm ${row.productIoId}`);
         }}
@@ -36,6 +43,7 @@ const productIoTableFormat: Array<TableColumn<ProductIoData>> = [
     component: ({ row }) => (
       <ButtonColumn
         color="--color-red"
+        disabled={calcDisabledProps(row.status)}
         onClick={() => {
           console.log(`cancel ${row.productIoId}`);
         }}

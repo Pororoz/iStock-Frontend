@@ -6,6 +6,12 @@ import TextColumn from '../Columns/TextColumn';
 import Table from '@components/Tables/Table';
 import { PartIoData } from '@type/data';
 import LinkColumn from '../Columns/LinkColumn';
+import { PartIoStatus } from '@type/io';
+import { getIoStatus } from '@utils/getIoStatus';
+
+const calcDisabledProps = (status: PartIoStatus): boolean => {
+  return getIoStatus(status) !== '대기';
+};
 
 const partIoTableFormat: Array<TableColumn<PartIoData>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
@@ -27,6 +33,7 @@ const partIoTableFormat: Array<TableColumn<PartIoData>> = [
     component: ({ row }) => (
       <ButtonColumn
         color="--color-blue"
+        disabled={calcDisabledProps(row.status)}
         onClick={() => {
           console.log(`confirm ${row.partIoId}`);
         }}
@@ -40,6 +47,7 @@ const partIoTableFormat: Array<TableColumn<PartIoData>> = [
     component: ({ row }) => (
       <ButtonColumn
         color="--color-red"
+        disabled={calcDisabledProps(row.status)}
         onClick={() => {
           console.log(`cancel ${row.partIoId}`);
         }}
