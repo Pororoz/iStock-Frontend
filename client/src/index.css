@@ -67,3 +67,6 @@ a {
 	all: unset;
 	cursor: pointer;
 }
+.Toastify__toast-container {
+	z-index: 200000 !important;
+}
