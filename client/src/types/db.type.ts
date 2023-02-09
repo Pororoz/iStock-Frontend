@@ -3,7 +3,7 @@ import { PartIoStatus, ProductIoStatus } from './io';
 export interface AccountDbType {
   userId: number;
   username: string;
-  roleName: string;
+  roleName: 'ROLE_USER' | 'ROLE_ADMIN';
   createdAt: Date;
   updatedAt: Date;
 }
