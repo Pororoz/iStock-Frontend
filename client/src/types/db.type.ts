@@ -1,6 +1,7 @@
 import { PartIoStatus, ProductIoStatus } from './io';
 
 export interface AccountDbType {
+  userId: number;
   username: string;
   roleName: string;
   createdAt: Date;

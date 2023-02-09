@@ -3,6 +3,10 @@ import TableColumn from '@type/table';
 import ButtonColumn from '@components/Columns/ButtonColumn';
 import NumberColumn from '@components/Columns/NumberColumn';
 import TextColumn from '@components/Columns/TextColumn';
+
+import useMutate from '@hooks/useMutate';
+import { deleteUser } from '@utils/useAccounts';
+
 import Table from '@components/Tables/Table';
 import { AccountDtoType } from '@type/dto.type';
 
@@ -37,7 +41,7 @@ const accountTableFormat: Array<TableColumn<AccountDtoType>> = [
       <ButtonColumn
         color="--color-red"
         onClick={() => {
-          console.log(`delete ${row.username}`);
+          useMutate({ key: 'users', action: deleteUser }).mutate(row.userId);
         }}
       >
         삭제
