@@ -13,6 +13,7 @@ const productIoTableFormat: Array<TableColumn<ProductIoData>> = [
   { key: '변동량', component: ({ row }) => <TextColumn>{row.quantity}</TextColumn> },
   { key: '입고', component: ({ row }) => <TextColumn>{row.quantity >= 0 ? row.quantity : ''}</TextColumn> },
   { key: '출고', component: ({ row }) => <TextColumn>{row.quantity < 0 ? row.quantity : ''}</TextColumn> },
+  { key: '상태', component: ({ row }) => <TextColumn>{row.status}</TextColumn> },
   {
     key: '비고',
     component: ({ row }) => <LinkColumn to={'/part'}>{row.productId}</LinkColumn>,
@@ -21,12 +22,25 @@ const productIoTableFormat: Array<TableColumn<ProductIoData>> = [
     key: '확정',
     component: ({ row }) => (
       <ButtonColumn
-        color="--color-dark-gray"
+        color="--color-blue"
         onClick={() => {
-          console.log(`delete ${row.productIoId}`);
+          console.log(`confirm ${row.productIoId}`);
         }}
       >
         확정
+      </ButtonColumn>
+    ),
+  },
+  {
+    key: '취소',
+    component: ({ row }) => (
+      <ButtonColumn
+        color="--color-red"
+        onClick={() => {
+          console.log(`cancel ${row.productIoId}`);
+        }}
+      >
+        취소
       </ButtonColumn>
     ),
   },

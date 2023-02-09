@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 import TableColumn from '../../types/table';
 import ButtonColumn from '../Columns/ButtonColumn';
 import NumberColumn from '../Columns/NumberColumn';
-import TextColumn from './TextColumn';
+import TextColumn from '../Columns/TextColumn';
 import Table from '@components/Tables/Table';
 import { PartData } from '@type/data';
 import InputColumn from '../Columns/InputColumn';
