@@ -1,20 +1,20 @@
 import { PartIoStatus, ProductIoStatus } from './io';
 
-export interface AccountData {
+export interface AccountDbType {
   username: string;
-  role: string;
+  roleName: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
-export interface CategoryData {
+export interface CategoryDbType {
   categoryId: number;
   name: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
-export interface ProductData {
+export interface ProductDbType {
   productId: number;
   number: string;
   name: string;
@@ -25,7 +25,7 @@ export interface ProductData {
   updatedAt: Date;
 }
 
-export interface BomData {
+export interface BomDbType {
   bomId: number;
   locationNumber: string;
   codeNumber: string;
@@ -37,7 +37,7 @@ export interface BomData {
   partId: number;
 }
 
-export interface PartData {
+export interface PartDbType {
   partId: number;
   name: string;
   spec: string;
@@ -47,7 +47,7 @@ export interface PartData {
   updatedAt: Date;
 }
 
-export interface PartIoData {
+export interface PartIoDbType {
   partIoId: number;
   quantity: number;
   status: PartIoStatus;
@@ -56,7 +56,7 @@ export interface PartIoData {
   partId: number;
 }
 
-export interface ProductIoData {
+export interface ProductIoDbType {
   productIoId: number;
   quantity: number;
   status: ProductIoStatus;
