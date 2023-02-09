@@ -32,14 +32,9 @@ const partTableFormat: Array<TableColumn<PartData>> = [
     component: ({ row }) => {
       const { pathname } = useLocation();
       return (
-        <ButtonColumn
-          color="--color-blue"
-          onClick={() => {
-            console.log(`open the BOM of ${row.partId}`);
-          }}
-        >
+        <TextColumn>
           <Link to={`${pathname}/log`}>조회</Link>
-        </ButtonColumn>
+        </TextColumn>
       );
     },
   },
@@ -47,14 +42,9 @@ const partTableFormat: Array<TableColumn<PartData>> = [
     key: 'Log',
     component: ({ row }) => {
       return (
-        <ButtonColumn
-          color="--color-blue"
-          onClick={() => {
-            console.log(`open the BOM of ${row.partId}`);
-          }}
-        >
+        <TextColumn>
           <Link to={`/parts/${row.partId}/log`}>Log</Link>
-        </ButtonColumn>
+        </TextColumn>
       );
     },
   },

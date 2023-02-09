@@ -36,14 +36,9 @@ const bomTableFormat: Array<TableColumn<BomData & PartData>> = [
     component: ({ row }) => {
       const { pathname } = useLocation();
       return (
-        <ButtonColumn
-          color="--color-blue"
-          onClick={() => {
-            console.log(`open the BOM of ${row.productId}`);
-          }}
-        >
+        <TextColumn>
           <Link to={`${pathname}/log`}>Log</Link>
-        </ButtonColumn>
+        </TextColumn>
       );
     },
   },

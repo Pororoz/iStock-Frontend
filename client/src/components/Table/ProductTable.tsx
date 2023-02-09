@@ -40,14 +40,9 @@ const productTableFormat: Array<TableColumn<ProductData>> = [
     component: ({ row }) => {
       const { pathname } = useLocation();
       return (
-        <ButtonColumn
-          color="--color-dark-gray"
-          onClick={() => {
-            console.log(`open the BOM of ${row.productId}`);
-          }}
-        >
+        <TextColumn>
           <Link to={`${pathname}/${row.productId}`}>BOM</Link>
-        </ButtonColumn>
+        </TextColumn>
       );
     },
   },
@@ -56,14 +51,9 @@ const productTableFormat: Array<TableColumn<ProductData>> = [
     component: ({ row }) => {
       const { pathname } = useLocation();
       return (
-        <ButtonColumn
-          color="--color-dark-gray"
-          onClick={() => {
-            console.log(`open the Log of ${row.productId}`);
-          }}
-        >
+        <TextColumn>
           <Link to={`${pathname}/${row.productId}/log`}>Log</Link>
-        </ButtonColumn>
+        </TextColumn>
       );
     },
   },
