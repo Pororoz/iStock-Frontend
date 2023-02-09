@@ -36,6 +36,7 @@ const accountTableFormat: Array<TableColumn<AccountData>> = [
     component: ({ row }) => (
       <ButtonColumn
         color="--color-red"
+        disabled
         onClick={() => {
           console.log(`delete ${row.username}`);
         }}
