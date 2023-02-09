@@ -1,11 +1,11 @@
 import { ReactElement } from 'react';
-import TableColumn from '../../types/table';
-import ButtonColumn from '../Columns/ButtonColumn';
-import NumberColumn from '../Columns/NumberColumn';
-import TextColumn from '../Columns/TextColumn';
+import TableColumn from '@type/table';
+import ButtonColumn from '@components/Columns/ButtonColumn';
+import NumberColumn from '@components/Columns/NumberColumn';
+import TextColumn from '@components/Columns/TextColumn';
 import Table from '@components/Tables/Table';
-import { PartIoData } from '@type/data';
-import LinkColumn from '../Columns/LinkColumn';
+import { PartIoDtoType } from '@type/dto.type';
+import LinkColumn from '@components/Columns/LinkColumn';
 import { PartIoStatus } from '@type/io';
 import { getIoStatus } from '@utils/getIoStatus';
 
@@ -13,7 +13,7 @@ const calcDisabledProps = (status: PartIoStatus): boolean => {
   return getIoStatus(status) !== '대기';
 };
 
-const partIoTableFormat: Array<TableColumn<PartIoData>> = [
+const partIoTableFormat: Array<TableColumn<PartIoDtoType>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
   { key: '수정일', component: ({ row }) => <TextColumn>{row.updatedAt.toLocaleDateString()}</TextColumn> },
   { key: '변동량', component: ({ row }) => <TextColumn>{row.quantity}</TextColumn> },
@@ -58,6 +58,6 @@ const partIoTableFormat: Array<TableColumn<PartIoData>> = [
   },
 ];
 
-export default function PartIoTable({ rows }: { rows: PartIoData[] }): ReactElement {
+export default function PartIoTable({ rows }: { rows: PartIoDtoType[] }): ReactElement {
   return <Table rows={rows} format={partIoTableFormat} />;
 }

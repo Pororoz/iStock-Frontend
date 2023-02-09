@@ -1,15 +1,15 @@
 import { ReactElement } from 'react';
-import TableColumn from '../../types/table';
-import ButtonColumn from '../Columns/ButtonColumn';
-import NumberColumn from '../Columns/NumberColumn';
-import TextColumn from '../Columns/TextColumn';
+import TableColumn from '@type/table';
+import ButtonColumn from '@components/Columns/ButtonColumn';
+import NumberColumn from '@components/Columns/NumberColumn';
+import TextColumn from '@components/Columns/TextColumn';
 import Table from '@components/Tables/Table';
-import { PartData } from '@type/data';
-import InputColumn from '../Columns/InputColumn';
+import { PartDtoType } from '@type/dto.type';
+import InputColumn from '@components/Columns/InputColumn';
 import { useLocation } from 'react-router-dom';
-import LinkColumn from '../Columns/LinkColumn';
+import LinkColumn from '@components/Columns/LinkColumn';
 
-const partTableFormat: Array<TableColumn<PartData>> = [
+const partTableFormat: Array<TableColumn<PartDtoType>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
   { key: '품명', component: ({ row }) => <TextColumn>{row.name}</TextColumn> },
   { key: '규격', component: ({ row }) => <TextColumn>{row.spec}</TextColumn> },
@@ -69,6 +69,6 @@ const partTableFormat: Array<TableColumn<PartData>> = [
   },
 ];
 
-export default function PartTable({ rows }: { rows: PartData[] }): ReactElement {
+export default function PartTable({ rows }: { rows: PartDtoType[] }): ReactElement {
   return <Table rows={rows} format={partTableFormat} />;
 }

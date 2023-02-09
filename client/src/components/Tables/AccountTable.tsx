@@ -1,15 +1,15 @@
 import { ReactElement } from 'react';
-import TableColumn from '../../types/table';
-import ButtonColumn from '../Columns/ButtonColumn';
-import NumberColumn from '../Columns/NumberColumn';
-import TextColumn from '../Columns/TextColumn';
+import TableColumn from '@type/table';
+import ButtonColumn from '@components/Columns/ButtonColumn';
+import NumberColumn from '@components/Columns/NumberColumn';
+import TextColumn from '@components/Columns/TextColumn';
 import Table from '@components/Tables/Table';
-import { AccountData } from '@type/data';
+import { AccountDtoType } from '@type/dto.type';
 
-const accountTableFormat: Array<TableColumn<AccountData>> = [
+const accountTableFormat: Array<TableColumn<AccountDtoType>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
   { key: 'ID', component: ({ row }) => <TextColumn>{row.username}</TextColumn> },
-  { key: '역할', component: ({ row }) => <TextColumn>{row.role}</TextColumn> },
+  { key: '역할', component: ({ row }) => <TextColumn>{row.roleName}</TextColumn> },
   {
     key: '생성일',
     component: ({ row }) => <TextColumn>{row.createdAt.toLocaleDateString()}</TextColumn>,
@@ -36,7 +36,6 @@ const accountTableFormat: Array<TableColumn<AccountData>> = [
     component: ({ row }) => (
       <ButtonColumn
         color="--color-red"
-        disabled
         onClick={() => {
           console.log(`delete ${row.username}`);
         }}
@@ -47,6 +46,6 @@ const accountTableFormat: Array<TableColumn<AccountData>> = [
   },
 ];
 
-export default function AccountTable({ rows }: { rows: AccountData[] }): ReactElement {
+export default function AccountTable({ rows }: { rows: AccountDtoType[] }): ReactElement {
   return <Table rows={rows} format={accountTableFormat} />;
 }
