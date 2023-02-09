@@ -1,10 +1,10 @@
 import { ReactElement } from 'react';
 import TableColumn from '../../types/table';
-import ButtonColumn from './ButtonColumn';
-import NumberColumn from './NumberColumn';
-import Table from '@components/Table/Table';
+import ButtonColumn from '../Columns/ButtonColumn';
+import NumberColumn from '../Columns/NumberColumn';
+import Table from '@components/Tables/Table';
 import { CategoryData } from '@type/data';
-import LinkColumn from './LinkColumn';
+import LinkColumn from '../Columns/LinkColumn';
 
 const categoryTableFormat: Array<TableColumn<CategoryData>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },

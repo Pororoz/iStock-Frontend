@@ -1,13 +1,13 @@
 import { ReactElement } from 'react';
 import TableColumn from '../../types/table';
-import ButtonColumn from './ButtonColumn';
-import NumberColumn from './NumberColumn';
+import ButtonColumn from '../Columns/ButtonColumn';
+import NumberColumn from '../Columns/NumberColumn';
 import TextColumn from './TextColumn';
-import Table from '@components/Table/Table';
+import Table from '@components/Tables/Table';
 import { PartData } from '@type/data';
-import InputColumn from './InputColumn';
+import InputColumn from '../Columns/InputColumn';
 import { useLocation } from 'react-router-dom';
-import LinkColumn from './LinkColumn';
+import LinkColumn from '../Columns/LinkColumn';
 
 const partTableFormat: Array<TableColumn<PartData>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },

@@ -1,4 +1,4 @@
-import ProductTable from '@components/Table/ProductTable';
+import ProductTable from '@components/Tables/ProductTable';
 import { ReactElement } from 'react';
 
 const rows = [
