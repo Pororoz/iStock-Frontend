@@ -6,7 +6,6 @@ import TextColumn from '@components/Columns/TextColumn';
 import Table from '@components/Tables/Table';
 import { PartDtoType } from '@type/dto.type';
 import InputColumn from '@components/Columns/InputColumn';
-import { useLocation } from 'react-router-dom';
 import LinkColumn from '@components/Columns/LinkColumn';
 
 const partTableFormat: Array<TableColumn<PartDtoType>> = [
@@ -27,12 +26,11 @@ const partTableFormat: Array<TableColumn<PartDtoType>> = [
       </InputColumn>
     ),
   },
-  { key: '구매', component: ({ row }) => <NumberColumn>{row.stock}</NumberColumn> },
+  { key: '구매', component: ({ row }) => <NumberColumn>{row.stock < 0 ? row.stock : 'N/A'}</NumberColumn> },
   {
     key: 'BOM',
     component: ({ row }) => {
-      const { pathname } = useLocation();
-      return <LinkColumn to={`${pathname}/log`}>조회</LinkColumn>;
+      return <LinkColumn to={'/error'}>미구현</LinkColumn>;
     },
   },
   {

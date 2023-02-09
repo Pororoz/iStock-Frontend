@@ -22,11 +22,11 @@ const partIoTableFormat: Array<TableColumn<PartIoDtoType>> = [
   { key: '상태', component: ({ row }) => <TextColumn>{row.status}</TextColumn> },
   {
     key: '비고',
-    component: ({ row }) => <LinkColumn to={'/part'}>{row.partId}</LinkColumn>,
+    component: ({ row }) => <LinkColumn to={`/items/${row.categoryId}/${row.productId}/log`}>{row.name}</LinkColumn>,
   },
   {
     key: '거래처 이름',
-    component: ({ row }) => <TextColumn>거래처명은 DB 어떤 항목에서 가져와야 하나요.</TextColumn>,
+    component: ({ row }) => <TextColumn>{row.companyName}</TextColumn>,
   },
   {
     key: '확정',

@@ -5,7 +5,6 @@ import NumberColumn from '@components/Columns/NumberColumn';
 import TextColumn from '@components/Columns/TextColumn';
 import Table from '@components/Tables/Table';
 import { ProductIoDtoType } from '@type/dto.type';
-import LinkColumn from '@components/Columns/LinkColumn';
 import { ProductIoStatus } from '@type/io';
 import { getIoStatus } from '@utils/getIoStatus';
 
@@ -20,10 +19,6 @@ const productIoTableFormat: Array<TableColumn<ProductIoDtoType>> = [
   { key: '입고', component: ({ row }) => <TextColumn>{row.quantity >= 0 ? row.quantity : ''}</TextColumn> },
   { key: '출고', component: ({ row }) => <TextColumn>{row.quantity < 0 ? row.quantity : ''}</TextColumn> },
   { key: '상태', component: ({ row }) => <TextColumn>{row.status}</TextColumn> },
-  {
-    key: '비고',
-    component: ({ row }) => <LinkColumn to={'/part'}>{row.productId}</LinkColumn>,
-  },
   {
     key: '확정',
     component: ({ row }) => (

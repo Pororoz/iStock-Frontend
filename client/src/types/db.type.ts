@@ -23,6 +23,7 @@ export interface ProductDbType {
   companyName: string;
   createdAt: Date;
   updatedAt: Date;
+  categoryId: number;
 }
 
 export interface BomDbType {

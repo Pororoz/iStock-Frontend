@@ -15,5 +15,5 @@ export type BomDtoType = BomDbType & PartDbType;
 export type PartDtoType = PartDbType;
 export type PartIoDtoType = PartIoDbType &
   Pick<ProductIoDbType, 'productId'> &
-  Pick<ProductDbType, 'name' | 'companyName'>;
+  Pick<ProductDbType, 'name' | 'companyName' | 'categoryId'>;
 export type ProductIoDtoType = ProductIoDbType & Pick<ProductDbType, 'name'>;

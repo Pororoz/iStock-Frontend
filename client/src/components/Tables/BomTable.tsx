@@ -29,7 +29,7 @@ const bomTableFormat: Array<TableColumn<BomDtoType>> = [
       </InputColumn>
     ),
   },
-  { key: '구매', component: ({ row }) => <NumberColumn>{row.stock}</NumberColumn> },
+  { key: '구매', component: ({ row }) => <NumberColumn>{row.stock < 0 ? row.stock : 'N/A'}</NumberColumn> },
   { key: '코드번호', component: ({ row }) => <TextColumn>{row.codeNumber}</TextColumn> },
   { key: '비고', component: ({ row }) => <TextColumn>{row.memo}</TextColumn> },
   {
