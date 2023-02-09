@@ -9,6 +9,7 @@ import { createUser, updateUser } from '@utils/useAccounts';
 import useInput from '@hooks/useInput';
 import RequiredInput from './RequiredInput';
 import { checkLength, checkRequired } from '@utils/common';
+import { toast } from 'react-toastify';
 
 interface Props {
   close: () => void;
@@ -80,7 +81,10 @@ function AuthModal({ close, target }: Props): ReactElement {
   const [password, , errorPasswordMessage, onChangePassword] = useInput({ ...useInputParameter, title: '비밀번호' });
 
   const handleOnClick = (): undefined => {
-    if (errorIdMessage === '' || errorPasswordMessage === '' || roleNameRef.current?.value === '') return;
+    if (errorIdMessage !== '' || errorPasswordMessage !== '' || roleNameRef.current?.value === '') {
+      toast.error('입력값을 확인하세요');
+      return;
+    }
 
     if (!isUpdate) {
       createMutate.mutate({

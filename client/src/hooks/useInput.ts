@@ -7,14 +7,12 @@ interface InputType {
   validationCheck?: Array<(title: string, target: string, max: number, min: number) => string>;
 }
 
-const useInput = ({ title, min = 1, max = 250, ...props }: InputType): any[] => {
+const useInput = ({ title, min = 1, max = 250, validationCheck = [] }: InputType): any[] => {
   const [value, setValue] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    if (props.validationCheck === undefined) return;
-
-    const result = props.validationCheck
+    const result = validationCheck
       .map((checkFunction) => checkFunction(title, value, min, max))
       .filter((errorMsg) => errorMsg !== '');
 
