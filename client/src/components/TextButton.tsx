@@ -6,6 +6,7 @@ interface Props {
   color?: string;
   backgroundColor?: string;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
 const StyledButton = styled.button<Props>`

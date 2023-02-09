@@ -20,7 +20,7 @@ const StyledInput = styled.input<{ color?: string; size?: number; width?: number
   color: var(${({ color }) => color ?? '--color-dark-gray'});
   font-weight: 500;
   font-size: ${({ size }) => size ?? 15}px;
-  background-color: transparent;
+  background-color: var() (--color-white);
   border: 1px solid var(--color-dark-gray);
   border-radius: 5px;
   outline: none;

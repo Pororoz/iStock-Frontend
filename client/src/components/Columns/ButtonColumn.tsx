@@ -3,19 +3,21 @@ import styled from 'styled-components';
 import { ReactProps } from '@type/props';
 import TextButton from '@components/TextButton';
 
-const Column = styled.td`
+const Column = styled.td<{ disabled: boolean }>`
   text-align: center;
+  opacity: ${(props) => (!props.disabled ? 1.0 : 0.5)};
 `;
 
 interface Props {
   color?: string;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
-function ButtonColumn({ children, color, onClick }: ReactProps<Props>): ReactElement {
+function ButtonColumn({ children, color, onClick, disabled = false }: ReactProps<Props>): ReactElement {
   return (
-    <Column>
-      <TextButton color={color} onClick={onClick}>
+    <Column disabled={disabled}>
+      <TextButton color={color} onClick={onClick} disabled={disabled}>
         {children}
       </TextButton>
     </Column>

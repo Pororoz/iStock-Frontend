@@ -1,3 +1,5 @@
+import { PartIoStatus, ProductIoStatus } from './io';
+
 export interface AccountData {
   userId: number;
   username: string;
@@ -57,7 +59,7 @@ export interface PartData {
 export interface PartIoData {
   partIoId: number;
   quantity: number;
-  status: string;
+  status: PartIoStatus;
   createdAt: Date;
   updatedAt: Date;
   partId: number;
@@ -66,7 +68,7 @@ export interface PartIoData {
 export interface ProductIoData {
   productIoId: number;
   quantity: number;
-  status: string;
+  status: ProductIoStatus;
   createdAt: Date;
   updatedAt: Date;
   productId: number;

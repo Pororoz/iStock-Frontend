@@ -1,6 +1,6 @@
+import AccountTable from '@components/Tables/AccountTable';
 import { ReactElement } from 'react';
 import { useQuery } from 'react-query';
-import AccountTable from '@components/Table/AccountTable';
 import { handleOnError } from '@utils/common';
 import { getUsers, transformData } from '@utils/useAccounts';
 

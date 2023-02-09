@@ -1,11 +1,17 @@
 import { ReactElement } from 'react';
-import { Link } from 'react-router-dom';
 import TableColumn from '../../types/table';
-import ButtonColumn from './ButtonColumn';
-import NumberColumn from './NumberColumn';
-import TextColumn from './TextColumn';
-import Table from '@components/Table/Table';
+import ButtonColumn from '../Columns/ButtonColumn';
+import NumberColumn from '../Columns/NumberColumn';
+import TextColumn from '../Columns/TextColumn';
+import Table from '@components/Tables/Table';
 import { PartIoData } from '@type/data';
+import LinkColumn from '../Columns/LinkColumn';
+import { PartIoStatus } from '@type/io';
+import { getIoStatus } from '@utils/getIoStatus';
+
+const calcDisabledProps = (status: PartIoStatus): boolean => {
+  return getIoStatus(status) !== '대기';
+};
 
 const partIoTableFormat: Array<TableColumn<PartIoData>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
@@ -13,13 +19,10 @@ const partIoTableFormat: Array<TableColumn<PartIoData>> = [
   { key: '변동량', component: ({ row }) => <TextColumn>{row.quantity}</TextColumn> },
   { key: '입고', component: ({ row }) => <TextColumn>{row.quantity >= 0 ? row.quantity : ''}</TextColumn> },
   { key: '출고', component: ({ row }) => <TextColumn>{row.quantity < 0 ? row.quantity : ''}</TextColumn> },
+  { key: '상태', component: ({ row }) => <TextColumn>{row.status}</TextColumn> },
   {
     key: '비고',
-    component: ({ row }) => (
-      <TextColumn>
-        <Link to={'/part'}>{row.partId}</Link>
-      </TextColumn>
-    ),
+    component: ({ row }) => <LinkColumn to={'/part'}>{row.partId}</LinkColumn>,
   },
   {
     key: '거래처 이름',
@@ -29,12 +32,27 @@ const partIoTableFormat: Array<TableColumn<PartIoData>> = [
     key: '확정',
     component: ({ row }) => (
       <ButtonColumn
-        color="--color-dark-gray"
+        color="--color-blue"
+        disabled={calcDisabledProps(row.status)}
         onClick={() => {
-          console.log(`delete ${row.partIoId}`);
+          console.log(`confirm ${row.partIoId}`);
         }}
       >
         확정
+      </ButtonColumn>
+    ),
+  },
+  {
+    key: '취소',
+    component: ({ row }) => (
+      <ButtonColumn
+        color="--color-red"
+        disabled={calcDisabledProps(row.status)}
+        onClick={() => {
+          console.log(`cancel ${row.partIoId}`);
+        }}
+      >
+        취소
       </ButtonColumn>
     ),
   },

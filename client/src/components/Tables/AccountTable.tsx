@@ -2,10 +2,10 @@ import { ReactElement } from 'react';
 import useMutate from '@hooks/useMutate';
 import { deleteUser } from '@utils/useAccounts';
 import TableColumn from '../../types/table';
-import ButtonColumn from './ButtonColumn';
-import NumberColumn from './NumberColumn';
-import TextColumn from './TextColumn';
-import Table from '@components/Table/Table';
+import ButtonColumn from '../Columns/ButtonColumn';
+import NumberColumn from '../Columns/NumberColumn';
+import TextColumn from '../Columns/TextColumn';
+import Table from '@components/Tables/Table';
 import { AccountData } from '@type/data';
 
 const accountTableFormat: Array<TableColumn<AccountData>> = [
@@ -38,6 +38,7 @@ const accountTableFormat: Array<TableColumn<AccountData>> = [
     component: ({ row }) => (
       <ButtonColumn
         color="--color-red"
+        disabled
         onClick={() => {
           useMutate({ key: 'users', action: deleteUser }).mutate(row.userId);
         }}
