@@ -1,4 +1,6 @@
 import { ReactElement } from 'react';
+import useMutate from '@hooks/useMutate';
+import { deleteUser } from '@utils/useAccounts';
 import TableColumn from '../../types/table';
 import ButtonColumn from './ButtonColumn';
 import NumberColumn from './NumberColumn';
@@ -9,7 +11,7 @@ import { AccountData } from '@type/data';
 const accountTableFormat: Array<TableColumn<AccountData>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
   { key: 'ID', component: ({ row }) => <TextColumn>{row.username}</TextColumn> },
-  { key: '역할', component: ({ row }) => <TextColumn>{row.role}</TextColumn> },
+  { key: '역할', component: ({ row }) => <TextColumn>{row.roleName}</TextColumn> },
   {
     key: '생성일',
     component: ({ row }) => <TextColumn>{row.createdAt.toLocaleDateString()}</TextColumn>,
@@ -37,7 +39,7 @@ const accountTableFormat: Array<TableColumn<AccountData>> = [
       <ButtonColumn
         color="--color-red"
         onClick={() => {
-          console.log(`delete ${row.username}`);
+          useMutate({ key: 'users', action: deleteUser }).mutate(row.userId);
         }}
       >
         삭제
