@@ -1,34 +1,31 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
-const INVALID = [null, undefined, ''];
+interface InputType {
+  title: string;
+  max?: number;
+  min?: number;
+  validationCheck?: Array<(title: string, target: string, max: number, min: number) => string>;
+}
 
-const useInput = (required = false, regex = undefined): any[] => {
+const useInput = ({ title, min = 1, max = 250, ...props }: InputType): any[] => {
   const [value, setValue] = useState('');
-  const [isValid, setIsValid] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    if (required && value === '') {
-      setIsValid(false);
-    }
-    if (!required || value !== '') {
-      setIsValid(true);
-    }
+    if (props.validationCheck === undefined) return;
+
+    const result = props.validationCheck
+      .map((checkFunction) => checkFunction(title, value, min, max))
+      .filter((errorMsg) => errorMsg !== '');
+
+    setErrorMessage(result[0]);
   }, [value]);
 
   const handleOnChange = ({ target }: ChangeEvent<HTMLInputElement>): void => {
     setValue(target.value);
-
-    if (regex !== undefined && target.value.match(regex) === null) {
-      setIsValid(false);
-      return;
-    }
-    if (required && INVALID.includes(target.value)) {
-      setIsValid(false);
-      return;
-    }
-    setIsValid(true);
   };
 
-  return [value, setValue, isValid, handleOnChange];
+  return [value, setValue, errorMessage, handleOnChange];
 };
+
 export default useInput;

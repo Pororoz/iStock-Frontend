@@ -8,6 +8,7 @@ import Text from './Text';
 import { createUser, updateUser } from '@utils/useAccounts';
 import useInput from '@hooks/useInput';
 import RequiredInput from './RequiredInput';
+import { checkLength, checkRequired } from '@utils/common';
 
 interface Props {
   close: () => void;
@@ -18,10 +19,10 @@ interface ModalBodyProps {
   isUpdate: boolean;
   id: string;
   onChangeId: Function;
-  isValidId: boolean;
+  errorIdMessage: string | undefined;
   password: string;
   onChangePassword: Function;
-  isValidPassword: boolean;
+  errorPasswordMessage: string | undefined;
   roleNameRef: RefObject<HTMLSelectElement>;
 }
 
@@ -31,23 +32,42 @@ function ModalBody({
   isUpdate,
   id,
   onChangeId,
-  isValidId,
+  errorIdMessage,
   password,
   onChangePassword,
-  isValidPassword,
+  errorPasswordMessage,
   roleNameRef,
 }: ModalBodyProps): ReactElement {
   return (
     <>
       <Text size={24}>{isUpdate ? '계정 수정' : '계정 생성'}</Text>
-      <RequiredInput value={id} title="ID" onChange={onChangeId} isValid={isValidId} readonly={isUpdate} />
+      <RequiredInput value={id} title="ID" onChange={onChangeId} errorMessage={errorIdMessage} readonly={isUpdate} />
       {!isUpdate && (
-        <RequiredInput value={password} title="비밀번호" onChange={onChangePassword} isValid={isValidPassword} />
+        <RequiredInput
+          value={password}
+          title="비밀번호"
+          onChange={onChangePassword}
+          errorMessage={errorPasswordMessage}
+        />
       )}
       <SelectInput optionList={ROLES} title="권한" ref={roleNameRef} />
     </>
   );
 }
+
+const AUTH_REGEX = {
+  id: /^[\w/-/!]{2,15}$/gi,
+  비밀번호: /^[\w/-/!]{2,15}$/gi,
+};
+
+const checkRegEx = (title: string, target: string): string => {
+  return title !== '' && target.match(AUTH_REGEX[title as keyof typeof AUTH_REGEX]) === null
+    ? `유효하지 않은 ${title}입니다.`
+    : '';
+};
+
+const validationCheck = [checkRequired, checkLength, checkRegEx];
+const useInputParameter = { validationCheck, min: 2, max: 15 };
 
 function AuthModal({ close, target }: Props): ReactElement {
   const createMutate = useMutate({ key: 'users', action: createUser, onSuccess: close });
@@ -56,12 +76,13 @@ function AuthModal({ close, target }: Props): ReactElement {
   const [isUpdate] = useState(target !== undefined);
   const roleNameRef = useRef<HTMLSelectElement>(null);
 
-  const [id, setId, isValidId, onChangeId] = useInput(true);
-  const [password, , isValidPassword, onChangePassword] = useInput(true);
+  const [id, setId, errorIdMessage, onChangeId] = useInput({ ...useInputParameter, title: 'id' });
+  const [password, , errorPasswordMessage, onChangePassword] = useInput({ ...useInputParameter, title: '비밀번호' });
 
   const handleOnClick = (): undefined => {
-    if (isValidId === false || roleNameRef.current?.value === '') return;
-    if (!isUpdate && isValidPassword === true) {
+    if (errorIdMessage === '' || errorPasswordMessage === '' || roleNameRef.current?.value === '') return;
+
+    if (!isUpdate) {
       createMutate.mutate({
         username: id,
         password,
@@ -84,7 +105,16 @@ function AuthModal({ close, target }: Props): ReactElement {
 
   return (
     <Modal onClose={close} onSubmit={handleOnClick}>
-      {ModalBody({ isUpdate, id, onChangeId, isValidId, password, onChangePassword, isValidPassword, roleNameRef })}
+      {ModalBody({
+        isUpdate,
+        id,
+        onChangeId,
+        errorIdMessage,
+        password,
+        onChangePassword,
+        errorPasswordMessage,
+        roleNameRef,
+      })}
     </Modal>
   );
 }

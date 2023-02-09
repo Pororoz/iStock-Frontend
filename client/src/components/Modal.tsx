@@ -25,7 +25,7 @@ const ModalWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 25px;
   padding-inline: 50px;
   padding-block: 30px;
   border-radius: 10px;

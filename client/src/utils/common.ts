@@ -16,3 +16,11 @@ export const handleOnError = ({ response }: { response: ErrorResponse }): void =
   const { status } = response;
   toast.error(ERROR_MESSAGE[status as keyof typeof ERROR_MESSAGE]);
 };
+
+export const checkRequired = (title: string, target: string): string => {
+  return target === '' ? `${title}는(은) 필수값입니다.` : '';
+};
+
+export const checkLength = (title: string, target: string, min: number, max: number): string => {
+  return target.length > max || target.length < min ? `${title}는(은) ${min}자 ~ ${max}자여야 합니다` : '';
+};

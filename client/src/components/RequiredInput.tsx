@@ -6,7 +6,7 @@ interface Props {
   value?: string;
   onChange?: any;
   title?: string;
-  isValid?: boolean;
+  errorMessage?: string | undefined;
   readonly?: boolean;
   color?: string;
   backgroundColor?: string;
@@ -15,10 +15,20 @@ interface Props {
   placeholder?: string;
 }
 
-const Wrapper = styled.div`
+const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
+  width: 100%;
+  align-items: flex-end;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  align-items: center;
 `;
 
 const TextWrapper = styled.div<Props>`
@@ -50,36 +60,36 @@ const StyledInput = styled.input<Props>`
   }
 `;
 
-const TitleWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+const Blank = styled.div`
+  height: 12px;
 `;
 
 function RequiredInput({
   value,
   onChange,
   title = '',
-  isValid = true,
+  errorMessage = '',
   readonly = false,
   ...props
 }: Props): ReactElement {
   return (
-    <Wrapper>
-      <TitleWrapper>
+    <InputWrapper>
+      <Wrapper>
         <Text size={20} weight={700}>
           {title}
         </Text>
-        {!isValid && (
-          <Text color="--color-red" weight={500} size={12}>
-            {`${title}는 필수값입니다`}
-          </Text>
-        )}
-      </TitleWrapper>
-      <TextWrapper {...props}>
-        <StyledInput value={value} onChange={onChange} placeholder={`${title}을 입력하세요...`} readOnly={readonly} />
-      </TextWrapper>
-    </Wrapper>
+        <TextWrapper {...props}>
+          <StyledInput value={value} onChange={onChange} placeholder={`${title}을 입력하세요...`} readOnly={readonly} />
+        </TextWrapper>
+      </Wrapper>
+      {errorMessage !== '' ? (
+        <Text color="--color-red" weight={500} size={12}>
+          {errorMessage}
+        </Text>
+      ) : (
+        <Blank />
+      )}
+    </InputWrapper>
   );
 }
 export default RequiredInput;

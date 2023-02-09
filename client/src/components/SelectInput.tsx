@@ -12,9 +12,10 @@ interface Props {
 }
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: left;
+  justify-content: space-between;
+  align-items: center;
   gap: 10px;
+  width: 100%;
 `;
 
 function SelectInput({ optionList, title }: Props, ref: Ref<HTMLSelectElement>): ReactElement {
