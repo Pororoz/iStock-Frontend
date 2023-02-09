@@ -1,12 +1,10 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginButton from '@components/LoginButton';
 import NavButton from '@components/NavButton';
 import SearchInput from '@components/SearchInput';
-import LoginModal from './LoginModal';
-import { useQueryClient } from 'react-query';
-import { toast } from 'react-toastify';
+import UserButton from './UserButton';
 
 const Wrapper = styled.div`
   position: relative;
@@ -33,16 +31,6 @@ const CenteredSearchInput = styled(SearchInput)`
 
 function NavBar(): ReactElement {
   const selectedPage = useLocation().pathname.split('/')[1];
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const queryClient = useQueryClient();
-
-  const handleOnClick = (): void => {
-    if (queryClient.getQueryData('user') === undefined) setShowModal(true);
-    else {
-      toast.success('로그아웃되었습니다.');
-      queryClient.setQueryData('user', undefined);
-    }
-  };
 
   return (
     <Wrapper>
@@ -58,14 +46,9 @@ function NavBar(): ReactElement {
         </Link>
       </Menus>
       <CenteredSearchInput />
-      <LoginButton onClick={handleOnClick} />
-      {showModal && (
-        <LoginModal
-          onCancel={() => {
-            setShowModal(false);
-          }}
-        />
-      )}
+      <LoginButton>
+        <UserButton />
+      </LoginButton>
     </Wrapper>
   );
 }
