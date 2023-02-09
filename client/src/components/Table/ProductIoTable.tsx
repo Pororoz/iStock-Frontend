@@ -1,11 +1,11 @@
 import { ReactElement } from 'react';
-import { Link } from 'react-router-dom';
 import TableColumn from '../../types/table';
 import ButtonColumn from './ButtonColumn';
 import NumberColumn from './NumberColumn';
 import TextColumn from './TextColumn';
 import Table from '@components/Table/Table';
 import { ProductIoData } from '@type/data';
+import LinkColumn from './LinkColumn';
 
 const productIoTableFormat: Array<TableColumn<ProductIoData>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
@@ -15,11 +15,7 @@ const productIoTableFormat: Array<TableColumn<ProductIoData>> = [
   { key: '출고', component: ({ row }) => <TextColumn>{row.quantity < 0 ? row.quantity : ''}</TextColumn> },
   {
     key: '비고',
-    component: ({ row }) => (
-      <TextColumn>
-        <Link to={'/part'}>{row.productId}</Link>
-      </TextColumn>
-    ),
+    component: ({ row }) => <LinkColumn to={'/part'}>{row.productId}</LinkColumn>,
   },
   {
     key: '확정',

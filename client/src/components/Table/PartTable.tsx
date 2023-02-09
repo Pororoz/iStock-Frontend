@@ -6,7 +6,8 @@ import TextColumn from './TextColumn';
 import Table from '@components/Table/Table';
 import { PartData } from '@type/data';
 import InputColumn from './InputColumn';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import LinkColumn from './LinkColumn';
 
 const partTableFormat: Array<TableColumn<PartData>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
@@ -31,21 +32,13 @@ const partTableFormat: Array<TableColumn<PartData>> = [
     key: 'BOM',
     component: ({ row }) => {
       const { pathname } = useLocation();
-      return (
-        <TextColumn>
-          <Link to={`${pathname}/log`}>조회</Link>
-        </TextColumn>
-      );
+      return <LinkColumn to={`${pathname}/log`}>조회</LinkColumn>;
     },
   },
   {
     key: 'Log',
     component: ({ row }) => {
-      return (
-        <TextColumn>
-          <Link to={`/parts/${row.partId}/log`}>Log</Link>
-        </TextColumn>
-      );
+      return <LinkColumn to={`/parts/${row.partId}/log`}>Log</LinkColumn>;
     },
   },
   {

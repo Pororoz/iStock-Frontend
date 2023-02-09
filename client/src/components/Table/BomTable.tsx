@@ -6,7 +6,8 @@ import TextColumn from './TextColumn';
 import Table from '@components/Table/Table';
 import { BomData, PartData } from '@type/data';
 import InputColumn from './InputColumn';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import LinkColumn from './LinkColumn';
 
 const bomTableFormat: Array<TableColumn<BomData & PartData>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
@@ -35,11 +36,7 @@ const bomTableFormat: Array<TableColumn<BomData & PartData>> = [
     key: 'Log',
     component: ({ row }) => {
       const { pathname } = useLocation();
-      return (
-        <TextColumn>
-          <Link to={`${pathname}/log`}>Log</Link>
-        </TextColumn>
-      );
+      return <LinkColumn to={`${pathname}/log`}>Log</LinkColumn>;
     },
   },
   {

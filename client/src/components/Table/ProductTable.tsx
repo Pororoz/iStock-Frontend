@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import TableColumn from '../../types/table';
 import ButtonColumn from './ButtonColumn';
 import NumberColumn from './NumberColumn';
@@ -7,6 +7,7 @@ import TextColumn from './TextColumn';
 import Table from '@components/Table/Table';
 import { ProductData } from '@type/data';
 import InputColumn from './InputColumn';
+import LinkColumn from './LinkColumn';
 
 const productTableFormat: Array<TableColumn<ProductData>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
@@ -39,22 +40,14 @@ const productTableFormat: Array<TableColumn<ProductData>> = [
     key: 'BOM',
     component: ({ row }) => {
       const { pathname } = useLocation();
-      return (
-        <TextColumn>
-          <Link to={`${pathname}/${row.productId}`}>BOM</Link>
-        </TextColumn>
-      );
+      return <LinkColumn to={`${pathname}/${row.productId}`}>BOM</LinkColumn>;
     },
   },
   {
     key: 'Log',
     component: ({ row }) => {
       const { pathname } = useLocation();
-      return (
-        <TextColumn>
-          <Link to={`${pathname}/${row.productId}/log`}>Log</Link>
-        </TextColumn>
-      );
+      return <LinkColumn to={`${pathname}/${row.productId}/log`}>Log</LinkColumn>;
     },
   },
   {
