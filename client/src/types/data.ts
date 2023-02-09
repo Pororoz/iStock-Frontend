@@ -1,10 +1,19 @@
 import { PartIoStatus, ProductIoStatus } from './io';
 
 export interface AccountData {
+  userId: number;
   username: string;
-  role: string;
+  roleName: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface ServerAccountData {
+  userId: number;
+  username: string;
+  roleName: 'ROLE_USER' | 'ROLE_ADMIN';
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface CategoryData {
