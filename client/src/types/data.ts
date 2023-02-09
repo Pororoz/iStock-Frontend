@@ -1,6 +1,7 @@
 export interface AccountData {
+  userId: number;
   username: string;
-  role: string;
+  roleName: string;
   createdAt: Date;
   updatedAt: Date;
 }

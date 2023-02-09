@@ -1,31 +1,18 @@
-import AccountTable from '@components/Table/AccountTable';
 import { ReactElement } from 'react';
-
-const rows = [
-  {
-    username: '아이디',
-    role: '관리자',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    username: '아이디',
-    role: '관리자',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    username: '아이디2',
-    role: '관리자',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-];
+import { useQuery } from 'react-query';
+import AccountTable from '@components/Table/AccountTable';
+import { handleOnError } from '@utils/common';
+import { getUsers, handleOnSuccess } from '@utils/useAccounts';
 
 function AccountsPage(): ReactElement {
+  const { data, isLoading } = useQuery('users', getUsers, {
+    onError: handleOnError,
+    select: (data) => handleOnSuccess(data),
+  });
+
   return (
     <div>
-      <AccountTable rows={rows} />
+      {isLoading ? <div>loading</div> : data !== undefined ? <AccountTable rows={data} /> : <div>dataundefined</div>}
     </div>
   );
 }
