@@ -2,12 +2,12 @@ import { ReactElement } from 'react';
 import { useQuery } from 'react-query';
 import AccountTable from '@components/Table/AccountTable';
 import { handleOnError } from '@utils/common';
-import { getUsers, handleOnSuccess } from '@utils/useAccounts';
+import { getUsers, transformData } from '@utils/useAccounts';
 
 function AccountsPage(): ReactElement {
   const { data, isLoading } = useQuery('users', getUsers, {
     onError: handleOnError,
-    select: (data) => handleOnSuccess(data),
+    select: (data) => transformData(data),
   });
 
   return (

@@ -1,3 +1,4 @@
+import { AccountData, ServerAccountData } from '@type/data';
 import axios, { AxiosResponse } from 'axios';
 
 export interface AccountResponse<T> {
@@ -12,22 +13,7 @@ interface AccountInfoData {
   currentSize: number;
   first: boolean;
   last: boolean;
-  contents: ServerAccountContent[];
-}
-
-interface ClientAccountContent {
-  userId: number;
-  username: string;
-  roleName: 'ROLE_USER' | 'ROLE_ADMIN';
-  createdAt: Date;
-  updatedAt: Date;
-}
-interface ServerAccountContent {
-  userId: number;
-  username: string;
-  roleName: 'ROLE_USER' | 'ROLE_ADMIN';
-  createdAt: string;
-  updatedAt: string;
+  contents: ServerAccountData[];
 }
 
 interface AccountType {
@@ -52,8 +38,8 @@ export const deleteUser = async (id: string): Promise<AxiosResponse<AccountRespo
   return await axios.delete<AccountResponse<AccountType>>(`/users/${id === undefined ? '' : id.toString()}`);
 };
 
-export const handleOnSuccess = (data: AxiosResponse<AccountResponse<AccountInfoData>>): ClientAccountContent[] => {
-  const newData = data.data.data.contents.map((elem: ServerAccountContent) => {
+export const transformData = (data: AxiosResponse<AccountResponse<AccountInfoData>>): AccountData[] => {
+  const newData = data.data.data.contents.map((elem: ServerAccountData) => {
     return { ...elem, createdAt: new Date(elem.createdAt), updatedAt: new Date(elem.updatedAt) };
   });
   return newData;

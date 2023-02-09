@@ -6,6 +6,14 @@ export interface AccountData {
   updatedAt: Date;
 }
 
+export interface ServerAccountData {
+  userId: number;
+  username: string;
+  roleName: 'ROLE_USER' | 'ROLE_ADMIN';
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface CategoryData {
   categoryId: number;
   name: string;
