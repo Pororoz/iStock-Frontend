@@ -22,14 +22,14 @@ const Wrapper = styled.select<Props>`
   border-radius: 10px;
   background-color: var(${({ backgroundColor }) => backgroundColor ?? '--color-white'});
   border: 2px solid var(${({ color }) => color ?? '--color-dark-gray'});
-  width: 200px;
+  width: 206px;
 
   option {
     font-family: 'Noto Sans KR';
     color: var(${({ color }) => color ?? '--color-dark-gray'});
     font-weight: 500;
     font-size: ${({ size }) => size ?? 15}px;
-    width: ${({ width }) => (width !== undefined ? `${width}px` : '200px')};
+    width: ${({ width }) => (width !== undefined ? `${width}px` : '206px')};
   }
 `;
 

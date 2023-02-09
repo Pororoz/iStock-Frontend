@@ -1,119 +1,125 @@
 import useMutate from '@hooks/useMutate';
-import { ReactElement, RefObject, useEffect, useRef } from 'react';
-import { toast } from 'react-toastify';
-import styled from 'styled-components';
+import { ReactElement, RefObject, useEffect, useRef, useState } from 'react';
 
-import ModalButton from './ModalButton';
-import ModalInput from './ModalInput';
 import SelectInput from './SelectInput';
+import Modal from './Modal';
+import Text from './Text';
 
 import { createUser, updateUser } from '@utils/useAccounts';
+import useInput from '@hooks/useInput';
+import RequiredInput from './RequiredInput';
+import { checkLength, checkRequired } from '@utils/common';
+import { toast } from 'react-toastify';
+
 interface Props {
   close: () => void;
   target: any;
 }
 
-type HtmlElement = HTMLInputElement | HTMLSelectElement;
-
-const Wrapper = styled.div`
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  z-index: 10000;
-`;
-
-const ModalWrapper = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: max-content;
-  height: max-content;
-  max-height: 600px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  padding-inline: 25px;
-  padding-block: 30px;
-  border-radius: 10px;
-  background-color: var(--color-white);
-  box-shadow: 1px 1px 4px 4px var(--color-black);
-  z-index: 20000;
-`;
-
-const OverLay = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: var(--color-black);
-  opacity: 0.8;
-  z-index: 10000;
-`;
-
-const validationCheck = (...args: Array<RefObject<HtmlElement>>): boolean => {
-  const mappedArr = args.map((x) => x.current?.value);
-  if (mappedArr.some((x) => x === '')) {
-    toast.error('모든 필드를 입력하세요.');
-    return false;
-  }
-  return true;
-};
+interface ModalBodyProps {
+  isUpdate: boolean;
+  id: string;
+  onChangeId: Function;
+  errorIdMessage: string | undefined;
+  password: string;
+  onChangePassword: Function;
+  errorPasswordMessage: string | undefined;
+  roleNameRef: RefObject<HTMLSelectElement>;
+}
 
 const ROLES = ['ROLE_ADMIN', 'ROLE_USER'];
 
-function AuthModal({ close, target }: Props): ReactElement {
-  const createMutate = useMutate({ key: 'users', action: createUser });
-  const updateMutate = useMutate({ key: 'users', action: updateUser });
-  const idInput = useRef<HTMLInputElement>(null);
-  const passwordInput = useRef<HTMLInputElement>(null);
-  const roleInput = useRef<HTMLSelectElement>(null);
+function ModalBody({
+  isUpdate,
+  id,
+  onChangeId,
+  errorIdMessage,
+  password,
+  onChangePassword,
+  errorPasswordMessage,
+  roleNameRef,
+}: ModalBodyProps): ReactElement {
+  return (
+    <>
+      <Text size={24}>{isUpdate ? '계정 수정' : '계정 생성'}</Text>
+      <RequiredInput value={id} title="ID" onChange={onChangeId} errorMessage={errorIdMessage} readonly={isUpdate} />
+      {!isUpdate && (
+        <RequiredInput
+          value={password}
+          title="비밀번호"
+          onChange={onChangePassword}
+          errorMessage={errorPasswordMessage}
+        />
+      )}
+      <SelectInput optionList={ROLES} title="권한" ref={roleNameRef} />
+    </>
+  );
+}
 
-  const handleOnClick = (): void => {
-    if (validationCheck(idInput, passwordInput, roleInput)) {
-      if (target === undefined)
-        createMutate.mutate(
-          {
-            username: idInput.current?.value,
-            password: passwordInput.current?.value,
-            roleName: roleInput.current?.value,
-          },
-          { onSuccess: close },
-        );
-      else {
-        updateMutate.mutate(
-          {
-            id: target.id,
-            password: passwordInput.current?.value,
-            roleName: roleInput.current?.value,
-          },
-          { onSuccess: close },
-        );
-      }
+const AUTH_REGEX = {
+  id: /^[\w/-/!]{2,15}$/gi,
+  비밀번호: /^[\w/-/!]{2,15}$/gi,
+};
+
+const checkRegEx = (title: string, target: string): string => {
+  return title !== '' && target.match(AUTH_REGEX[title as keyof typeof AUTH_REGEX]) === null
+    ? `유효하지 않은 ${title}입니다.`
+    : '';
+};
+
+const validationCheck = [checkRequired, checkLength, checkRegEx];
+const useInputParameter = { validationCheck, min: 2, max: 15 };
+
+function AuthModal({ close, target }: Props): ReactElement {
+  const createMutate = useMutate({ key: 'users', action: createUser, onSuccess: close });
+  const updateMutate = useMutate({ key: 'users', action: updateUser, onSuccess: close });
+
+  const [isUpdate] = useState(target !== undefined);
+  const roleNameRef = useRef<HTMLSelectElement>(null);
+
+  const [id, setId, errorIdMessage, onChangeId] = useInput({ ...useInputParameter, title: 'id' });
+  const [password, , errorPasswordMessage, onChangePassword] = useInput({ ...useInputParameter, title: '비밀번호' });
+
+  const handleOnClick = (): undefined => {
+    if (errorIdMessage !== '' || errorPasswordMessage !== '' || roleNameRef.current?.value === '') {
+      toast.error('입력값을 확인하세요');
+      return;
+    }
+
+    if (!isUpdate) {
+      createMutate.mutate({
+        username: id,
+        password,
+        roleName: roleNameRef.current?.value,
+      });
+    } else {
+      updateMutate.mutate({
+        userId: target.userId,
+        password: '1234', // todo: (현재 필수값)password 수정 api 분리되면 삭제
+        roleName: roleNameRef.current?.value,
+      });
     }
   };
 
   useEffect(() => {
-    if (target === undefined || idInput.current == null || roleInput.current == null) {
-      return;
-    }
-    const { username, roleName } = target;
-    idInput.current.value = username;
-    roleInput.current.value = roleName;
-  }, [idInput.current, passwordInput.current, roleInput.current]);
+    if (!isUpdate) return;
+    // modal 기본값 설정
+    setId(target.username);
+  }, []);
 
   return (
-    <Wrapper>
-      <OverLay onClick={close} />
-      <ModalWrapper>
-        <ModalInput ref={idInput} title="ID" placeholder="ID를 입력하세요..." readonly={target !== undefined} />
-        <ModalInput ref={passwordInput} title="비밀번호" placeholder="비밀번호를 입력하세요..." />
-        <SelectInput ref={roleInput} optionList={ROLES} title="권한" />
-        <ModalButton onCancel={close} action={handleOnClick} title={target !== undefined ? '수정하기' : '추가하기'} />
-      </ModalWrapper>
-    </Wrapper>
+    <Modal onClose={close} onSubmit={handleOnClick}>
+      {ModalBody({
+        isUpdate,
+        id,
+        onChangeId,
+        errorIdMessage,
+        password,
+        onChangePassword,
+        errorPasswordMessage,
+        roleNameRef,
+      })}
+    </Modal>
   );
 }
 export default AuthModal;

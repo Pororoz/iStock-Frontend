@@ -6,7 +6,6 @@ import TextButton from './TextButton';
 
 const ExitButton = styled(TextButton)`
   cursor: pointer;
-  margin-top: 20px;
   font-size: 18px;
   font-weight: 500;
   border: none;
@@ -15,7 +14,6 @@ const ExitButton = styled(TextButton)`
 
 const ConfirmButton = styled(TextButton)`
   cursor: pointer;
-  margin-top: 20px;
   font-size: 18px;
   font-weight: 500;
   border: none;
@@ -32,11 +30,11 @@ interface Props {
   title?: string;
 }
 
-function ModalButton({ action, onCancel, title }: Props): ReactElement {
+function ModalButton({ action, onCancel, title = '확인' }: Props): ReactElement {
   return (
     <Wrapper>
       <ConfirmButton onClick={action}>{title}</ConfirmButton>
-      <ExitButton color={'--color-red'} onClick={onCancel}>
+      <ExitButton color="--color-red" onClick={onCancel}>
         돌아가기
       </ExitButton>
     </Wrapper>
