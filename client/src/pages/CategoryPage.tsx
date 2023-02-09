@@ -1,4 +1,4 @@
-import CategoryTable from '@components/Table/CategoryTable';
+import CategoryTable from '@components/Tables/CategoryTable';
 import { ReactElement } from 'react';
 
 const rows = [

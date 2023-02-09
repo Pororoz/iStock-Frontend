@@ -1,4 +1,4 @@
-import AccountTable from '@components/Table/AccountTable';
+import AccountTable from '@components/Tables/AccountTable';
 import { ReactElement } from 'react';
 
 const rows = [

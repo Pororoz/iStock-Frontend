@@ -1,12 +1,13 @@
 import { ReactElement } from 'react';
 import TableColumn from '../../types/table';
-import ButtonColumn from './ButtonColumn';
-import NumberColumn from './NumberColumn';
-import TextColumn from './TextColumn';
-import Table from '@components/Table/Table';
+import ButtonColumn from '../Columns/ButtonColumn';
+import NumberColumn from '../Columns/NumberColumn';
+import TextColumn from '../Columns/TextColumn';
+import Table from '@components/Tables/Table';
 import { PartData } from '@type/data';
-import InputColumn from './InputColumn';
-import { Link, useLocation } from 'react-router-dom';
+import InputColumn from '../Columns/InputColumn';
+import { useLocation } from 'react-router-dom';
+import LinkColumn from '../Columns/LinkColumn';
 
 const partTableFormat: Array<TableColumn<PartData>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
@@ -31,31 +32,13 @@ const partTableFormat: Array<TableColumn<PartData>> = [
     key: 'BOM',
     component: ({ row }) => {
       const { pathname } = useLocation();
-      return (
-        <ButtonColumn
-          color="--color-blue"
-          onClick={() => {
-            console.log(`open the BOM of ${row.partId}`);
-          }}
-        >
-          <Link to={`${pathname}/log`}>조회</Link>
-        </ButtonColumn>
-      );
+      return <LinkColumn to={`${pathname}/log`}>조회</LinkColumn>;
     },
   },
   {
     key: 'Log',
     component: ({ row }) => {
-      return (
-        <ButtonColumn
-          color="--color-blue"
-          onClick={() => {
-            console.log(`open the BOM of ${row.partId}`);
-          }}
-        >
-          <Link to={`/parts/${row.partId}/log`}>Log</Link>
-        </ButtonColumn>
-      );
+      return <LinkColumn to={`/parts/${row.partId}/log`}>Log</LinkColumn>;
     },
   },
   {

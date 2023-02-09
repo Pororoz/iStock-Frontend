@@ -1,21 +1,16 @@
 import { ReactElement } from 'react';
-import { Link } from 'react-router-dom';
 import TableColumn from '../../types/table';
-import ButtonColumn from './ButtonColumn';
-import NumberColumn from './NumberColumn';
-import TextColumn from './TextColumn';
-import Table from '@components/Table/Table';
+import ButtonColumn from '../Columns/ButtonColumn';
+import NumberColumn from '../Columns/NumberColumn';
+import Table from '@components/Tables/Table';
 import { CategoryData } from '@type/data';
+import LinkColumn from '../Columns/LinkColumn';
 
 const categoryTableFormat: Array<TableColumn<CategoryData>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
   {
     key: '카테고리 이름',
-    component: ({ row }) => (
-      <TextColumn>
-        <Link to={`/items/${row.categoryId}`}>{row.name}</Link>
-      </TextColumn>
-    ),
+    component: ({ row }) => <LinkColumn to={`/items/${row.categoryId}`}>{row.name}</LinkColumn>,
   },
   {
     key: '수정',
