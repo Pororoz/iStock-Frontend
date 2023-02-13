@@ -24,3 +24,7 @@ export const checkRequired = (title: string, target: string): string => {
 export const checkLength = (title: string, target: string, min: number, max: number): string => {
   return target.length > max || target.length < min ? `${title}는(은) ${min}자 ~ ${max}자여야 합니다` : '';
 };
+
+export const checkEmpty = (value: string | undefined | null): boolean => {
+  return value === '' || value === undefined || value === null;
+};
