@@ -1,14 +1,16 @@
 import { ReactElement } from 'react';
+import TableColumn from '@type/table';
+import ButtonColumn from '@components/Columns/ButtonColumn';
+import NumberColumn from '@components/Columns/NumberColumn';
+import TextColumn from '@components/Columns/TextColumn';
+
 import useMutate from '@hooks/useMutate';
 import { deleteUser } from '@utils/useAccounts';
-import TableColumn from '../../types/table';
-import ButtonColumn from '../Columns/ButtonColumn';
-import NumberColumn from '../Columns/NumberColumn';
-import TextColumn from '../Columns/TextColumn';
-import Table from '@components/Tables/Table';
-import { AccountData } from '@type/data';
 
-const accountTableFormat: Array<TableColumn<AccountData>> = [
+import Table from '@components/Tables/Table';
+import { AccountDtoType } from '@type/dto.type';
+
+const accountTableFormat: Array<TableColumn<AccountDtoType>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
   { key: 'ID', component: ({ row }) => <TextColumn>{row.username}</TextColumn> },
   { key: '역할', component: ({ row }) => <TextColumn>{row.roleName}</TextColumn> },
@@ -38,7 +40,6 @@ const accountTableFormat: Array<TableColumn<AccountData>> = [
     component: ({ row }) => (
       <ButtonColumn
         color="--color-red"
-        disabled
         onClick={() => {
           useMutate({ key: 'users', action: deleteUser }).mutate(row.userId);
         }}
@@ -49,6 +50,6 @@ const accountTableFormat: Array<TableColumn<AccountData>> = [
   },
 ];
 
-export default function AccountTable({ rows }: { rows: AccountData[] }): ReactElement {
+export default function AccountTable({ rows }: { rows: AccountDtoType[] }): ReactElement {
   return <Table rows={rows} format={accountTableFormat} />;
 }

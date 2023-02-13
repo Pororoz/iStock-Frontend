@@ -1,12 +1,12 @@
 import { ReactElement } from 'react';
-import TableColumn from '../../types/table';
-import ButtonColumn from '../Columns/ButtonColumn';
-import NumberColumn from '../Columns/NumberColumn';
+import TableColumn from '@type/table';
+import ButtonColumn from '@components/Columns/ButtonColumn';
+import NumberColumn from '@components/Columns/NumberColumn';
 import Table from '@components/Tables/Table';
-import { CategoryData } from '@type/data';
-import LinkColumn from '../Columns/LinkColumn';
+import { CategoryDtoType } from '@type/dto.type';
+import LinkColumn from '@components/Columns/LinkColumn';
 
-const categoryTableFormat: Array<TableColumn<CategoryData>> = [
+const categoryTableFormat: Array<TableColumn<CategoryDtoType>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
   {
     key: '카테고리 이름',
@@ -40,6 +40,6 @@ const categoryTableFormat: Array<TableColumn<CategoryData>> = [
   },
 ];
 
-export default function CategoryTable({ rows }: { rows: CategoryData[] }): ReactElement {
+export default function CategoryTable({ rows }: { rows: CategoryDtoType[] }): ReactElement {
   return <Table rows={rows} format={categoryTableFormat} />;
 }

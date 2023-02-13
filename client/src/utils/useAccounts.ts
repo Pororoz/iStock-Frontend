@@ -1,4 +1,4 @@
-import { AccountData, ServerAccountData } from '@type/data';
+import { AccountDtoType, AccountServerDtoType } from '@type/dto.type';
 import axios, { AxiosResponse } from 'axios';
 
 export interface AccountResponse<T> {
@@ -13,7 +13,7 @@ interface AccountInfoData {
   currentSize: number;
   first: boolean;
   last: boolean;
-  contents: ServerAccountData[];
+  contents: AccountServerDtoType[];
 }
 
 interface AccountType {
@@ -38,8 +38,8 @@ export const deleteUser = async (id: string): Promise<AxiosResponse<AccountRespo
   return await axios.delete<AccountResponse<AccountType>>(`/users/${id === undefined ? '' : id.toString()}`);
 };
 
-export const transformData = (data: AxiosResponse<AccountResponse<AccountInfoData>>): AccountData[] => {
-  const newData = data.data.data.contents.map((elem: ServerAccountData) => {
+export const transformData = (data: AxiosResponse<AccountResponse<AccountInfoData>>): AccountDtoType[] => {
+  const newData = data.data.data.contents.map((elem: AccountServerDtoType) => {
     return { ...elem, createdAt: new Date(elem.createdAt), updatedAt: new Date(elem.updatedAt) };
   });
   return newData;
