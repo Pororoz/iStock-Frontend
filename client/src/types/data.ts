@@ -7,7 +7,7 @@ export interface AccountData {
 
 export interface CategoryData {
   categoryId: number;
-  name: string;
+  categoryName: string;
   createdAt: Date;
   updatedAt: Date;
 }

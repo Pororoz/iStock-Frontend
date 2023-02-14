@@ -6,6 +6,9 @@ import NumberColumn from './NumberColumn';
 import TextColumn from './TextColumn';
 import Table from '@components/Table/Table';
 import { CategoryData } from '@type/data';
+import { deleteCategory } from '@utils/useCategory';
+import { useConfirm } from '@utils/common';
+import useMutate from '@hooks/useMutate';
 
 const categoryTableFormat: Array<TableColumn<CategoryData>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
@@ -13,7 +16,7 @@ const categoryTableFormat: Array<TableColumn<CategoryData>> = [
     key: '카테고리 이름',
     component: ({ row }) => (
       <TextColumn>
-        <Link to={`/items/${row.categoryId}`}>{row.name}</Link>
+        <Link to={`/items/${row.categoryId}`}>{row.categoryName}</Link>
       </TextColumn>
     ),
   },
@@ -32,16 +35,25 @@ const categoryTableFormat: Array<TableColumn<CategoryData>> = [
   },
   {
     key: '삭제',
-    component: ({ row }) => (
-      <ButtonColumn
-        color="--color-red"
-        onClick={() => {
-          console.log(`delete ${row.categoryId}`);
-        }}
-      >
-        삭제
-      </ButtonColumn>
-    ),
+    component: ({ row }) => {
+      const deleteMutate = useMutate({ key: 'users', action: deleteCategory(row.categoryId) });
+      return (
+        <ButtonColumn
+          color="--color-red"
+          onClick={() => {
+            useConfirm(
+              () => {
+                deleteMutate.mutate({});
+              },
+              () => {},
+              `${row.categoryName}를 삭제하시겠습니까?`,
+            );
+          }}
+        >
+          삭제
+        </ButtonColumn>
+      );
+    },
   },
 ];
 
