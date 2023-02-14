@@ -31,7 +31,7 @@ const categoryTableFormat: Array<TableColumn<CategoryDtoType>> = [
   {
     key: '삭제',
     component: ({ row }) => {
-      const deleteMutate = useMutate({ key: 'users', action: deleteCategory(row.categoryId) });
+      const deleteMutate = useMutate({ key: 'category', action: deleteCategory(row.categoryId) });
       return (
         <ButtonColumn
           color="--color-red"

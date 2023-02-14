@@ -6,7 +6,7 @@ import { handleOnError } from '@utils/common';
 import { getCategory, onSelect } from '@utils/useCategory';
 
 function CategoryPage(): ReactElement {
-  const { data, isLoading } = useQuery('users', getCategory, {
+  const { data, isLoading } = useQuery('category', getCategory, {
     onError: handleOnError,
     select: (data) => onSelect(data),
   });
