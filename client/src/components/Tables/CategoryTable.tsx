@@ -1,24 +1,19 @@
 import { ReactElement } from 'react';
-import { Link } from 'react-router-dom';
-import TableColumn from '../../types/table';
-import ButtonColumn from './ButtonColumn';
-import NumberColumn from './NumberColumn';
-import TextColumn from './TextColumn';
-import Table from '@components/Table/Table';
-import { CategoryData } from '@type/data';
+import TableColumn from '@type/table';
+import ButtonColumn from '@components/Columns/ButtonColumn';
+import NumberColumn from '@components/Columns/NumberColumn';
+import LinkColumn from '@components/Columns/LinkColumn';
+import Table from '@components/Tables/Table';
+import useMutate from '@hooks/useMutate';
 import { deleteCategory } from '@utils/useCategory';
 import { useConfirm } from '@utils/common';
-import useMutate from '@hooks/useMutate';
+import { CategoryDtoType } from '@type/dto.type';
 
-const categoryTableFormat: Array<TableColumn<CategoryData>> = [
+const categoryTableFormat: Array<TableColumn<CategoryDtoType>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
   {
     key: '카테고리 이름',
-    component: ({ row }) => (
-      <TextColumn>
-        <Link to={`/items/${row.categoryId}`}>{row.categoryName}</Link>
-      </TextColumn>
-    ),
+    component: ({ row }) => <LinkColumn to={`/items/${row.categoryId}`}>{row.categoryName}</LinkColumn>,
   },
   {
     key: '수정',
@@ -57,6 +52,6 @@ const categoryTableFormat: Array<TableColumn<CategoryData>> = [
   },
 ];
 
-export default function CategoryTable({ rows }: { rows: CategoryData[] }): ReactElement {
+export default function CategoryTable({ rows }: { rows: CategoryDtoType[] }): ReactElement {
   return <Table rows={rows} format={categoryTableFormat} />;
 }

@@ -1,14 +1,15 @@
 import { ReactElement } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import TableColumn from '../../types/table';
-import ButtonColumn from './ButtonColumn';
-import NumberColumn from './NumberColumn';
-import TextColumn from './TextColumn';
-import Table from '@components/Table/Table';
-import { ProductData } from '@type/data';
-import InputColumn from './InputColumn';
+import { useLocation } from 'react-router-dom';
+import TableColumn from '@type/table';
+import ButtonColumn from '@components/Columns/ButtonColumn';
+import NumberColumn from '@components/Columns/NumberColumn';
+import TextColumn from '@components/Columns/TextColumn';
+import Table from '@components/Tables/Table';
+import { ProductDtoType } from '@type/dto.type';
+import InputColumn from '@components/Columns/InputColumn';
+import LinkColumn from '@components/Columns/LinkColumn';
 
-const productTableFormat: Array<TableColumn<ProductData>> = [
+const productTableFormat: Array<TableColumn<ProductDtoType>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
   { key: '품명', component: ({ row }) => <TextColumn>{row.name}</TextColumn> },
   { key: '품번', component: ({ row }) => <TextColumn>{row.number}</TextColumn> },
@@ -29,42 +30,20 @@ const productTableFormat: Array<TableColumn<ProductData>> = [
   },
   {
     key: 'SUB ASSY',
-    component: ({ row }) => <TextColumn>구현필요</TextColumn>,
-  },
-  {
-    key: '사급자재',
-    component: ({ row }) => <TextColumn>구현필요</TextColumn>,
+    component: ({ row }) => <TextColumn>{row.subAssy.map((el) => `${el.name}(${el.stock})`).join(', ')}</TextColumn>,
   },
   {
     key: 'BOM',
     component: ({ row }) => {
       const { pathname } = useLocation();
-      return (
-        <ButtonColumn
-          color="--color-dark-gray"
-          onClick={() => {
-            console.log(`open the BOM of ${row.productId}`);
-          }}
-        >
-          <Link to={`${pathname}/${row.productId}`}>BOM</Link>
-        </ButtonColumn>
-      );
+      return <LinkColumn to={`${pathname}/${row.productId}`}>BOM</LinkColumn>;
     },
   },
   {
     key: 'Log',
     component: ({ row }) => {
       const { pathname } = useLocation();
-      return (
-        <ButtonColumn
-          color="--color-dark-gray"
-          onClick={() => {
-            console.log(`open the Log of ${row.productId}`);
-          }}
-        >
-          <Link to={`${pathname}/${row.productId}/log`}>Log</Link>
-        </ButtonColumn>
-      );
+      return <LinkColumn to={`${pathname}/${row.productId}/log`}>Log</LinkColumn>;
     },
   },
   {
@@ -95,6 +74,6 @@ const productTableFormat: Array<TableColumn<ProductData>> = [
   },
 ];
 
-export default function ProductTable({ rows }: { rows: ProductData[] }): ReactElement {
+export default function ProductTable({ rows }: { rows: ProductDtoType[] }): ReactElement {
   return <Table rows={rows} format={productTableFormat} />;
 }

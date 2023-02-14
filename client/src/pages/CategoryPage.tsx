@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import { useQuery } from 'react-query';
+import CategoryTable from '@components/Tables/CategoryTable';
 import SideButton from '@components/SideButton';
-import CategoryTable from '@components/Table/CategoryTable';
 import { handleOnError } from '@utils/common';
 import { getCategory, onSelect } from '@utils/useCategory';
 

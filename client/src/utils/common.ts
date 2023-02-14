@@ -35,3 +35,11 @@ export const useConfirm = (onConfirm: () => void, onCancel: () => void, message 
   if (window.confirm(message)) onConfirm();
   else onCancel();
 };
+
+export const checkRequired = (title: string, target: string): string => {
+  return target === '' ? `${title}는(은) 필수값입니다.` : '';
+};
+
+export const checkLength = (title: string, target: string, min: number, max: number): string => {
+  return target.length > max || target.length < min ? `${title}는(은) ${min}자 ~ ${max}자여야 합니다` : '';
+};

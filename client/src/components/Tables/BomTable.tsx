@@ -1,14 +1,15 @@
 import { ReactElement } from 'react';
-import TableColumn from '../../types/table';
-import ButtonColumn from './ButtonColumn';
-import NumberColumn from './NumberColumn';
-import TextColumn from './TextColumn';
-import Table from '@components/Table/Table';
-import { BomData, PartData } from '@type/data';
-import InputColumn from './InputColumn';
-import { Link, useLocation } from 'react-router-dom';
+import TableColumn from '@type/table';
+import ButtonColumn from '@components/Columns/ButtonColumn';
+import NumberColumn from '@components//Columns/NumberColumn';
+import TextColumn from '@components//Columns/TextColumn';
+import Table from '@components/Tables/Table';
+import { BomDtoType } from '@type/dto.type';
+import InputColumn from '@components/Columns/InputColumn';
+import { useLocation } from 'react-router-dom';
+import LinkColumn from '@components/Columns/LinkColumn';
 
-const bomTableFormat: Array<TableColumn<BomData & PartData>> = [
+const bomTableFormat: Array<TableColumn<BomDtoType>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
   { key: '소요량', component: ({ row }) => <TextColumn>{row.quantity}</TextColumn> },
   { key: 'Location No.', component: ({ row }) => <TextColumn>{row.locationNumber}</TextColumn> },
@@ -28,23 +29,14 @@ const bomTableFormat: Array<TableColumn<BomData & PartData>> = [
       </InputColumn>
     ),
   },
-  { key: '구매', component: ({ row }) => <NumberColumn>{row.stock}</NumberColumn> },
+  { key: '구매', component: ({ row }) => <NumberColumn>{row.stock < 0 ? row.stock : 'N/A'}</NumberColumn> },
   { key: '코드번호', component: ({ row }) => <TextColumn>{row.codeNumber}</TextColumn> },
   { key: '비고', component: ({ row }) => <TextColumn>{row.memo}</TextColumn> },
   {
     key: 'Log',
     component: ({ row }) => {
       const { pathname } = useLocation();
-      return (
-        <ButtonColumn
-          color="--color-blue"
-          onClick={() => {
-            console.log(`open the BOM of ${row.productId}`);
-          }}
-        >
-          <Link to={`${pathname}/log`}>Log</Link>
-        </ButtonColumn>
-      );
+      return <LinkColumn to={`${pathname}/log`}>Log</LinkColumn>;
     },
   },
   {
@@ -75,6 +67,6 @@ const bomTableFormat: Array<TableColumn<BomData & PartData>> = [
   },
 ];
 
-export default function BomTable({ rows }: { rows: Array<BomData & PartData> }): ReactElement {
+export default function BomTable({ rows }: { rows: BomDtoType[] }): ReactElement {
   return <Table rows={rows} format={bomTableFormat} />;
 }

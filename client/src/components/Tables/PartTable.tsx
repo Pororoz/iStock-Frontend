@@ -1,14 +1,14 @@
 import { ReactElement } from 'react';
-import TableColumn from '../../types/table';
-import ButtonColumn from './ButtonColumn';
-import NumberColumn from './NumberColumn';
-import TextColumn from './TextColumn';
-import Table from '@components/Table/Table';
-import { PartData } from '@type/data';
-import InputColumn from './InputColumn';
-import { Link, useLocation } from 'react-router-dom';
+import TableColumn from '@type/table';
+import ButtonColumn from '@components/Columns/ButtonColumn';
+import NumberColumn from '@components/Columns/NumberColumn';
+import TextColumn from '@components/Columns/TextColumn';
+import Table from '@components/Tables/Table';
+import { PartDtoType } from '@type/dto.type';
+import InputColumn from '@components/Columns/InputColumn';
+import LinkColumn from '@components/Columns/LinkColumn';
 
-const partTableFormat: Array<TableColumn<PartData>> = [
+const partTableFormat: Array<TableColumn<PartDtoType>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
   { key: '품명', component: ({ row }) => <TextColumn>{row.name}</TextColumn> },
   { key: '규격', component: ({ row }) => <TextColumn>{row.spec}</TextColumn> },
@@ -26,36 +26,17 @@ const partTableFormat: Array<TableColumn<PartData>> = [
       </InputColumn>
     ),
   },
-  { key: '구매', component: ({ row }) => <NumberColumn>{row.stock}</NumberColumn> },
+  { key: '구매', component: ({ row }) => <NumberColumn>{row.stock < 0 ? row.stock : 'N/A'}</NumberColumn> },
   {
     key: 'BOM',
     component: ({ row }) => {
-      const { pathname } = useLocation();
-      return (
-        <ButtonColumn
-          color="--color-blue"
-          onClick={() => {
-            console.log(`open the BOM of ${row.partId}`);
-          }}
-        >
-          <Link to={`${pathname}/log`}>조회</Link>
-        </ButtonColumn>
-      );
+      return <LinkColumn to={'/error'}>미구현</LinkColumn>;
     },
   },
   {
     key: 'Log',
     component: ({ row }) => {
-      return (
-        <ButtonColumn
-          color="--color-blue"
-          onClick={() => {
-            console.log(`open the BOM of ${row.partId}`);
-          }}
-        >
-          <Link to={`/parts/${row.partId}/log`}>Log</Link>
-        </ButtonColumn>
-      );
+      return <LinkColumn to={`/parts/${row.partId}/log`}>Log</LinkColumn>;
     },
   },
   {
@@ -86,6 +67,6 @@ const partTableFormat: Array<TableColumn<PartData>> = [
   },
 ];
 
-export default function PartTable({ rows }: { rows: PartData[] }): ReactElement {
+export default function PartTable({ rows }: { rows: PartDtoType[] }): ReactElement {
   return <Table rows={rows} format={partTableFormat} />;
 }

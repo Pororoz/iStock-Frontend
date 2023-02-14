@@ -1,18 +1,21 @@
-export interface AccountData {
+import { PartIoStatus, ProductIoStatus } from './io';
+
+export interface AccountDbType {
+  userId: number;
   username: string;
-  role: string;
+  roleName: 'ROLE_USER' | 'ROLE_ADMIN';
   createdAt: Date;
   updatedAt: Date;
 }
 
-export interface CategoryData {
+export interface CategoryDbType {
   categoryId: number;
   categoryName: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
-export interface ProductData {
+export interface ProductDbType {
   productId: number;
   number: string;
   name: string;
@@ -21,9 +24,10 @@ export interface ProductData {
   companyName: string;
   createdAt: Date;
   updatedAt: Date;
+  categoryId: number;
 }
 
-export interface BomData {
+export interface BomDbType {
   bomId: number;
   locationNumber: string;
   codeNumber: string;
@@ -35,7 +39,7 @@ export interface BomData {
   partId: number;
 }
 
-export interface PartData {
+export interface PartDbType {
   partId: number;
   name: string;
   spec: string;
@@ -45,19 +49,19 @@ export interface PartData {
   updatedAt: Date;
 }
 
-export interface PartIoData {
+export interface PartIoDbType {
   partIoId: number;
   quantity: number;
-  status: string;
+  status: PartIoStatus;
   createdAt: Date;
   updatedAt: Date;
   partId: number;
 }
 
-export interface ProductIoData {
+export interface ProductIoDbType {
   productIoId: number;
   quantity: number;
-  status: string;
+  status: ProductIoStatus;
   createdAt: Date;
   updatedAt: Date;
   productId: number;

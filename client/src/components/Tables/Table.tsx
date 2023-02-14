@@ -7,6 +7,7 @@ const StyledTable = styled.table`
   thead {
     background-color: var(--color-blue);
     color: var(--color-white);
+    font-weight: 700;
     th {
       padding: 5px;
     }
@@ -16,6 +17,9 @@ const StyledTable = styled.table`
     color: var(--color-black);
     tr:nth-child(2n) {
       background-color: var(--color-lightest-gray);
+    }
+    tr:hover {
+      background-color: var(--color-light-blue);
     }
     td {
       padding: 5px;
