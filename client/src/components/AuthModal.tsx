@@ -8,7 +8,7 @@ import Text from './Text';
 import { createUser, updateUser } from '@utils/useAccounts';
 import useInput from '@hooks/useInput';
 import RequiredInput from './RequiredInput';
-import { checkLength, checkRequired } from '@utils/common';
+import { checkLength, checkEmpty, checkRequired } from '@utils/common';
 import { toast } from 'react-toastify';
 
 interface Props {
@@ -81,7 +81,7 @@ function AuthModal({ close, target }: Props): ReactElement {
   const [password, , errorPasswordMessage, onChangePassword] = useInput({ ...useInputParameter, title: '비밀번호' });
 
   const handleOnClick = (): undefined => {
-    if (errorIdMessage !== '' || errorPasswordMessage !== '' || roleNameRef.current?.value === '') {
+    if (!checkEmpty(errorIdMessage) || !checkEmpty(errorPasswordMessage) || checkEmpty(roleNameRef.current?.value)) {
       toast.error('입력값을 확인하세요');
       return;
     }
