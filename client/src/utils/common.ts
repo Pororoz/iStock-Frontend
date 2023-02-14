@@ -1,4 +1,18 @@
 import { toast } from 'react-toastify';
+export interface ApiResponse<T> {
+  status: number;
+  message?: string;
+  data: T;
+}
+
+export interface ApiData<T> {
+  totalPages: number;
+  totalElements: number;
+  currentSize: number;
+  first: boolean;
+  last: boolean;
+  contents: T;
+}
 
 export interface ErrorResponse {
   status: string;
@@ -15,4 +29,9 @@ export const ERROR_MESSAGE = {
 export const handleOnError = ({ response }: { response: ErrorResponse }): void => {
   const { status } = response;
   toast.error(ERROR_MESSAGE[status as keyof typeof ERROR_MESSAGE]);
+};
+
+export const useConfirm = (onConfirm: () => void, onCancel: () => void, message = '진행하시겠습니까?'): void => {
+  if (window.confirm(message)) onConfirm();
+  else onCancel();
 };
