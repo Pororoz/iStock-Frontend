@@ -34,7 +34,7 @@ export const updateUser = async (parameter: AccountType): Promise<AxiosResponse<
   return await axios.put<AccountResponse<AccountType>>('/users', parameter);
 };
 
-export const deleteUser = async (id: string): Promise<AxiosResponse<AccountResponse<AccountType>>> => {
+export const deleteUser = async (id: number): Promise<AxiosResponse<AccountResponse<AccountType>>> => {
   return await axios.delete<AccountResponse<AccountType>>(`/users/${id === undefined ? '' : id.toString()}`);
 };
 
