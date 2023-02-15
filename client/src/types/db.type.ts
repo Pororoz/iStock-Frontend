@@ -10,7 +10,7 @@ export interface AccountDbType {
 
 export interface CategoryDbType {
   categoryId: number;
-  name: string;
+  categoryName: string;
   createdAt: Date;
   updatedAt: Date;
 }

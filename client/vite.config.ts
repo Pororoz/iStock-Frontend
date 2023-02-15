@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 import * as path from 'path';
 
 // https://vitejs.dev/config/
@@ -14,7 +14,7 @@ export default defineConfig({
       '@images': path.resolve(__dirname, './src/images'),
       '@utils': path.resolve(__dirname, './src/utils'),
       '@hooks': path.resolve(__dirname, './src/hooks'),
-    }
+    },
   },
   server: {
     proxy: {
@@ -25,7 +25,11 @@ export default defineConfig({
       '/users': {
         target: 'http://52.198.80.244/api/v1/',
         changeOrigin: true,
-      }
-    }
-  }
-})
+      },
+      '/categories': {
+        target: 'http://52.198.80.244/api/v1/',
+        changeOrigin: true,
+      },
+    },
+  },
+});
