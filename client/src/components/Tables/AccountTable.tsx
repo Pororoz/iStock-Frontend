@@ -9,47 +9,64 @@ import { deleteUser } from '@utils/useAccounts';
 
 import Table from '@components/Tables/Table';
 import { AccountDtoType } from '@type/dto.type';
+import { useConfirm } from '@utils/common';
 
-const accountTableFormat: Array<TableColumn<AccountDtoType>> = [
-  { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
-  { key: 'ID', component: ({ row }) => <TextColumn>{row.username}</TextColumn> },
-  { key: '역할', component: ({ row }) => <TextColumn>{row.roleName}</TextColumn> },
-  {
-    key: '생성일',
-    component: ({ row }) => <TextColumn>{row.createdAt.toLocaleDateString()}</TextColumn>,
-  },
-  {
-    key: '수정일',
-    component: ({ row }) => <TextColumn>{row.updatedAt.toLocaleDateString()}</TextColumn>,
-  },
-  {
-    key: '수정',
-    component: ({ row }) => (
-      <ButtonColumn
-        color="--color-blue"
-        onClick={() => {
-          console.log(`update ${row.username}`);
-        }}
-      >
-        수정
-      </ButtonColumn>
-    ),
-  },
-  {
-    key: '삭제',
-    component: ({ row }) => (
-      <ButtonColumn
-        color="--color-red"
-        onClick={() => {
-          useMutate({ key: 'users', action: deleteUser }).mutate(row.userId);
-        }}
-      >
-        삭제
-      </ButtonColumn>
-    ),
-  },
-];
+interface ParameterType {
+  rows: AccountDtoType[];
+  updateAction: (row: AccountDtoType) => void;
+}
 
-export default function AccountTable({ rows }: { rows: AccountDtoType[] }): ReactElement {
-  return <Table rows={rows} format={accountTableFormat} />;
+const getAccountTableFormat = (updateAction: (row: AccountDtoType) => void): Array<TableColumn<AccountDtoType>> => {
+  return [
+    { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
+    { key: 'ID', component: ({ row }) => <TextColumn>{row.username}</TextColumn> },
+    { key: '역할', component: ({ row }) => <TextColumn>{row.roleName}</TextColumn> },
+    {
+      key: '생성일',
+      component: ({ row }) => <TextColumn>{row.createdAt.toLocaleDateString()}</TextColumn>,
+    },
+    {
+      key: '수정일',
+      component: ({ row }) => <TextColumn>{row.updatedAt.toLocaleDateString()}</TextColumn>,
+    },
+    {
+      key: '수정',
+      component: ({ row }) => (
+        <ButtonColumn
+          color="--color-blue"
+          onClick={() => {
+            updateAction(row);
+          }}
+        >
+          수정
+        </ButtonColumn>
+      ),
+    },
+    {
+      key: '삭제',
+      component: ({ row }) => {
+        const { mutate } = useMutate({ key: 'users', action: deleteUser });
+
+        return (
+          <ButtonColumn
+            color="--color-red"
+            onClick={() => {
+              useConfirm({
+                message: '삭제하시겠습니까?',
+                onConfirm: () => {
+                  mutate(row.userId);
+                },
+              });
+            }}
+          >
+            삭제
+          </ButtonColumn>
+        );
+      },
+    },
+  ];
+};
+
+export default function AccountTable({ rows, updateAction }: ParameterType): ReactElement {
+  return <Table rows={rows} format={getAccountTableFormat(updateAction)} />;
 }
