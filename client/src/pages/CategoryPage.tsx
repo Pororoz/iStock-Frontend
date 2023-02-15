@@ -1,37 +1,20 @@
-import CategoryTable from '@components/Tables/CategoryTable';
 import { ReactElement } from 'react';
-
-const rows = [
-  {
-    categoryId: 1,
-    name: '모터',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    categoryId: 2,
-    name: '예시',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    categoryId: 3,
-    name: '입니다.',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    categoryId: 4,
-    name: '하하',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-];
+import { useQuery } from 'react-query';
+import CategoryTable from '@components/Tables/CategoryTable';
+import SideButton from '@components/SideButton';
+import { handleOnError } from '@utils/common';
+import { getCategory, onSelect } from '@utils/useCategory';
 
 function CategoryPage(): ReactElement {
+  const { data, isLoading } = useQuery('category', getCategory, {
+    onError: handleOnError,
+    select: (data) => onSelect(data),
+  });
+
   return (
     <div>
-      <CategoryTable rows={rows} />
+      {!isLoading && data !== undefined && <CategoryTable rows={data} />}
+      <SideButton action={() => {}}></SideButton>
     </div>
   );
 }
