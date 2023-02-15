@@ -1,7 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
 import { ApiData, ApiResponse } from '@type/api.type';
 import { CategoryDbType } from '@type/db.type';
-import { CategoryDtoType } from '@type/dto.type';
+import { CategoryDtoType, ClientDtoType } from '@type/dto.type';
+
+interface TimeInString {
+  createdAt: string;
+  updatedAt: string;
+}
 
 export const getCategory = async (): Promise<AxiosResponse<ApiResponse<ApiData<CategoryDbType[]>>, any>> => {
   return await axios.get<ApiResponse<ApiData<CategoryDbType[]>>>('/categories');
@@ -23,8 +28,10 @@ export const deleteCategory = (id: number): (() => Promise<AxiosResponse<ApiResp
   return async () => await axios.delete<ApiResponse<CategoryDtoType>>(`/categories/${id.toString()}`);
 };
 
-export const onSelect = (data: AxiosResponse<ApiResponse<ApiData<CategoryDbType[]>>>): CategoryDtoType[] => {
-  const newData = data.data.data.contents.map((elem: CategoryDbType) => {
+export const onSelect = <T extends TimeInString>(
+  data: AxiosResponse<ApiResponse<ApiData<T[]>>>,
+): Array<ClientDtoType<T>> => {
+  const newData = data.data.data.contents.map((elem: T) => {
     return { ...elem, createdAt: new Date(elem.createdAt), updatedAt: new Date(elem.updatedAt) };
   });
   return newData;

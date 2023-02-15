@@ -36,13 +36,13 @@ const categoryTableFormat: Array<TableColumn<CategoryDtoType>> = [
         <ButtonColumn
           color="--color-red"
           onClick={() => {
-            useConfirm(
-              () => {
+            useConfirm({
+              onConfirm: () => {
                 deleteMutate.mutate({});
               },
-              () => {},
-              `${row.categoryName}를 삭제하시겠습니까?`,
-            );
+              onCancel: () => {},
+              message: `${row.categoryName}를 삭제하시겠습니까?`,
+            });
           }}
         >
           삭제

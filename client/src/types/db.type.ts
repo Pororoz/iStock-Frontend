@@ -4,15 +4,15 @@ export interface AccountDbType {
   userId: number;
   username: string;
   roleName: 'ROLE_USER' | 'ROLE_ADMIN';
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface CategoryDbType {
   categoryId: number;
   categoryName: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface ProductDbType {
@@ -22,8 +22,8 @@ export interface ProductDbType {
   codeNumber: string;
   stock: number;
   companyName: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   categoryId: number;
 }
 
@@ -33,8 +33,8 @@ export interface BomDbType {
   codeNumber: string;
   quantity: number;
   memo: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   productId: number;
   partId: number;
 }
@@ -45,16 +45,16 @@ export interface PartDbType {
   spec: string;
   price: number;
   stock: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface PartIoDbType {
   partIoId: number;
   quantity: number;
   status: PartIoStatus;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   partId: number;
 }
 
@@ -62,7 +62,7 @@ export interface ProductIoDbType {
   productIoId: number;
   quantity: number;
   status: ProductIoStatus;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   productId: number;
 }
