@@ -5,6 +5,12 @@ export interface ErrorResponse {
   statusText: string;
 }
 
+interface UseConfirm {
+  onConfirm: () => void;
+  onCancel?: () => void;
+  message?: string;
+}
+
 export const ERROR_MESSAGE = {
   '204': 'NO CONTENTS',
   '400': '형식에 맞지 않는 ID 입니다.',
@@ -17,7 +23,11 @@ export const handleOnError = ({ response }: { response: ErrorResponse }): void =
   toast.error(ERROR_MESSAGE[status as keyof typeof ERROR_MESSAGE]);
 };
 
-export const useConfirm = (onConfirm: () => void, onCancel: () => void, message = '진행하시겠습니까?'): void => {
+export const useConfirm = ({
+  onConfirm = () => {},
+  onCancel = () => {},
+  message = '진행하시겠습니까?',
+}: UseConfirm): void => {
   if (window.confirm(message)) onConfirm();
   else onCancel();
 };
