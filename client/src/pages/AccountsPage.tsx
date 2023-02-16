@@ -34,7 +34,7 @@ function AccountsPage(): ReactElement {
     <div>
       {data !== undefined && (
         <div>
-          <AccountTable rows={data} updateAction={openEditModal} />
+          <AccountTable rows={data} onUpdate={openEditModal} />
           <SideButton action={openModal} />
           {hasModal && <AuthModal close={closeModal} target={target} />}
         </div>

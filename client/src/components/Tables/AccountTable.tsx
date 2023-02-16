@@ -13,10 +13,10 @@ import { useConfirm } from '@utils/common';
 
 interface ParameterType {
   rows: AccountDtoType[];
-  updateAction: (row: AccountDtoType) => void;
+  onUpdate: (row: AccountDtoType) => void;
 }
 
-const getAccountTableFormat = (updateAction: (row: AccountDtoType) => void): Array<TableColumn<AccountDtoType>> => {
+const getAccountTableFormat = (onUpdate: (row: AccountDtoType) => void): Array<TableColumn<AccountDtoType>> => {
   return [
     { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
     { key: 'ID', component: ({ row }) => <TextColumn>{row.username}</TextColumn> },
@@ -35,7 +35,7 @@ const getAccountTableFormat = (updateAction: (row: AccountDtoType) => void): Arr
         <ButtonColumn
           color="--color-blue"
           onClick={() => {
-            updateAction(row);
+            onUpdate(row);
           }}
         >
           수정
@@ -67,6 +67,6 @@ const getAccountTableFormat = (updateAction: (row: AccountDtoType) => void): Arr
   ];
 };
 
-export default function AccountTable({ rows, updateAction }: ParameterType): ReactElement {
-  return <Table rows={rows} format={getAccountTableFormat(updateAction)} />;
+export default function AccountTable({ rows, onUpdate }: ParameterType): ReactElement {
+  return <Table rows={rows} format={getAccountTableFormat(onUpdate)} />;
 }
