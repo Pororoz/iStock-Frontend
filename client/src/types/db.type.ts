@@ -15,6 +15,14 @@ export interface CategoryDbType {
   updatedAt: string;
 }
 
+interface SubAssy {
+  partId: number;
+  partName: string;
+  spec: string;
+  stock: number;
+  quantity: number;
+}
+
 export interface ProductDbType {
   productId: number;
   number: string;
@@ -25,6 +33,7 @@ export interface ProductDbType {
   createdAt: string;
   updatedAt: string;
   categoryId: number;
+  subAssy: SubAssy[];
 }
 
 export interface BomDbType {

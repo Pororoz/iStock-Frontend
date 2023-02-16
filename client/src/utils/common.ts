@@ -1,5 +1,7 @@
 import { toast } from 'react-toastify';
-
+import { AxiosResponse } from 'axios';
+import { ApiData, ApiResponse } from '@type/api.type';
+import { ClientDtoType } from '@type/dto.type';
 export interface ErrorResponse {
   status: string;
   statusText: string;
@@ -42,4 +44,18 @@ export const checkLength = (title: string, target: string, min: number, max: num
 
 export const checkEmpty = (value: string | undefined | null): boolean => {
   return value === '' || value === undefined || value === null;
+};
+
+interface TimeInString {
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const onSelect = <T extends TimeInString>(
+  data: AxiosResponse<ApiResponse<ApiData<T[]>>>,
+): Array<ClientDtoType<T>> => {
+  const newData = data.data.data.contents.map((elem: T) => {
+    return { ...elem, createdAt: new Date(elem.createdAt), updatedAt: new Date(elem.updatedAt) };
+  });
+  return newData;
 };
