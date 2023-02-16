@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
@@ -8,14 +8,22 @@ import App from './App';
 import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      suspense: true,
+    },
+  },
+});
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <ToastContainer autoClose={800} />
-        <App />
+        <Suspense fallback={<div>loading</div>}>
+          <ToastContainer autoClose={800} />
+          <App />
+        </Suspense>
       </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>,

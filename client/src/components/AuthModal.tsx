@@ -10,6 +10,7 @@ import useInput from '@hooks/useInput';
 import RequiredInput from './RequiredInput';
 import { checkLength, checkEmpty, checkRequired } from '@utils/common';
 import { toast } from 'react-toastify';
+import { AccountDtoType } from '@type/dto.type';
 
 interface Props {
   close: () => void;
@@ -25,6 +26,7 @@ interface ModalBodyProps {
   onChangePassword: Function;
   errorPasswordMessage: string | undefined;
   roleNameRef: RefObject<HTMLSelectElement>;
+  target: AccountDtoType;
 }
 
 const ROLES = ['ROLE_ADMIN', 'ROLE_USER'];
@@ -38,7 +40,12 @@ function ModalBody({
   onChangePassword,
   errorPasswordMessage,
   roleNameRef,
+  target,
 }: ModalBodyProps): ReactElement {
+  useEffect(() => {
+    if (roleNameRef.current != null && target !== undefined) roleNameRef.current.value = target.roleName;
+  }, [roleNameRef.current]);
+
   return (
     <>
       <Text size={24}>{isUpdate ? '계정 수정' : '계정 생성'}</Text>
@@ -81,7 +88,11 @@ function AuthModal({ close, target }: Props): ReactElement {
   const [password, , errorPasswordMessage, onChangePassword] = useInput({ ...useInputParameter, title: '비밀번호' });
 
   const handleOnClick = (): undefined => {
-    if (!checkEmpty(errorIdMessage) || !checkEmpty(errorPasswordMessage) || checkEmpty(roleNameRef.current?.value)) {
+    if (
+      !checkEmpty(errorIdMessage) ||
+      (!checkEmpty(errorPasswordMessage) && !isUpdate) ||
+      checkEmpty(roleNameRef.current?.value)
+    ) {
       toast.error('입력값을 확인하세요');
       return;
     }
@@ -118,6 +129,7 @@ function AuthModal({ close, target }: Props): ReactElement {
         onChangePassword,
         errorPasswordMessage,
         roleNameRef,
+        target,
       })}
     </Modal>
   );
