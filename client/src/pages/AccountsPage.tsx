@@ -21,7 +21,7 @@ function AccountsPage(): ReactElement {
     setTarget(row);
   };
 
-  const openModal = (): void => {
+  const openCreateModal = (): void => {
     setHasModal(true);
   };
 
@@ -35,7 +35,7 @@ function AccountsPage(): ReactElement {
       {data !== undefined && (
         <div>
           <AccountTable rows={data} onUpdate={openEditModal} />
-          <SideButton action={openModal} />
+          <SideButton action={openCreateModal} />
           {hasModal && <AuthModal close={closeModal} target={target} />}
         </div>
       )}
