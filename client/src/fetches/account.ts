@@ -3,7 +3,7 @@ import { AccountDtoType } from '@type/dto.type';
 import { AccountDbType } from '@type/db.type';
 import axios, { AxiosResponse } from 'axios';
 
-interface AccountType {
+interface AccountRequestType {
   userId?: number;
   roleName?: string;
   username?: string;
@@ -13,11 +13,15 @@ export const getUsers = async (): Promise<AxiosResponse<ApiResponse<ApiData<Acco
   return await axios.get<ApiResponse<ApiData<AccountDbType[]>>>('/users');
 };
 
-export const createUser = async (parameter: AccountType): Promise<AxiosResponse<ApiResponse<AccountDtoType[]>>> => {
+export const createUser = async (
+  parameter: AccountRequestType,
+): Promise<AxiosResponse<ApiResponse<AccountDtoType[]>>> => {
   return await axios.post<ApiResponse<AccountDtoType[]>>('/users', parameter);
 };
 
-export const updateUser = async (parameter: AccountType): Promise<AxiosResponse<ApiResponse<AccountDtoType[]>>> => {
+export const updateUser = async (
+  parameter: AccountRequestType,
+): Promise<AxiosResponse<ApiResponse<AccountDtoType[]>>> => {
   return await axios.put<ApiResponse<AccountDtoType[]>>('/users', parameter);
 };
 
