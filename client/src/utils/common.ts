@@ -51,7 +51,7 @@ interface TimeInString {
   updatedAt: string;
 }
 
-export const onSelect = <T extends TimeInString>(
+export const convertStringToDate = <T extends TimeInString>(
   data: AxiosResponse<ApiResponse<ApiData<T[]>>>,
 ): Array<ClientDtoType<T>> => {
   const newData = data.data.data.contents.map((elem: T) => {

@@ -1,11 +1,11 @@
 import AccountTable from '@components/Tables/AccountTable';
 import { ReactElement, useState } from 'react';
 import { useQuery } from 'react-query';
-import { handleOnError } from '@utils/common';
-import { getUsers, transformData } from '@utils/useAccounts';
 import SideButton from '@components/SideButton';
 import AuthModal from '@components/AuthModal';
 import { AccountDtoType } from '@type/dto.type';
+import { handleOnError, convertStringToDate } from '@utils/common';
+import { getUsers } from '@fetches/account';
 
 function AccountsPage(): ReactElement {
   const [hasModal, setHasModal] = useState(false);
@@ -13,7 +13,7 @@ function AccountsPage(): ReactElement {
 
   const { data } = useQuery('users', getUsers, {
     onError: handleOnError,
-    select: (data) => transformData(data),
+    select: (data) => convertStringToDate(data),
   });
 
   const openEditModal = (row: AccountDtoType): void => {

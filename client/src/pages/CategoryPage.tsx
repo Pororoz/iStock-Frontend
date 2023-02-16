@@ -2,13 +2,13 @@ import { ReactElement } from 'react';
 import { useQuery } from 'react-query';
 import CategoryTable from '@components/Tables/CategoryTable';
 import SideButton from '@components/SideButton';
-import { handleOnError, onSelect } from '@utils/common';
+import { handleOnError, convertStringToDate } from '@utils/common';
 import { getCategory } from '@fetches/category';
 
 function CategoryPage(): ReactElement {
   const { data, isLoading } = useQuery('category', getCategory, {
     onError: handleOnError,
-    select: (data) => onSelect(data),
+    select: (data) => convertStringToDate(data),
   });
 
   return (
