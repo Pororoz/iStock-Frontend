@@ -43,7 +43,7 @@ function ModalBody({
   target,
 }: ModalBodyProps): ReactElement {
   useEffect(() => {
-    if (roleNameRef.current != null) roleNameRef.current.value = target.roleName;
+    if (roleNameRef.current != null && target !== undefined) roleNameRef.current.value = target.roleName;
   }, [roleNameRef.current]);
 
   return (
