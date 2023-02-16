@@ -14,6 +14,7 @@ export default defineConfig({
       '@images': path.resolve(__dirname, './src/images'),
       '@utils': path.resolve(__dirname, './src/utils'),
       '@hooks': path.resolve(__dirname, './src/hooks'),
+      '@fetches': path.resolve(__dirname, './src/fetches'),
     },
   },
   server: {

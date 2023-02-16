@@ -30,7 +30,9 @@ const productTableFormat: Array<TableColumn<ProductDtoType>> = [
   },
   {
     key: 'SUB ASSY',
-    component: ({ row }) => <TextColumn>{row.subAssy.map((el) => `${el.name}(${el.stock})`).join(', ')}</TextColumn>,
+    component: ({ row }) => (
+      <TextColumn>{row.subAssy.map((el) => `${el.partName}(${el.stock})`).join(', ')}</TextColumn>
+    ),
   },
   {
     key: 'BOM',

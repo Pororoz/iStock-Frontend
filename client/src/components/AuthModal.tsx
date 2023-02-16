@@ -5,7 +5,7 @@ import SelectInput from './SelectInput';
 import Modal from './Modal';
 import Text from './Text';
 
-import { createUser, updateUser } from '@utils/useAccounts';
+import { createUser, updateUser } from '@';
 import useInput from '@hooks/useInput';
 import RequiredInput from './RequiredInput';
 import { checkLength, checkEmpty, checkRequired } from '@utils/common';

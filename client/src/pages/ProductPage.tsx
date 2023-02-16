@@ -4,7 +4,7 @@ import SideButton from '@components/SideButton';
 import { handleOnError, onSelect } from '@utils/common';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { getProduct } from '@utils/product';
+import { getProduct } from '@fetches/product';
 
 function ProductPage(): ReactElement {
   const { categoryId } = useParams();

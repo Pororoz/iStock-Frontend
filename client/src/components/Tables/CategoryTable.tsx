@@ -5,7 +5,7 @@ import NumberColumn from '@components/Columns/NumberColumn';
 import LinkColumn from '@components/Columns/LinkColumn';
 import Table from '@components/Tables/Table';
 import useMutate from '@hooks/useMutate';
-import { deleteCategory } from '@utils/useCategory';
+import { deleteCategory } from '@fetches/category';
 import { useConfirm } from '@utils/common';
 import { CategoryDtoType } from '@type/dto.type';
 

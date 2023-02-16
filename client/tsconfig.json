@@ -23,6 +23,7 @@
       "@images/*": ["src/images/*"],
       "@utils/*": ["src/utils/*"],
       "@hooks/*": ["src/hooks/*"],
+      "@fetches/*": ["src/fetches/*"],
       "@": ["src/*"]
     }
   },
