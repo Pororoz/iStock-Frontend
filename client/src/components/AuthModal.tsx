@@ -5,7 +5,7 @@ import SelectInput from './SelectInput';
 import Modal from './Modal';
 import Text from './Text';
 
-import { createUser, updateUser } from '@';
+import { createUser, updateUser } from '@fetches/account';
 import useInput from '@hooks/useInput';
 import RequiredInput from './RequiredInput';
 import { checkLength, checkEmpty, checkRequired } from '@utils/common';
@@ -120,17 +120,19 @@ function AuthModal({ close, target }: Props): ReactElement {
 
   return (
     <Modal onClose={close} onSubmit={handleOnClick}>
-      {ModalBody({
-        isUpdate,
-        id,
-        onChangeId,
-        errorIdMessage,
-        password,
-        onChangePassword,
-        errorPasswordMessage,
-        roleNameRef,
-        target,
-      })}
+      <ModalBody
+        {...{
+          isUpdate,
+          id,
+          onChangeId,
+          errorIdMessage,
+          password,
+          onChangePassword,
+          errorPasswordMessage,
+          roleNameRef,
+          target,
+        }}
+      />
     </Modal>
   );
 }
