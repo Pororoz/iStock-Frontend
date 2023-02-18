@@ -16,6 +16,10 @@ function CategoryPage(): ReactElement {
 
   const [modal, setModal] = useState('none');
   const [target, setTarget] = useState<CategoryDtoType | null>(null);
+  const onClose = (): void => {
+    setModal('none');
+    setTarget(null);
+  };
 
   return (
     <div>
@@ -33,21 +37,8 @@ function CategoryPage(): ReactElement {
           setModal('create');
         }}
       ></SideButton>
-      {modal === 'create' && (
-        <CreateCategoryModal
-          onClose={() => {
-            setModal('none');
-          }}
-        />
-      )}
-      {modal === 'update' && target !== null && (
-        <UpdateCategoryModal
-          row={target}
-          onClose={() => {
-            setModal('none');
-          }}
-        />
-      )}
+      {modal === 'create' && <CreateCategoryModal onClose={onClose} />}
+      {modal === 'update' && target !== null && <UpdateCategoryModal row={target} onClose={onClose} />}
     </div>
   );
 }
