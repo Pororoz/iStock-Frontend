@@ -36,7 +36,7 @@ function AccountsPage(): ReactElement {
         <div>
           <AccountTable rows={data} onUpdate={openEditModal} />
           <SideButton action={openCreateModal} />
-          {hasModal && <AuthModal close={closeModal} target={target} />}
+          {hasModal && <AuthModal onClose={closeModal} target={target} />}
         </div>
       )}
     </div>

@@ -29,7 +29,7 @@ const validationCheck = [checkRequired, checkLength, checkRegEx];
 const useInputParameter = { validationCheck, min: 2, max: 15 };
 
 interface Props {
-  close: () => void;
+  onClose: () => void;
   target: any;
 }
 
@@ -77,7 +77,7 @@ function ModalBody({
   );
 }
 
-function AuthModal({ close, target }: Props): ReactElement {
+function AuthModal({ onClose, target }: Props): ReactElement {
   const createMutate = useMutate({ key: 'users', action: createUser, onSuccess: close });
   const updateMutate = useMutate({ key: 'users', action: updateUser, onSuccess: close });
 
@@ -119,7 +119,7 @@ function AuthModal({ close, target }: Props): ReactElement {
   }, []);
 
   return (
-    <Modal onClose={close} onSubmit={onSubmit}>
+    <Modal onClose={onClose} onSubmit={onSubmit}>
       <ModalBody
         {...{
           isUpdate,
