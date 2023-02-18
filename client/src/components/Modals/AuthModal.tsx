@@ -1,16 +1,32 @@
 import useMutate from '@hooks/useMutate';
 import { ReactElement, RefObject, useEffect, useRef, useState } from 'react';
 
-import SelectInput from './SelectInput';
-import Modal from './Modal';
-import Text from './Text';
+import SelectInput from '../ModalInputs/SelectInput';
+import Modal from '@components/Modals/Modal';
+import Text from '@components/Text';
 
 import { createUser, updateUser } from '@fetches/account';
 import useInput from '@hooks/useInput';
-import RequiredInput from './RequiredInput';
+import RequiredInput from '@components/ModalInputs/RequiredInput';
 import { checkLength, checkEmpty, checkRequired } from '@utils/common';
 import { toast } from 'react-toastify';
 import { AccountDtoType } from '@type/dto.type';
+
+const ROLES = ['ROLE_ADMIN', 'ROLE_USER'];
+
+const AUTH_REGEX = {
+  id: /^[\w/-/!]{2,15}$/gi,
+  비밀번호: /^[\w/-/!]{2,15}$/gi,
+};
+
+const checkRegEx = (title: string, target: string): string => {
+  return title !== '' && target.match(AUTH_REGEX[title as keyof typeof AUTH_REGEX]) === null
+    ? `유효하지 않은 ${title}입니다.`
+    : '';
+};
+
+const validationCheck = [checkRequired, checkLength, checkRegEx];
+const useInputParameter = { validationCheck, min: 2, max: 15 };
 
 interface Props {
   close: () => void;
@@ -28,8 +44,6 @@ interface ModalBodyProps {
   roleNameRef: RefObject<HTMLSelectElement>;
   target: AccountDtoType;
 }
-
-const ROLES = ['ROLE_ADMIN', 'ROLE_USER'];
 
 function ModalBody({
   isUpdate,
@@ -63,20 +77,6 @@ function ModalBody({
   );
 }
 
-const AUTH_REGEX = {
-  id: /^[\w/-/!]{2,15}$/gi,
-  비밀번호: /^[\w/-/!]{2,15}$/gi,
-};
-
-const checkRegEx = (title: string, target: string): string => {
-  return title !== '' && target.match(AUTH_REGEX[title as keyof typeof AUTH_REGEX]) === null
-    ? `유효하지 않은 ${title}입니다.`
-    : '';
-};
-
-const validationCheck = [checkRequired, checkLength, checkRegEx];
-const useInputParameter = { validationCheck, min: 2, max: 15 };
-
 function AuthModal({ close, target }: Props): ReactElement {
   const createMutate = useMutate({ key: 'users', action: createUser, onSuccess: close });
   const updateMutate = useMutate({ key: 'users', action: updateUser, onSuccess: close });
@@ -87,7 +87,7 @@ function AuthModal({ close, target }: Props): ReactElement {
   const [id, setId, errorIdMessage, onChangeId] = useInput({ ...useInputParameter, title: 'id' });
   const [password, , errorPasswordMessage, onChangePassword] = useInput({ ...useInputParameter, title: '비밀번호' });
 
-  const handleOnClick = (): undefined => {
+  const onSubmit = (): undefined => {
     if (
       !checkEmpty(errorIdMessage) ||
       (!checkEmpty(errorPasswordMessage) && !isUpdate) ||
@@ -119,7 +119,7 @@ function AuthModal({ close, target }: Props): ReactElement {
   }, []);
 
   return (
-    <Modal onClose={close} onSubmit={handleOnClick}>
+    <Modal onClose={close} onSubmit={onSubmit}>
       <ModalBody
         {...{
           isUpdate,

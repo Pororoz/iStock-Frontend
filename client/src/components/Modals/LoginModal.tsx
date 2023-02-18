@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 import ModalInput from '@components/ModalInput';
 import Text from '@components/Text';
-import TextButton from './TextButton';
+import TextButton from '@components/TextButton';
 import login, { LoginResponse } from '@fetches/login';
 import useMutate from '@hooks/useMutate';
 

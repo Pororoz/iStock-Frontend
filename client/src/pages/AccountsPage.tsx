@@ -2,7 +2,7 @@ import AccountTable from '@components/Tables/AccountTable';
 import { ReactElement, useState } from 'react';
 import { useQuery } from 'react-query';
 import SideButton from '@components/SideButton';
-import AuthModal from '@components/AuthModal';
+import AuthModal from '@components/Modals/AuthModal';
 import { AccountDtoType } from '@type/dto.type';
 import { handleOnError, convertStringToDate } from '@utils/common';
 import { getUsers } from '@fetches/account';

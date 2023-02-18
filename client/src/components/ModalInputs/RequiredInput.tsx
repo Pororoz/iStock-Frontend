@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-import Text from './Text';
+import Text from '@components/Text';
 
 interface Props {
   value?: string;

@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
 
-import ModalButton from './ModalButton';
+import ModalButton from '@components/Modals/ModalButton';
 import { ModalType } from '@type/modal.type';
 import { ReactProps, StyledProps } from '@type/props';
 
