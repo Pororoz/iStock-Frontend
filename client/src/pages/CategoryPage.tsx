@@ -9,7 +9,7 @@ import UpdateCategoryModal from '@components/Modals/UpdateCategoryModal';
 import { CategoryDtoType } from '@type/dto.type';
 
 function CategoryPage(): ReactElement {
-  const { data, isLoading } = useQuery('category', getCategory, {
+  const { data } = useQuery('category', getCategory, {
     onError: handleOnError,
     select: (data) => convertStringToDate(data),
   });
@@ -23,7 +23,7 @@ function CategoryPage(): ReactElement {
 
   return (
     <div>
-      {!isLoading && data !== undefined && (
+      {data !== undefined && (
         <CategoryTable
           rows={data}
           onUpdate={(row: CategoryDtoType) => {
