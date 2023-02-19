@@ -1,21 +1,37 @@
 import ProductTable from '@components/Tables/ProductTable';
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import SideButton from '@components/SideButton';
 import { handleOnError, convertStringToDate } from '@utils/common';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { getProduct } from '@fetches/product';
+import CreateProductModal from '@components/Modals/CreateProductModal';
+import { ProductDtoType } from '@type/dto.type';
 
 function ProductPage(): ReactElement {
-  const { categoryId } = useParams();
-  const { data, isLoading } = useQuery('product', getProduct(parseInt(categoryId as string)), {
+  const { category } = useParams();
+
+  const { data } = useQuery('product', getProduct(parseInt(category as string)), {
     onError: handleOnError,
     select: (data) => convertStringToDate(data),
   });
+
+  const [modal, setModal] = useState('none');
+  const [, setTarget] = useState<ProductDtoType | null>(null);
+  const onClose = (): void => {
+    setModal('none');
+    setTarget(null);
+  };
+
   return (
     <div>
-      {!isLoading && data !== undefined && <ProductTable rows={data} />}
-      <SideButton action={() => {}}></SideButton>
+      {data !== undefined && <ProductTable rows={data} />}
+      <SideButton
+        action={() => {
+          setModal('create');
+        }}
+      ></SideButton>
+      {modal === 'create' && <CreateProductModal onClose={onClose} />}
     </div>
   );
 }
