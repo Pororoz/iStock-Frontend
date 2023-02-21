@@ -6,6 +6,7 @@ import useMutate from '@hooks/useMutate';
 import { updateCategory } from '@fetches/category';
 import { CategoryDtoType } from '@type/dto.type';
 import useModalInput from '@hooks/useModalInput';
+import { lengthValidator } from '@utils/validator';
 
 interface Props {
   onSubmit?: () => void;
@@ -16,7 +17,7 @@ interface Props {
 
 export default function UpdateCategoryModal({ row, onClose = () => {} }: Props): ReactElement {
   const { mutate } = useMutate({ key: 'category', action: updateCategory, onSuccess: onClose });
-  const categoryName = useModalInput([], row.categoryName);
+  const categoryName = useModalInput([lengthValidator(2, 50)], row.categoryName);
   return (
     <Modal
       onSubmit={() => {
@@ -27,7 +28,12 @@ export default function UpdateCategoryModal({ row, onClose = () => {} }: Props):
     >
       <Text>카테고리 수정</Text>
       <ModalInput value={row.categoryId.toString()} title="카테고리 ID" readonly />
-      <ModalInput value={categoryName.value as string} title="카테고리 이름" onChange={categoryName.onChange} />
+      <ModalInput
+        value={categoryName.value as string}
+        title="카테고리 이름"
+        onChange={categoryName.onChange}
+        errorMessage={categoryName.errorMessage}
+      />
     </Modal>
   );
 }

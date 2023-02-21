@@ -1,13 +1,12 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
 import Text from '@components/Text';
-import { validate } from '@utils/validator';
 
 interface Props {
   value?: string;
   onChange?: any;
   title?: string;
-  validators?: Array<(value: string | undefined) => string>;
+  errorMessage?: string;
   readonly?: boolean;
 }
 
@@ -56,7 +55,11 @@ const StyledInput = styled.input<Props>`
   }
 `;
 
-function ModalInput({ value, onChange, title = '', validators = [], readonly = false }: Props): ReactElement {
+const ErrorWrapper = styled.div`
+  height: 12px;
+`;
+
+function ModalInput({ value, onChange, title = '', errorMessage = '', readonly = false }: Props): ReactElement {
   return (
     <InputWrapper>
       <Wrapper>
@@ -67,9 +70,11 @@ function ModalInput({ value, onChange, title = '', validators = [], readonly = f
           <StyledInput value={value} onChange={onChange} placeholder={`${title}을 입력하세요...`} readOnly={readonly} />
         </TextWrapper>
       </Wrapper>
-      <Text color="--color-red" weight={500} size={12}>
-        {validate(value, validators)}
-      </Text>
+      <ErrorWrapper>
+        <Text color="--color-red" weight={500} size={12}>
+          {errorMessage}
+        </Text>
+      </ErrorWrapper>
     </InputWrapper>
   );
 }

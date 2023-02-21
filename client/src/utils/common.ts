@@ -42,12 +42,6 @@ export const checkLength = (title: string, target: string, min: number, max: num
   return target.length > max || target.length < min ? `${title}는(은) ${min}자 ~ ${max}자여야 합니다` : '';
 };
 
-export const lengthValidator = (title: string, min: number, max: number) => {
-  return (target: string): string => {
-    return target.length > max || target.length < min ? `${title}는(은) ${min}자 ~ ${max}자여야 합니다` : '';
-  };
-};
-
 export const checkEmpty = (value: string | undefined | null): boolean => {
   return value === '' || value === undefined || value === null;
 };
