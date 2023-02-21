@@ -1,18 +1,13 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
 import Text from '@components/Text';
-
-const validate = (value: string | undefined, validators: Array<(value: string) => string>): string => {
-  if (value === undefined) return '';
-  for (const validator of validators) if (validator(value) !== '') return validator(value);
-  return '';
-};
+import { validate } from '@utils/validator';
 
 interface Props {
   value?: string;
   onChange?: any;
   title?: string;
-  validators?: Array<(value: string) => string>;
+  validators?: Array<(value: string | undefined) => string>;
   readonly?: boolean;
 }
 

@@ -23,7 +23,7 @@ interface RequestType {
 }
 
 export default function CreateProductModal({ onClose = () => {} }: Props): ReactElement {
-  const { mutate } = useMutate({ key: 'products', action: createCategory, onSuccess: close });
+  const { mutate } = useMutate({ key: 'products', action: createCategory, onSuccess: onClose });
   const { category } = useParams();
   const [value, setValue] = useState<RequestType>({ categoryId: parseInt(category as string) });
 
