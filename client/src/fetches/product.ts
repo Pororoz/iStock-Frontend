@@ -7,3 +7,18 @@ export const getProduct = (categoryId: number) => {
     return await axios.get<ApiResponse<ApiData<ProductDbType[]>>>(`/products?category-id=${categoryId}`);
   };
 };
+
+interface CreateProductDto {
+  productName: string;
+  productNumber: string;
+  codeNumber: string;
+  stock: number;
+  companyName: string;
+  categoryId: number;
+}
+
+export const createProduct = async (
+  parameter: CreateProductDto,
+): Promise<AxiosResponse<ApiResponse<CreateProductDto>>> => {
+  return await axios.post<ApiResponse<CreateProductDto>>('/products', parameter);
+};

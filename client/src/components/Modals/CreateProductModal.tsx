@@ -3,10 +3,10 @@ import { ReactElement } from 'react';
 import Modal from './Modal';
 import Text from '@components/Text';
 import useMutate from '@hooks/useMutate';
-import { createCategory } from '@fetches/category';
 import { useParams } from 'react-router-dom';
 import useModalInput from '@hooks/useModalInput';
 import { required, lengthValidator } from '@utils/validator';
+import { createProduct } from '@fetches/product';
 
 interface Props {
   onSubmit?: () => void;
@@ -15,7 +15,7 @@ interface Props {
 }
 
 export default function CreateProductModal({ onClose = () => {} }: Props): ReactElement {
-  const { mutate } = useMutate({ key: 'products', action: createCategory, onSuccess: onClose });
+  const { mutate } = useMutate({ key: 'products', action: createProduct, onSuccess: onClose });
   const { category } = useParams();
   const values = {
     productName: useModalInput([required, lengthValidator(2, 50)]),
@@ -29,7 +29,11 @@ export default function CreateProductModal({ onClose = () => {} }: Props): React
   return (
     <Modal
       onSubmit={() => {
-        mutate(Object.fromEntries(Object.entries(values).map(([k, v]) => [k, v.value])));
+        mutate({
+          ...Object.fromEntries(Object.entries(values).map(([k, v]) => [k, v.value])),
+          stock: parseInt(values.stock.value as string),
+          categoryId: parseInt(values.categoryId.value as string),
+        });
         onClose();
       }}
       onClose={onClose}
