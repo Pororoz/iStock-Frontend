@@ -1,10 +1,10 @@
 import ModalInput from '@components/ModalInputs/ModalInput';
-import { ReactElement, useState } from 'react';
+import { ReactElement } from 'react';
 import Modal from './Modal';
-import { lengthValidator } from '@utils/common';
 import Text from '@components/Text';
 import useMutate from '@hooks/useMutate';
 import { createCategory } from '@fetches/category';
+import useModalInput from '@hooks/useModalInput';
 
 interface Props {
   onSubmit?: () => void;
@@ -14,24 +14,17 @@ interface Props {
 
 export default function CreateCategoryModal({ onClose = () => {} }: Props): ReactElement {
   const { mutate } = useMutate({ key: 'category', action: createCategory, onSuccess: close });
-  const [value, setValue] = useState('');
+  const categoryName = useModalInput([]);
   return (
     <Modal
       onSubmit={() => {
-        mutate({ categoryName: value });
+        mutate({ categoryName: categoryName.value });
         onClose();
       }}
       onClose={onClose}
     >
       <Text>카테고리 생성</Text>
-      <ModalInput
-        value={value}
-        title="카테고리 이름"
-        onChange={(event: any) => {
-          setValue(event.target.value);
-        }}
-        validators={[lengthValidator('카테고리 이름', 2, 100)]}
-      />
+      <ModalInput value={categoryName.value as string} title="카테고리 이름" onChange={categoryName.onChange} />
     </Modal>
   );
 }
