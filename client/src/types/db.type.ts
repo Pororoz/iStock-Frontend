@@ -50,7 +50,7 @@ export interface BomDbType {
 
 export interface PartDbType {
   partId: number;
-  name: string;
+  partName: string;
   spec: string;
   price: number;
   stock: number;

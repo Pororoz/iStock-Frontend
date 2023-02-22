@@ -36,7 +36,7 @@ function CategoryPage(): ReactElement {
         action={() => {
           setModal('create');
         }}
-      ></SideButton>
+      />
       {modal === 'create' && <CreateCategoryModal onClose={onClose} />}
       {modal === 'update' && target !== null && <UpdateCategoryModal row={target} onClose={onClose} />}
     </div>
