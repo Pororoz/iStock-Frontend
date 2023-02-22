@@ -8,6 +8,9 @@ import Table from '@components/Tables/Table';
 import { ProductDtoType } from '@type/dto.type';
 import InputColumn from '@components/Columns/InputColumn';
 import LinkColumn from '@components/Columns/LinkColumn';
+import { useConfirm } from '@utils/common';
+import useMutate from '@hooks/useMutate';
+import { deleteProduct } from '@fetches/product';
 
 const productTableFormat: Array<TableColumn<ProductDtoType>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
@@ -63,16 +66,25 @@ const productTableFormat: Array<TableColumn<ProductDtoType>> = [
   },
   {
     key: '삭제',
-    component: ({ row }) => (
-      <ButtonColumn
-        color="--color-red"
-        onClick={() => {
-          console.log(`delete ${row.productId}`);
-        }}
-      >
-        삭제
-      </ButtonColumn>
-    ),
+    component: ({ row }) => {
+      const { mutate } = useMutate({ key: 'product', action: deleteProduct(row.productId) });
+      return (
+        <ButtonColumn
+          color="--color-red"
+          onClick={() => {
+            useConfirm({
+              onConfirm: () => {
+                mutate({});
+              },
+              onCancel: () => {},
+              message: `${row.productName}를 삭제하시겠습니까?`,
+            });
+          }}
+        >
+          삭제
+        </ButtonColumn>
+      );
+    },
   },
 ];
 

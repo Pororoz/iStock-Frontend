@@ -15,7 +15,7 @@ interface Props {
 }
 
 export default function CreateProductModal({ onClose = () => {} }: Props): ReactElement {
-  const { mutate } = useMutate({ key: 'products', action: createProduct, onSuccess: onClose });
+  const { mutate } = useMutate({ key: 'product', action: createProduct, onSuccess: onClose });
   const { category } = useParams();
   const values = {
     productName: useModalInput([required, lengthValidator(2, 50)]),

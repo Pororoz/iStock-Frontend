@@ -11,7 +11,7 @@ import { ProductDtoType } from '@type/dto.type';
 function ProductPage(): ReactElement {
   const { category } = useParams();
 
-  const { data } = useQuery('products', getProduct(parseInt(category as string)), {
+  const { data } = useQuery('product', getProduct(parseInt(category as string)), {
     onError: handleOnError,
     select: (data) => convertStringToDate(data),
   });
