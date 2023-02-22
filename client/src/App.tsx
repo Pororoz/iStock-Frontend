@@ -4,6 +4,7 @@ import { QueryClientProvider, useQueryClient } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { ErrorBoundary } from 'react-error-boundary';
 
+import AuthRouter from '@routers/AuthRouter';
 import CategoryPage from '@pages/CategoryPage';
 import ProductPage from '@pages/ProductPage';
 import BomPage from '@pages/BomPage';
@@ -30,14 +31,16 @@ function App(): ReactElement {
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             <Suspense fallback={<div>loading</div>}>
               <Routes>
-                <Route path="/" element={<MainPage />} />
-                <Route path="/items" element={<CategoryPage />} />
-                <Route path="/items/:category" element={<ProductPage />} />
-                <Route path="/items/:category/:product" element={<BomPage />} />
-                <Route path="/items/:category/:product/log" element={<ProductLogPage />} />
-                <Route path="/parts" element={<PartsPage />} />
-                <Route path="/parts/:part/log" element={<PartLogPage />} />
-                <Route path="/accounts" element={<AccountsPage />} />
+                <Route element={<AuthRouter />}>
+                  <Route path="/" element={<MainPage />} />
+                  <Route path="/items" element={<CategoryPage />} />
+                  <Route path="/items/:category" element={<ProductPage />} />
+                  <Route path="/items/:category/:product" element={<BomPage />} />
+                  <Route path="/items/:category/:product/log" element={<ProductLogPage />} />
+                  <Route path="/parts" element={<PartsPage />} />
+                  <Route path="/parts/:part/log" element={<PartLogPage />} />
+                  <Route path="/accounts" element={<AccountsPage />} />
+                </Route>
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>

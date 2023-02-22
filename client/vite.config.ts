@@ -14,20 +14,25 @@ export default defineConfig({
       '@images': path.resolve(__dirname, './src/images'),
       '@utils': path.resolve(__dirname, './src/utils'),
       '@hooks': path.resolve(__dirname, './src/hooks'),
+      '@routers': path.resolve(__dirname, './src/routers'),
     },
   },
   server: {
     proxy: {
       '/login': {
-        target: 'http://52.198.80.244/api/v1/auth',
+        target: 'http://146.56.168.39/api/v1/auth',
         changeOrigin: true,
       },
       '/users': {
-        target: 'http://52.198.80.244/api/v1/',
+        target: 'http://146.56.168.39/api/v1/',
         changeOrigin: true,
       },
       '/categories': {
-        target: 'http://52.198.80.244/api/v1/',
+        target: 'http://146.56.168.39/api/v1/',
+        changeOrigin: true,
+      },
+      '/products': {
+        target: 'http://146.56.168.39/api/v1/',
         changeOrigin: true,
       },
     },

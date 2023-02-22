@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import { getCategory } from './useCategory';
 
 export interface ErrorResponse {
   status: string;
@@ -15,7 +16,10 @@ export const ERROR_MESSAGE = {
   '204': 'NO CONTENTS',
   '400': '형식에 맞지 않는 ID 입니다.',
   '401': 'id, password를 확인하세요.',
+  '403': '접근 권한이 없습니다. 로그인 후 이용해주세요.',
   '404': '해당 아이디에 맞는 유저를 찾을 수 없습니다.',
+  '클라이언트 오류': '관리자에게 문의하시거나 잠시후에 이용해주세요.',
+  '500': '서버오류, 관리자에게 문의하시거나 잠시후에 이용해주세요.',
 };
 
 export const handleOnError = ({ response }: { response: ErrorResponse }): void => {
@@ -42,4 +46,15 @@ export const checkLength = (title: string, target: string, min: number, max: num
 
 export const checkEmpty = (value: string | undefined | null): boolean => {
   return value === '' || value === undefined || value === null;
+};
+
+export const checkAuthState = async (): Promise<boolean> => {
+  // 임의로 Category GET요청으로 사용자 인증
+  const authState = getCategory()
+    .then(() => true)
+    .catch((err) => {
+      toast.error(err);
+      return false;
+    });
+  return await authState;
 };
