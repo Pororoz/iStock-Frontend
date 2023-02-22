@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import { getProduct } from '@fetches/product';
 import CreateProductModal from '@components/Modals/CreateProductModal';
 import { ProductDtoType } from '@type/dto.type';
+import UpdateProductModal from '@components/Modals/UpdateProductModal';
 
 function ProductPage(): ReactElement {
   const { category } = useParams();
@@ -17,7 +18,7 @@ function ProductPage(): ReactElement {
   });
 
   const [modal, setModal] = useState('none');
-  const [, setTarget] = useState<ProductDtoType | null>(null);
+  const [target, setTarget] = useState<ProductDtoType | null>(null);
   const onClose = (): void => {
     setModal('none');
     setTarget(null);
@@ -25,13 +26,22 @@ function ProductPage(): ReactElement {
 
   return (
     <div>
-      {data !== undefined && <ProductTable rows={data} />}
+      {data !== undefined && (
+        <ProductTable
+          rows={data}
+          onUpdate={(row: ProductDtoType) => {
+            setTarget(row);
+            setModal('update');
+          }}
+        />
+      )}
       <SideButton
         action={() => {
           setModal('create');
         }}
       ></SideButton>
       {modal === 'create' && <CreateProductModal onClose={onClose} />}
+      {modal === 'update' && target !== null && <UpdateProductModal row={target} onClose={onClose} />}
     </div>
   );
 }

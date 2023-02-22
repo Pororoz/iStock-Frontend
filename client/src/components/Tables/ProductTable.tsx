@@ -12,7 +12,7 @@ import { useConfirm } from '@utils/common';
 import useMutate from '@hooks/useMutate';
 import { deleteProduct } from '@fetches/product';
 
-const productTableFormat: Array<TableColumn<ProductDtoType>> = [
+const productTableFormat = (onUpdate: (row: ProductDtoType) => void): Array<TableColumn<ProductDtoType>> => [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
   { key: '품명', component: ({ row }) => <TextColumn>{row.productName}</TextColumn> },
   { key: '품번', component: ({ row }) => <TextColumn>{row.productNumber}</TextColumn> },
@@ -57,7 +57,7 @@ const productTableFormat: Array<TableColumn<ProductDtoType>> = [
       <ButtonColumn
         color="--color-blue"
         onClick={() => {
-          console.log(`update ${row.productId}`);
+          onUpdate(row);
         }}
       >
         수정
@@ -88,6 +88,12 @@ const productTableFormat: Array<TableColumn<ProductDtoType>> = [
   },
 ];
 
-export default function ProductTable({ rows }: { rows: ProductDtoType[] }): ReactElement {
-  return <Table rows={rows} format={productTableFormat} />;
+export default function ProductTable({
+  rows,
+  onUpdate,
+}: {
+  rows: ProductDtoType[];
+  onUpdate: (row: ProductDtoType) => void;
+}): ReactElement {
+  return <Table rows={rows} format={productTableFormat(onUpdate)} />;
 }
