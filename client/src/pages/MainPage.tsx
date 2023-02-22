@@ -1,8 +1,6 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-import { useQuery } from 'react-query';
 import Text from '@components/Text';
-import { checkAuthState, handleOnError } from '@utils/common';
 
 const Wrapper = styled.div`
   height: 30vh;
@@ -14,14 +12,10 @@ const Wrapper = styled.div`
 `;
 
 function MainPage({ info }: { info?: string }): ReactElement {
-  const { data, isLoading } = useQuery('auth', checkAuthState, {
-    onError: handleOnError,
-    refetchOnMount: 'always',
-  });
   return (
     <Wrapper>
       <Text size={100}>iStock</Text>
-      {!isLoading && data === false && <Text>{info}</Text>}
+      <Text>{info}</Text>
     </Wrapper>
   );
 }
