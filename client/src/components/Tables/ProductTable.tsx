@@ -11,8 +11,8 @@ import LinkColumn from '@components/Columns/LinkColumn';
 
 const productTableFormat: Array<TableColumn<ProductDtoType>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
-  { key: '품명', component: ({ row }) => <TextColumn>{row.name}</TextColumn> },
-  { key: '품번', component: ({ row }) => <TextColumn>{row.number}</TextColumn> },
+  { key: '품명', component: ({ row }) => <TextColumn>{row.productName}</TextColumn> },
+  { key: '품번', component: ({ row }) => <TextColumn>{row.productNumber}</TextColumn> },
   { key: '거래처 이름', component: ({ row }) => <TextColumn>{row.companyName}</TextColumn> },
   { key: '코드번호', component: ({ row }) => <TextColumn>{row.codeNumber}</TextColumn> },
   { key: '재고', component: ({ row }) => <NumberColumn>{row.stock}</NumberColumn> },
@@ -21,7 +21,7 @@ const productTableFormat: Array<TableColumn<ProductDtoType>> = [
     component: ({ row }) => (
       <InputColumn
         onSubmit={(input: number) => {
-          console.log(`produce ${input} ${row.name}`);
+          console.log(`produce ${input} ${row.productName}`);
         }}
       >
         {'입고(출고)'}

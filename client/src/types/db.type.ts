@@ -25,8 +25,8 @@ interface SubAssy {
 
 export interface ProductDbType {
   productId: number;
-  number: string;
-  name: string;
+  productNumber: string;
+  productName: string;
   codeNumber: string;
   stock: number;
   companyName: string;

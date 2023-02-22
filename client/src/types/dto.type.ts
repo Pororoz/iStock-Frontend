@@ -24,6 +24,6 @@ export type BomDtoType = ClientDtoType<BomDbType & Omit<PartDbType, 'createdAt' 
 export type PartDtoType = ClientDtoType<PartDbType>;
 export type PartIoDtoType = ClientDtoType<PartIoDbType> &
   Pick<ProductIoDbType, 'productId'> &
-  Pick<ProductDbType, 'name' | 'companyName' | 'categoryId'>;
-export type ProductIoDtoType = ProductIoDbType & Pick<ProductDbType, 'name'>;
+  Pick<ProductDbType, 'productName' | 'companyName' | 'categoryId'>;
+export type ProductIoDtoType = ProductIoDbType & Pick<ProductDbType, 'productName'>;
 export type AccountServerDtoType = AccountDtoType;
