@@ -7,10 +7,13 @@ import Table from '@components/Tables/Table';
 import { PartDtoType } from '@type/dto.type';
 import InputColumn from '@components/Columns/InputColumn';
 import LinkColumn from '@components/Columns/LinkColumn';
+import useMutate from '@hooks/useMutate';
+import { deletePart } from '@fetches/part';
+import { useConfirm } from '@utils/common';
 
-const partTableFormat: Array<TableColumn<PartDtoType>> = [
+const partTableFormat = (onUpdate: (row: PartDtoType) => void): Array<TableColumn<PartDtoType>> => [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
-  { key: '품명', component: ({ row }) => <TextColumn>{row.name}</TextColumn> },
+  { key: '품명', component: ({ row }) => <TextColumn>{row.partName}</TextColumn> },
   { key: '규격', component: ({ row }) => <TextColumn>{row.spec}</TextColumn> },
   { key: '단가', component: ({ row }) => <NumberColumn>{row.price}</NumberColumn> },
   { key: '재고', component: ({ row }) => <NumberColumn>{row.stock}</NumberColumn> },
@@ -19,7 +22,7 @@ const partTableFormat: Array<TableColumn<PartDtoType>> = [
     component: ({ row }) => (
       <InputColumn
         onSubmit={(input: number) => {
-          console.log(`produce ${input} ${row.name}`);
+          console.log(`produce ${input} ${row.partName}`);
         }}
       >
         {'입고(출고)'}
@@ -45,7 +48,7 @@ const partTableFormat: Array<TableColumn<PartDtoType>> = [
       <ButtonColumn
         color="--color-blue"
         onClick={() => {
-          console.log(`update ${row.partId}`);
+          onUpdate(row);
         }}
       >
         수정
@@ -54,19 +57,34 @@ const partTableFormat: Array<TableColumn<PartDtoType>> = [
   },
   {
     key: '삭제',
-    component: ({ row }) => (
-      <ButtonColumn
-        color="--color-red"
-        onClick={() => {
-          console.log(`delete ${row.partId}`);
-        }}
-      >
-        삭제
-      </ButtonColumn>
-    ),
+    component: ({ row }) => {
+      const { mutate } = useMutate({ key: 'product', action: deletePart(row.partId) });
+      return (
+        <ButtonColumn
+          color="--color-red"
+          onClick={() => {
+            useConfirm({
+              onConfirm: () => {
+                mutate({});
+              },
+              onCancel: () => {},
+              message: `${row.partName}를 삭제하시겠습니까?`,
+            });
+          }}
+        >
+          삭제
+        </ButtonColumn>
+      );
+    },
   },
 ];
 
-export default function PartTable({ rows }: { rows: PartDtoType[] }): ReactElement {
-  return <Table rows={rows} format={partTableFormat} />;
+export default function PartTable({
+  rows,
+  onUpdate,
+}: {
+  rows: PartDtoType[];
+  onUpdate: (row: PartDtoType) => void;
+}): ReactElement {
+  return <Table rows={rows} format={partTableFormat(onUpdate)} />;
 }

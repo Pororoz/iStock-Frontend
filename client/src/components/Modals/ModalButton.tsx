@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { ReactElement } from 'react';
 import { UseMutateFunction } from 'react-query';
 import styled from 'styled-components';
-import TextButton from './TextButton';
+import TextButton from '@components/TextButton';
 
 const ExitButton = styled(TextButton)`
   cursor: pointer;

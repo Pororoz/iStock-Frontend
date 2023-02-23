@@ -22,10 +22,3 @@ export const updateCategory = async (
 export const deleteCategory = (id: number): (() => Promise<AxiosResponse<ApiResponse<CategoryDtoType>, any>>) => {
   return async () => await axios.delete<ApiResponse<CategoryDtoType>>(`/categories/${id.toString()}`);
 };
-
-export const onSelect = (data: AxiosResponse<ApiResponse<ApiData<CategoryDbType[]>>>): CategoryDtoType[] => {
-  const newData = data.data.data.contents.map((elem: CategoryDbType) => {
-    return { ...elem, createdAt: new Date(elem.createdAt), updatedAt: new Date(elem.updatedAt) };
-  });
-  return newData;
-};

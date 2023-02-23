@@ -5,7 +5,7 @@ import NumberColumn from '@components/Columns/NumberColumn';
 import TextColumn from '@components/Columns/TextColumn';
 
 import useMutate from '@hooks/useMutate';
-import { deleteUser } from '@utils/useAccounts';
+import { deleteUser } from '@fetches/account';
 
 import Table from '@components/Tables/Table';
 import { AccountDtoType } from '@type/dto.type';

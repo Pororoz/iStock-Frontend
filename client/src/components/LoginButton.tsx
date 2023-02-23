@@ -2,7 +2,7 @@ import { ReactProps } from '@type/props';
 import { ReactElement, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { toast } from 'react-toastify';
-import LoginModal from './LoginModal';
+import LoginModal from './Modals/LoginModal';
 
 function LoginButton({ children }: ReactProps<{}>): ReactElement {
   const [showModal, setShowModal] = useState<boolean>(false);

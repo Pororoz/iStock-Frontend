@@ -1,18 +1,13 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-import Text from './Text';
+import Text from '@components/Text';
 
 interface Props {
   value?: string;
   onChange?: any;
   title?: string;
-  errorMessage?: string | undefined;
+  errorMessage?: string;
   readonly?: boolean;
-  color?: string;
-  backgroundColor?: string;
-  size?: number;
-  width?: number;
-  placeholder?: string;
 }
 
 const InputWrapper = styled.div`
@@ -31,7 +26,7 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const TextWrapper = styled.div<Props>`
+const TextWrapper = styled.div`
   position: relative;
   display: flex;
   gap: 20px;
@@ -40,56 +35,47 @@ const TextWrapper = styled.div<Props>`
   padding-inline: 16px;
   padding-block: 12px;
   border-radius: 10px;
-  background-color: var(${({ backgroundColor }) => backgroundColor ?? '--color-white'});
-  border: 2px solid var(${({ color }) => color ?? '--color-dark-gray'});
+  background-color: var(--color-white);
+  border: 2px solid var(--color-dark-gray);
   width: max-content;
 `;
 
 const StyledInput = styled.input<Props>`
   font-family: 'Noto Sans KR';
-  color: var(${({ color }) => color ?? '--color-dark-gray'});
+  color: var(--color-dark-gray);
   font-weight: 500;
-  font-size: ${({ size }) => size ?? 15}px;
+  font-size: 15px;
   background-color: transparent;
   border: none;
   outline: none;
-  width: ${({ width }) => (width !== undefined ? `${width}px` : 'max-content')};
+  width: max-content;
 
   &:read-only {
     color: var(--color-gray);
   }
 `;
 
-const Blank = styled.div`
+const ErrorWrapper = styled.div`
   height: 12px;
 `;
 
-function RequiredInput({
-  value,
-  onChange,
-  title = '',
-  errorMessage = '',
-  readonly = false,
-  ...props
-}: Props): ReactElement {
+function ModalInput({ value, onChange, title = '', errorMessage = '', readonly = false }: Props): ReactElement {
   return (
     <InputWrapper>
       <Wrapper>
         <Text size={20} weight={700}>
           {title}
         </Text>
-        <TextWrapper {...props}>
+        <TextWrapper>
           <StyledInput value={value} onChange={onChange} placeholder={`${title}을 입력하세요...`} readOnly={readonly} />
         </TextWrapper>
       </Wrapper>
-      {errorMessage !== '' ? (
+      <ErrorWrapper>
         <Text color="--color-red" weight={500} size={12}>
           {errorMessage}
         </Text>
-      ) : (
-        <Blank />
-      )}
+      </ErrorWrapper>
     </InputWrapper>
   );
 }
-export default RequiredInput;
+export default ModalInput;
