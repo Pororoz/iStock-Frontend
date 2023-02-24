@@ -1,8 +1,8 @@
 import { forwardRef, ReactElement, Ref } from 'react';
 import styled from 'styled-components';
 
-import Text from './Text';
-import Input from './Input';
+import Text from '@components/Text';
+import Input from '@components/Input';
 
 interface Props {
   title: string;

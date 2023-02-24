@@ -1,7 +1,46 @@
-import { ReactElement } from 'react';
+import CreatePartModal from '@components/Modals/CreatePartModal';
+import UpdatePartModal from '@components/Modals/UpdatePartModal';
+import SideButton from '@components/SideButton';
+import PartTable from '@components/Tables/PartTable';
+import { getPart } from '@fetches/part';
+import { PartDtoType } from '@type/dto.type';
+import { convertStringToDate, handleOnError } from '@utils/common';
+import { ReactElement, useState } from 'react';
+import { useQuery } from 'react-query';
 
 function PartsPage(): ReactElement {
-  return <div>PartsPage</div>;
+  const { data } = useQuery('part', getPart(''), {
+    onError: handleOnError,
+    select: (data) => convertStringToDate(data),
+  });
+
+  const [modal, setModal] = useState('none');
+  const [target, setTarget] = useState<PartDtoType | null>(null);
+  const onClose = (): void => {
+    setModal('none');
+    setTarget(null);
+  };
+
+  return (
+    <div>
+      {data !== undefined && (
+        <PartTable
+          rows={data}
+          onUpdate={(row: PartDtoType) => {
+            setTarget(row);
+            setModal('update');
+          }}
+        />
+      )}
+      <SideButton
+        action={() => {
+          setModal('create');
+        }}
+      ></SideButton>
+      {modal === 'create' && <CreatePartModal onClose={onClose} />}
+      {modal === 'update' && target !== null && <UpdatePartModal row={target} onClose={onClose} />}
+    </div>
+  );
 }
 
 export default PartsPage;

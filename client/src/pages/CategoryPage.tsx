@@ -1,18 +1,43 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import { useQuery } from 'react-query';
 import CategoryTable from '@components/Tables/CategoryTable';
 import SideButton from '@components/SideButton';
-import { getCategory, onSelect } from '@utils/useCategory';
+import CreateCategoryModal from '@components/Modals/CreateCategoryModal';
+import UpdateCategoryModal from '@components/Modals/UpdateCategoryModal';
+import { convertStringToDate } from '@utils/common';
+import { getCategory } from '@fetches/category';
+import { CategoryDtoType } from '@type/dto.type';
 
 function CategoryPage(): ReactElement {
-  const { data, isLoading } = useQuery('category', getCategory, {
-    select: (data) => onSelect(data),
+  const { data } = useQuery('category', getCategory, {
+    select: (data) => convertStringToDate(data),
   });
+
+  const [modal, setModal] = useState('none');
+  const [target, setTarget] = useState<CategoryDtoType | null>(null);
+  const onClose = (): void => {
+    setModal('none');
+    setTarget(null);
+  };
 
   return (
     <div>
-      {!isLoading && data !== undefined && <CategoryTable rows={data} />}
-      <SideButton action={() => {}}></SideButton>
+      {data !== undefined && (
+        <CategoryTable
+          rows={data}
+          onUpdate={(row: CategoryDtoType) => {
+            setTarget(row);
+            setModal('update');
+          }}
+        />
+      )}
+      <SideButton
+        action={() => {
+          setModal('create');
+        }}
+      />
+      {modal === 'create' && <CreateCategoryModal onClose={onClose} />}
+      {modal === 'update' && target !== null && <UpdateCategoryModal row={target} onClose={onClose} />}
     </div>
   );
 }

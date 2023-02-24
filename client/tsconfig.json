@@ -24,6 +24,7 @@
       "@utils/*": ["src/utils/*"],
       "@hooks/*": ["src/hooks/*"],
       "@routers/*": ["src/routers/*"],
+      "@fetches/*": ["src/fetches/*"],
       "@": ["src/*"]
     }
   },

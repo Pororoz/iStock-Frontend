@@ -1,7 +1,7 @@
 import { forwardRef, ReactElement, Ref, RefObject } from 'react';
 import styled from 'styled-components';
-import Select from './Select';
-import Text from './Text';
+import Select from '@components/Select';
+import Text from '@components/Text';
 
 interface Props {
   optionList: string[];

@@ -15,6 +15,7 @@ export default defineConfig({
       '@utils': path.resolve(__dirname, './src/utils'),
       '@hooks': path.resolve(__dirname, './src/hooks'),
       '@routers': path.resolve(__dirname, './src/routers'),
+      '@fetches': path.resolve(__dirname, './src/fetches'),
     },
   },
   server: {

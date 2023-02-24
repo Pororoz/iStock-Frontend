@@ -5,8 +5,8 @@ import { toast } from 'react-toastify';
 
 import ModalInput from '@components/ModalInput';
 import Text from '@components/Text';
-import TextButton from './TextButton';
-import login, { LoginResponse } from '@utils/useLogin';
+import TextButton from '@components/TextButton';
+import login, { LoginResponse } from '@fetches/login';
 import useMutate from '@hooks/useMutate';
 
 const Wrapper = styled.div`

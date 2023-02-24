@@ -5,11 +5,11 @@ import NumberColumn from '@components/Columns/NumberColumn';
 import LinkColumn from '@components/Columns/LinkColumn';
 import Table from '@components/Tables/Table';
 import useMutate from '@hooks/useMutate';
-import { deleteCategory } from '@utils/useCategory';
+import { deleteCategory } from '@fetches/category';
 import { useConfirm } from '@utils/common';
 import { CategoryDtoType } from '@type/dto.type';
 
-const categoryTableFormat: Array<TableColumn<CategoryDtoType>> = [
+const categoryTableFormat = (onUpdate: (row: CategoryDtoType) => void): Array<TableColumn<CategoryDtoType>> => [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
   {
     key: '카테고리 이름',
@@ -21,7 +21,7 @@ const categoryTableFormat: Array<TableColumn<CategoryDtoType>> = [
       <ButtonColumn
         color="--color-blue"
         onClick={() => {
-          console.log(`update ${row.categoryId}`);
+          onUpdate(row);
         }}
       >
         수정
@@ -31,18 +31,18 @@ const categoryTableFormat: Array<TableColumn<CategoryDtoType>> = [
   {
     key: '삭제',
     component: ({ row }) => {
-      const deleteMutate = useMutate({ key: 'category', action: deleteCategory(row.categoryId) });
+      const { mutate } = useMutate({ key: 'category', action: deleteCategory(row.categoryId) });
       return (
         <ButtonColumn
           color="--color-red"
           onClick={() => {
-            useConfirm(
-              () => {
-                deleteMutate.mutate({});
+            useConfirm({
+              onConfirm: () => {
+                mutate({});
               },
-              () => {},
-              `${row.categoryName}를 삭제하시겠습니까?`,
-            );
+              onCancel: () => {},
+              message: `${row.categoryName}를 삭제하시겠습니까?`,
+            });
           }}
         >
           삭제
@@ -52,6 +52,12 @@ const categoryTableFormat: Array<TableColumn<CategoryDtoType>> = [
   },
 ];
 
-export default function CategoryTable({ rows }: { rows: CategoryDtoType[] }): ReactElement {
-  return <Table rows={rows} format={categoryTableFormat} />;
+export default function CategoryTable({
+  rows,
+  onUpdate,
+}: {
+  rows: CategoryDtoType[];
+  onUpdate: (row: CategoryDtoType) => void;
+}): ReactElement {
+  return <Table rows={rows} format={categoryTableFormat(onUpdate)} />;
 }

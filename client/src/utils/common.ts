@@ -1,6 +1,8 @@
 import { toast } from 'react-toastify';
-import { getCategory } from './useCategory';
-
+import { AxiosResponse } from 'axios';
+import { getCategory } from '@fetches/category';
+import { ApiData, ApiResponse } from '@type/api.type';
+import { ClientDtoType } from '@type/dto.type';
 export interface ErrorResponse {
   status: string;
   statusText: string;
@@ -57,4 +59,17 @@ export const checkAuthState = async (): Promise<boolean> => {
       return false;
     });
   return await authState;
+};
+interface TimeInString {
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const convertStringToDate = <T extends TimeInString>(
+  data: AxiosResponse<ApiResponse<ApiData<T[]>>>,
+): Array<ClientDtoType<T>> => {
+  const newData = data.data.data.contents.map((elem: T) => {
+    return { ...elem, createdAt: new Date(elem.createdAt), updatedAt: new Date(elem.updatedAt) };
+  });
+  return newData;
 };

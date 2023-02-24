@@ -8,11 +8,14 @@ import Table from '@components/Tables/Table';
 import { ProductDtoType } from '@type/dto.type';
 import InputColumn from '@components/Columns/InputColumn';
 import LinkColumn from '@components/Columns/LinkColumn';
+import { useConfirm } from '@utils/common';
+import useMutate from '@hooks/useMutate';
+import { deleteProduct } from '@fetches/product';
 
-const productTableFormat: Array<TableColumn<ProductDtoType>> = [
+const productTableFormat = (onUpdate: (row: ProductDtoType) => void): Array<TableColumn<ProductDtoType>> => [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
-  { key: '품명', component: ({ row }) => <TextColumn>{row.name}</TextColumn> },
-  { key: '품번', component: ({ row }) => <TextColumn>{row.number}</TextColumn> },
+  { key: '품명', component: ({ row }) => <TextColumn>{row.productName}</TextColumn> },
+  { key: '품번', component: ({ row }) => <TextColumn>{row.productNumber}</TextColumn> },
   { key: '거래처 이름', component: ({ row }) => <TextColumn>{row.companyName}</TextColumn> },
   { key: '코드번호', component: ({ row }) => <TextColumn>{row.codeNumber}</TextColumn> },
   { key: '재고', component: ({ row }) => <NumberColumn>{row.stock}</NumberColumn> },
@@ -21,7 +24,7 @@ const productTableFormat: Array<TableColumn<ProductDtoType>> = [
     component: ({ row }) => (
       <InputColumn
         onSubmit={(input: number) => {
-          console.log(`produce ${input} ${row.name}`);
+          console.log(`produce ${input} ${row.productName}`);
         }}
       >
         {'입고(출고)'}
@@ -30,7 +33,9 @@ const productTableFormat: Array<TableColumn<ProductDtoType>> = [
   },
   {
     key: 'SUB ASSY',
-    component: ({ row }) => <TextColumn>{row.subAssy.map((el) => `${el.name}(${el.stock})`).join(', ')}</TextColumn>,
+    component: ({ row }) => (
+      <TextColumn>{row.subAssy.map((el) => `${el.partName}(${el.stock})`).join(', ')}</TextColumn>
+    ),
   },
   {
     key: 'BOM',
@@ -52,7 +57,7 @@ const productTableFormat: Array<TableColumn<ProductDtoType>> = [
       <ButtonColumn
         color="--color-blue"
         onClick={() => {
-          console.log(`update ${row.productId}`);
+          onUpdate(row);
         }}
       >
         수정
@@ -61,19 +66,34 @@ const productTableFormat: Array<TableColumn<ProductDtoType>> = [
   },
   {
     key: '삭제',
-    component: ({ row }) => (
-      <ButtonColumn
-        color="--color-red"
-        onClick={() => {
-          console.log(`delete ${row.productId}`);
-        }}
-      >
-        삭제
-      </ButtonColumn>
-    ),
+    component: ({ row }) => {
+      const { mutate } = useMutate({ key: 'product', action: deleteProduct(row.productId) });
+      return (
+        <ButtonColumn
+          color="--color-red"
+          onClick={() => {
+            useConfirm({
+              onConfirm: () => {
+                mutate({});
+              },
+              onCancel: () => {},
+              message: `${row.productName}를 삭제하시겠습니까?`,
+            });
+          }}
+        >
+          삭제
+        </ButtonColumn>
+      );
+    },
   },
 ];
 
-export default function ProductTable({ rows }: { rows: ProductDtoType[] }): ReactElement {
-  return <Table rows={rows} format={productTableFormat} />;
+export default function ProductTable({
+  rows,
+  onUpdate,
+}: {
+  rows: ProductDtoType[];
+  onUpdate: (row: ProductDtoType) => void;
+}): ReactElement {
+  return <Table rows={rows} format={productTableFormat(onUpdate)} />;
 }
