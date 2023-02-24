@@ -6,6 +6,11 @@ import { ClientDtoType } from '@type/dto.type';
 export interface ErrorResponse {
   status: string;
   statusText: string;
+  data: ErrorData | '';
+}
+export interface ErrorData {
+  status: string | number;
+  message?: string;
 }
 
 interface UseConfirm {
@@ -14,19 +19,28 @@ interface UseConfirm {
   message?: string;
 }
 
-export const ERROR_MESSAGE = {
-  '204': 'NO CONTENTS',
-  '400': '형식에 맞지 않는 ID 입니다.',
-  '401': 'id, password를 확인하세요.',
-  '403': '접근 권한이 없습니다. 로그인 후 이용해주세요.',
-  '404': '해당 아이디에 맞는 유저를 찾을 수 없습니다.',
-  '클라이언트 오류': '관리자에게 문의하시거나 잠시후에 이용해주세요.',
-  '500': '서버오류, 관리자에게 문의하시거나 잠시후에 이용해주세요.',
+export interface CustomError<T = unknown, D = any> extends Error {
+  code?: string;
+  response?: AxiosResponse<T, D>;
+}
+
+export const CLIENT_ERROR_DATA: ErrorData = {
+  status: 'CLIENT_ERROR',
+  message: '클라이언트 오류, 관리자에게 문의하시거나 잠시후에 이용해주세요.',
+};
+export const SERVER_ERROR_DATA: ErrorData = {
+  status: 'SERVER_ERROR',
+  message: '서버 오류, 관리자에게 문의하시거나 잠시후에 이용해주세요.',
 };
 
-export const handleOnError = ({ response }: { response: ErrorResponse }): void => {
-  const { status } = response;
-  toast.error(ERROR_MESSAGE[status as keyof typeof ERROR_MESSAGE]);
+export const toastErrorMessage = (error: CustomError): void => {
+  const errorData = generateErrorObject(error);
+  toast.error(errorData.message);
+};
+
+export const generateErrorObject = ({ response }: { response?: AxiosResponse }): ErrorData => {
+  if (response === undefined) return CLIENT_ERROR_DATA;
+  return response.data === '' ? SERVER_ERROR_DATA : response.data;
 };
 
 export const useConfirm = ({

@@ -1,14 +1,8 @@
 import { ReactElement } from 'react';
-import { AxiosResponse } from 'axios';
 import styled from 'styled-components';
 import MainButton from '@components/MainButton';
 import Text from '@components/Text';
-import { ERROR_MESSAGE } from '@utils/common';
-
-interface CustomError<T = unknown, D = any> extends Error {
-  code?: string;
-  response?: AxiosResponse<T, D>;
-}
+import { CustomError, ErrorData, generateErrorObject } from '@utils/common';
 
 const Wrapper = styled.div`
   display: flex;
@@ -28,17 +22,18 @@ function ErrorFallback({
   error: CustomError;
   resetErrorBoundary: () => void;
 }): ReactElement {
-  const statusCode = error.response != null ? error.response.status : '클라이언트 오류';
+  const errorData: ErrorData = generateErrorObject(error);
   setTimeout(() => {
     resetErrorBoundary();
   }, 3000);
+
   return (
     <Wrapper role="alert">
       <Text color={'--color-red'} weight={700} size={35}>
-        Error : {statusCode}
+        Error : {errorData.status}
       </Text>
       <Text weight={700} size={35}>
-        {ERROR_MESSAGE[statusCode as keyof typeof ERROR_MESSAGE]}
+        {errorData.message}
       </Text>
       <Text weight={500} size={15}>
         {error.stack}
