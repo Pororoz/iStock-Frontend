@@ -20,8 +20,8 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/login': {
-        target: 'http://146.56.168.39/api/v1/auth',
+      '/auth/login': {
+        target: 'http://146.56.168.39/api/v1',
         changeOrigin: true,
       },
       '/users': {
