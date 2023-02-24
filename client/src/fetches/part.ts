@@ -5,7 +5,7 @@ import { PartDtoType } from '@type/dto.type';
 
 export const getPart = (partName: string) => {
   return async (): Promise<AxiosResponse<ApiResponse<ApiData<PartDbType[]>>, any>> => {
-    return await axios.get<ApiResponse<ApiData<PartDbType[]>>>(`/parts?part-name=${partName}`);
+    return await axios.get<ApiResponse<ApiData<PartDbType[]>>>('/parts?');
   };
 };
 

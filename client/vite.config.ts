@@ -35,6 +35,10 @@ export default defineConfig({
         target: 'http://146.56.168.39/api/v1/',
         changeOrigin: true,
       },
+      '/parts': {
+        target: 'http://146.56.168.39/api/v1/',
+        changeOrigin: true,
+      },
     },
   },
 });
