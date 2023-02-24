@@ -29,6 +29,9 @@ function ErrorFallback({
   resetErrorBoundary: () => void;
 }): ReactElement {
   const statusCode = error.response != null ? error.response.status : '클라이언트 오류';
+  setTimeout(() => {
+    resetErrorBoundary();
+  }, 3000);
   return (
     <Wrapper role="alert">
       <Text color={'--color-red'} weight={700} size={35}>

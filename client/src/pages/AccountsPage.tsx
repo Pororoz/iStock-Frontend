@@ -1,7 +1,6 @@
 import AccountTable from '@components/Tables/AccountTable';
 import { ReactElement, useState } from 'react';
 import { useQuery } from 'react-query';
-import { handleOnError } from '@utils/common';
 import { getUsers, transformData } from '@utils/useAccounts';
 import SideButton from '@components/SideButton';
 import AuthModal from '@components/AuthModal';
@@ -12,7 +11,6 @@ function AccountsPage(): ReactElement {
   const [target, setTarget] = useState<AccountDtoType>(); // 수정 시 모달에 표현돼야 하는 데이터
 
   const { data } = useQuery('users', getUsers, {
-    onError: handleOnError,
     select: (data) => transformData(data),
   });
 
