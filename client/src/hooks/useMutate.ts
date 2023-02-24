@@ -1,7 +1,7 @@
-import { ErrorResponse, handleOnError } from '@utils/common';
 import { AxiosResponse } from 'axios';
 import { UseMutateAsyncFunction, UseMutateFunction, useMutation, useQueryClient } from 'react-query';
 import { toast } from 'react-toastify';
+import { ErrorResponse, toastErrorMessage } from '@utils/common';
 
 interface MutationType {
   mutate: UseMutateFunction<AxiosResponse, { response: ErrorResponse }, any, unknown>;
@@ -29,7 +29,7 @@ const useMutate = (parameter: MutationParameterType): MutationType => {
 
       if (parameter.onSuccess !== undefined) parameter.onSuccess();
     },
-    onError: handleOnError,
+    onError: toastErrorMessage,
   });
 
   return { mutate, mutateAsync };

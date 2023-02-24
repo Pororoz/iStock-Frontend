@@ -1,7 +1,7 @@
 import ProductTable from '@components/Tables/ProductTable';
 import { ReactElement, useState } from 'react';
 import SideButton from '@components/SideButton';
-import { handleOnError, convertStringToDate } from '@utils/common';
+import { convertStringToDate } from '@utils/common';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { getProduct } from '@fetches/product';
@@ -13,7 +13,6 @@ function ProductPage(): ReactElement {
   const { category } = useParams();
 
   const { data } = useQuery('product', getProduct(parseInt(category as string)), {
-    onError: handleOnError,
     select: (data) => convertStringToDate(data),
   });
 

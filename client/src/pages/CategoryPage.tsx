@@ -2,15 +2,14 @@ import { ReactElement, useState } from 'react';
 import { useQuery } from 'react-query';
 import CategoryTable from '@components/Tables/CategoryTable';
 import SideButton from '@components/SideButton';
-import { handleOnError, convertStringToDate } from '@utils/common';
-import { getCategory } from '@fetches/category';
 import CreateCategoryModal from '@components/Modals/CreateCategoryModal';
 import UpdateCategoryModal from '@components/Modals/UpdateCategoryModal';
+import { convertStringToDate } from '@utils/common';
+import { getCategory } from '@fetches/category';
 import { CategoryDtoType } from '@type/dto.type';
 
 function CategoryPage(): ReactElement {
   const { data } = useQuery('category', getCategory, {
-    onError: handleOnError,
     select: (data) => convertStringToDate(data),
   });
 

@@ -14,13 +14,14 @@ export default defineConfig({
       '@images': path.resolve(__dirname, './src/images'),
       '@utils': path.resolve(__dirname, './src/utils'),
       '@hooks': path.resolve(__dirname, './src/hooks'),
+      '@routers': path.resolve(__dirname, './src/routers'),
       '@fetches': path.resolve(__dirname, './src/fetches'),
     },
   },
   server: {
     proxy: {
       '/auth/login': {
-        target: 'http://146.56.168.39/api/v1/',
+        target: 'http://146.56.168.39/api/v1',
         changeOrigin: true,
       },
       '/users': {
