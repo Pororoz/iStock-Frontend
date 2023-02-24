@@ -58,7 +58,7 @@ const partTableFormat = (onUpdate: (row: PartDtoType) => void): Array<TableColum
   {
     key: '삭제',
     component: ({ row }) => {
-      const { mutate } = useMutate({ key: 'product', action: deletePart(row.partId) });
+      const { mutate } = useMutate({ key: 'part', action: deletePart(row.partId) });
       return (
         <ButtonColumn
           color="--color-red"
