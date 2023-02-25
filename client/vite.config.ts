@@ -24,6 +24,10 @@ export default defineConfig({
         target: 'http://146.56.168.39/api/v1',
         changeOrigin: true,
       },
+      '/auth/logout': {
+        target: 'http://146.56.168.39/api/v1',
+        changeOrigin: true,
+      },
       '/users': {
         target: 'http://146.56.168.39/api/v1/',
         changeOrigin: true,

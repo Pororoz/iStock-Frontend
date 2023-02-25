@@ -6,8 +6,9 @@ import { toast } from 'react-toastify';
 import ModalInput from '@components/ModalInput';
 import Text from '@components/Text';
 import TextButton from '@components/TextButton';
-import login, { LoginResponse } from '@fetches/login';
+import { AuthType, login } from '@fetches/auth';
 import useMutate from '@hooks/useMutate';
+import { ApiResponse } from '@type/api.type';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -67,7 +68,7 @@ function LoginModal({ onCancel }: { onCancel: () => void }): ReactElement {
   const passwordInput = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
 
-  const successCallback = async ({ data }: LoginResponse): Promise<void> => {
+  const successCallback = async ({ data }: ApiResponse<AuthType>): Promise<void> => {
     const { username, rolename } = data;
     toast(`${username} 님 로그인되었습니다`);
     queryClient.setQueryData('user', { username, rolename });
