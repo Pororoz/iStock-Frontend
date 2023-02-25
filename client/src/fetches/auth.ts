@@ -1,5 +1,5 @@
-import { ApiResponse } from '@type/api.type';
 import axios, { AxiosResponse } from 'axios';
+import { ApiResponse } from '@type/api.type';
 
 interface LoginType {
   username: string;

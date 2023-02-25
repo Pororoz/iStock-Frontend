@@ -4,8 +4,8 @@ import CategoryTable from '@components/Tables/CategoryTable';
 import SideButton from '@components/SideButton';
 import CreateCategoryModal from '@components/Modals/CreateCategoryModal';
 import UpdateCategoryModal from '@components/Modals/UpdateCategoryModal';
-import { convertStringToDate } from '@utils/common';
 import { getCategory } from '@fetches/category';
+import { convertStringToDate } from '@utils/common';
 import { CategoryDtoType } from '@type/dto.type';
 
 function CategoryPage(): ReactElement {

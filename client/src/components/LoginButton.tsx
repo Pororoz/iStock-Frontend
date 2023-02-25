@@ -1,10 +1,10 @@
-import { logout } from '@fetches/auth';
-import useMutate from '@hooks/useMutate';
-import { ReactProps } from '@type/props';
 import { ReactElement, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { toast } from 'react-toastify';
-import LoginModal from './Modals/LoginModal';
+import LoginModal from '@components/Modals/LoginModal';
+import { logout } from '@fetches/auth';
+import useMutate from '@hooks/useMutate';
+import { ReactProps } from '@type/props';
 
 function LoginButton({ children }: ReactProps<{}>): ReactElement {
   const [showModal, setShowModal] = useState<boolean>(false);

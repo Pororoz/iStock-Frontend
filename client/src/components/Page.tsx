@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import Breadcrumb from './Breadcrumb';
+import Breadcrumb from '@components/Breadcrumb';
 
 function Page(): ReactElement {
   return <Breadcrumb />;

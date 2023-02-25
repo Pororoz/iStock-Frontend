@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-import TableColumn from '../../types/table';
+import TableColumn from '@type/table';
 
 const StyledTable = styled.table`
   width: 100%;

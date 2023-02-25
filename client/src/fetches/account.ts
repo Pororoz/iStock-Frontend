@@ -1,7 +1,7 @@
+import axios, { AxiosResponse } from 'axios';
 import { ApiResponse, ApiData } from '@type/api.type';
 import { AccountDtoType } from '@type/dto.type';
 import { AccountDbType } from '@type/db.type';
-import axios, { AxiosResponse } from 'axios';
 
 interface AccountRequestType {
   userId?: number;

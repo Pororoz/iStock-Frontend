@@ -1,12 +1,12 @@
-import ModalInput from '@components/ModalInputs/ModalInput';
 import { ReactElement } from 'react';
-import Modal from './Modal';
-import Text from '@components/Text';
-import useMutate from '@hooks/useMutate';
 import { useParams } from 'react-router-dom';
+import Modal from '@components/Modals/Modal';
+import ModalInput from '@components/ModalInputs/ModalInput';
+import Text from '@components/Text';
+import { createProduct } from '@fetches/product';
+import useMutate from '@hooks/useMutate';
 import useModalInput from '@hooks/useModalInput';
 import { required, lengthValidator } from '@utils/validator';
-import { createProduct } from '@fetches/product';
 
 interface Props {
   onSubmit?: () => void;

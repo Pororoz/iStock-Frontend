@@ -1,7 +1,7 @@
 import { ReactElement, useState } from 'react';
 import styled from 'styled-components';
-import { ReactProps } from '@type/props';
 import TextButton from '@components/TextButton';
+import { ReactProps } from '@type/props';
 
 const Column = styled.td`
   text-align: center;

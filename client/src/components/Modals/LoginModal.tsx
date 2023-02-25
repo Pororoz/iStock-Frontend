@@ -2,7 +2,6 @@ import { ReactElement } from 'react';
 import styled from 'styled-components';
 import { useQueryClient } from 'react-query';
 import { toast } from 'react-toastify';
-
 import ModalInput from '@components/ModalInputs/ModalInput';
 import Text from '@components/Text';
 import TextButton from '@components/TextButton';

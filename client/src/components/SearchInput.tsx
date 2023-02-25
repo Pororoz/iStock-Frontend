@@ -1,7 +1,7 @@
-import Input from '@components/Input';
 import { ReactElement } from 'react';
-import Search from '@images/search.svg';
+import Input from '@components/Input';
 import { StyledProps } from '@type/props';
+import Search from '@images/search.svg';
 
 function SearchInput({ className }: StyledProps<{}>): ReactElement {
   return (
