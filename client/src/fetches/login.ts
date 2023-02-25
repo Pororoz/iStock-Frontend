@@ -17,7 +17,7 @@ interface AuthType {
 }
 
 const login = async (userInfo: LoginType): Promise<AxiosResponse<LoginResponse, any>> => {
-  return await axios.post<LoginResponse>('/auth/login', userInfo);
+  return await axios.post<LoginResponse>('/api/v1/auth/login', userInfo);
 };
 
 export default login;
