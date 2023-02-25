@@ -12,9 +12,9 @@ export interface AuthType {
 }
 
 export const login = async (userInfo: LoginType): Promise<AxiosResponse<ApiResponse<AuthType>, any>> => {
-  return await axios.post<ApiResponse<AuthType>>('/auth/login', userInfo);
+  return await axios.post<ApiResponse<AuthType>>('/api/v1/auth/login', userInfo);
 };
 
 export const logout = async (): Promise<AxiosResponse<ApiResponse<null>, any>> => {
-  return await axios.post<ApiResponse<null>>('/auth/logout');
+  return await axios.post<ApiResponse<null>>('/api/v1/auth/logout');
 };
