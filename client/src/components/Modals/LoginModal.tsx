@@ -75,6 +75,7 @@ function LoginModal({ onCancel }: { onCancel: () => void }): ReactElement {
     const { username, rolename } = data;
     toast(`${username} 님 로그인되었습니다`);
     queryClient.setQueryData('user', { username, rolename });
+    queryClient.setQueryData('auth', true);
     onCancel();
   };
   const { mutate } = useMutate({ action: login, callback: successCallback });

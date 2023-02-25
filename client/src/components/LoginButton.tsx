@@ -12,6 +12,7 @@ function LoginButton({ children }: ReactProps<{}>): ReactElement {
   const onSuccess = (): void => {
     toast.success('로그아웃되었습니다.');
     queryClient.setQueryData('user', undefined);
+    queryClient.setQueryData('auth', false);
   };
   const { mutate } = useMutate({ action: logout, onSuccess });
   const onClick = (): void => {
