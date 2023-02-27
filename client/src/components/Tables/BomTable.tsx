@@ -8,12 +8,15 @@ import { BomDtoType } from '@type/dto.type';
 import InputColumn from '@components/Columns/InputColumn';
 import { useLocation } from 'react-router-dom';
 import LinkColumn from '@components/Columns/LinkColumn';
+import { useConfirm } from '@utils/common';
+import { deleteBom } from '@fetches/bom';
+import useMutate from '@hooks/useMutate';
 
-const bomTableFormat: Array<TableColumn<BomDtoType>> = [
+const bomTableFormat = (onUpdate: (row: BomDtoType) => void): Array<TableColumn<BomDtoType>> => [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
   { key: '소요량', component: ({ row }) => <TextColumn>{row.quantity}</TextColumn> },
   { key: 'Location No.', component: ({ row }) => <TextColumn>{row.locationNumber}</TextColumn> },
-  { key: '품명', component: ({ row }) => <TextColumn>{row.name}</TextColumn> },
+  { key: '품명', component: ({ row }) => <TextColumn>{row.partName}</TextColumn> },
   { key: '규격', component: ({ row }) => <TextColumn>{row.spec}</TextColumn> },
   { key: '단가', component: ({ row }) => <NumberColumn>{row.price}</NumberColumn> },
   { key: '재고', component: ({ row }) => <NumberColumn>{row.stock}</NumberColumn> },
@@ -22,7 +25,7 @@ const bomTableFormat: Array<TableColumn<BomDtoType>> = [
     component: ({ row }) => (
       <InputColumn
         onSubmit={(input: number) => {
-          console.log(`produce ${input} ${row.name}`);
+          console.log(`produce ${input} ${row.partName}`);
         }}
       >
         {'입고(출고)'}
@@ -45,7 +48,7 @@ const bomTableFormat: Array<TableColumn<BomDtoType>> = [
       <ButtonColumn
         color="--color-blue"
         onClick={() => {
-          console.log(`update ${row.productId}`);
+          onUpdate(row);
         }}
       >
         수정
@@ -54,19 +57,34 @@ const bomTableFormat: Array<TableColumn<BomDtoType>> = [
   },
   {
     key: '삭제',
-    component: ({ row }) => (
-      <ButtonColumn
-        color="--color-red"
-        onClick={() => {
-          console.log(`delete ${row.productId}`);
-        }}
-      >
-        삭제
-      </ButtonColumn>
-    ),
+    component: ({ row }) => {
+      const { mutate } = useMutate({ key: 'bom', action: deleteBom(row.bomId) });
+      return (
+        <ButtonColumn
+          color="--color-red"
+          onClick={() => {
+            useConfirm({
+              onConfirm: () => {
+                mutate({});
+              },
+              onCancel: () => {},
+              message: `${row.bomId}를 삭제하시겠습니까?`,
+            });
+          }}
+        >
+          삭제
+        </ButtonColumn>
+      );
+    },
   },
 ];
 
-export default function BomTable({ rows }: { rows: BomDtoType[] }): ReactElement {
-  return <Table rows={rows} format={bomTableFormat} />;
+export default function BomTable({
+  rows,
+  onUpdate,
+}: {
+  rows: BomDtoType[];
+  onUpdate: (row: BomDtoType) => void;
+}): ReactElement {
+  return <Table rows={rows} format={bomTableFormat(onUpdate)} />;
 }
