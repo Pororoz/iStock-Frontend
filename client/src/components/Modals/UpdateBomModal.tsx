@@ -23,7 +23,7 @@ export default function UpdateBomModal({ row, onClose = () => {} }: Props): Reac
     codeNumber: useModalInput([], row.codeNumber),
     quantity: useModalInput([], row.quantity.toString()),
     memo: useModalInput([], row.memo),
-    partId: useModalInput([required], row.partId.toString()),
+    partId: useModalInput([required], row.part !== undefined ? row.part.partId.toString() : ''),
     productId: useModalInput([required], row.productId.toString()),
   };
 

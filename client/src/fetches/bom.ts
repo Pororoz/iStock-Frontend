@@ -1,15 +1,11 @@
-import { BomDbType, PartDbType } from '@type/db.type';
+import { BomDbType } from '@type/db.type';
 import axios, { AxiosResponse } from 'axios';
 import { ApiData, ApiResponse } from '@type/api.type';
 import { BomDtoType } from '@type/dto.type';
 
 export const getBom = (productId: number) => {
-  return async (): Promise<
-    AxiosResponse<ApiResponse<ApiData<Array<BomDbType & Omit<PartDbType, 'createdAt' | 'updatedAt'>>>>, any>
-  > => {
-    return await axios.get<ApiResponse<ApiData<Array<BomDbType & Omit<PartDbType, 'createdAt' | 'updatedAt'>>>>>(
-      `/api/v1/bom?product-id=${productId}`,
-    );
+  return async (): Promise<AxiosResponse<ApiResponse<ApiData<BomDbType[]>>, any>> => {
+    return await axios.get<ApiResponse<ApiData<BomDbType[]>>>(`/api/v1/bom?product-id=${productId}`);
   };
 };
 
@@ -26,5 +22,5 @@ export const updateBom = async (parameter: UpdateBomDto): Promise<AxiosResponse<
 };
 
 export const deleteBom = (id: number): (() => Promise<AxiosResponse<ApiResponse<BomDtoType>, any>>) => {
-  return async () => await axios.delete<ApiResponse<BomDtoType>>(`/api/v1/products/${id.toString()}`);
+  return async () => await axios.delete<ApiResponse<BomDtoType>>(`/api/v1/bom/${id.toString()}`);
 };

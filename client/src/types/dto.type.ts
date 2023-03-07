@@ -20,7 +20,7 @@ export type ClientDtoType<T extends { createdAt: string; updatedAt: string }> = 
 export type AccountDtoType = ClientDtoType<AccountDbType>;
 export type CategoryDtoType = ClientDtoType<CategoryDbType>;
 export type ProductDtoType = ClientDtoType<ProductDbType>;
-export type BomDtoType = ClientDtoType<BomDbType & Omit<PartDbType, 'createdAt' | 'updatedAt'>>;
+export type BomDtoType = ClientDtoType<BomDbType>;
 export type PartDtoType = ClientDtoType<PartDbType>;
 export type PartIoDtoType = ClientDtoType<PartIoDbType> &
   Pick<ProductIoDbType, 'productId'> &

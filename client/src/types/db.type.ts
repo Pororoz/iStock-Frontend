@@ -15,14 +15,6 @@ export interface CategoryDbType {
   updatedAt: string;
 }
 
-interface SubAssy {
-  partId: number;
-  partName: string;
-  spec: string;
-  stock: number;
-  quantity: number;
-}
-
 export interface ProductDbType {
   productId: number;
   productNumber: string;
@@ -36,18 +28,6 @@ export interface ProductDbType {
   subAssy: SubAssy[];
 }
 
-export interface BomDbType {
-  bomId: number;
-  locationNumber: string;
-  codeNumber: string;
-  quantity: number;
-  memo: string;
-  createdAt: string;
-  updatedAt: string;
-  productId: number;
-  partId: number;
-}
-
 export interface PartDbType {
   partId: number;
   partName: string;
@@ -56,6 +36,28 @@ export interface PartDbType {
   stock: number;
   createdAt: string;
   updatedAt: string;
+}
+
+interface SubAssy {
+  partId: number;
+  partName: string;
+  spec: string;
+  stock: number;
+  quantity: number;
+}
+export interface BomDbType {
+  bomId: number;
+  locationNumber: string;
+  codeNumber: string;
+  quantity: number;
+  memo: string;
+  createdAt: string;
+  updatedAt: string;
+
+  productId: number;
+
+  part?: PartDbType;
+  product?: ProductDbType;
 }
 
 export interface PartIoDbType {
