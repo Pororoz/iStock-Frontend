@@ -1,13 +1,15 @@
-import { ReactElement, useRef } from 'react';
+import { ReactElement } from 'react';
 import styled from 'styled-components';
 import { useQueryClient } from 'react-query';
 import { toast } from 'react-toastify';
-
-import ModalInput from '@components/ModalInput';
+import ModalInput from '@components/ModalInputs/ModalInput';
 import Text from '@components/Text';
 import TextButton from '@components/TextButton';
-import login, { LoginResponse } from '@fetches/login';
+import { AuthType, login } from '@fetches/auth';
 import useMutate from '@hooks/useMutate';
+import useModalInput from '@hooks/useModalInput';
+import { lengthValidator, required } from '@utils/validator';
+import { ApiResponse } from '@type/api.type';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -63,24 +65,22 @@ const LoginButton = styled(TextButton)`
 `;
 
 function LoginModal({ onCancel }: { onCancel: () => void }): ReactElement {
-  const idInput = useRef<HTMLInputElement>(null);
-  const passwordInput = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
-
-  const successCallback = async ({ data }: LoginResponse): Promise<void> => {
+  const values = {
+    // ERD 기준으로 아이디 50자 / 비밀번호 100자이나 최소 문자수에 대해서 이야기 해봐야함
+    username: useModalInput([required, lengthValidator(2, 50)]),
+    password: useModalInput([required, lengthValidator(2, 100)]),
+  };
+  const successCallback = async ({ data }: ApiResponse<AuthType>): Promise<void> => {
     const { username, rolename } = data;
     toast(`${username} 님 로그인되었습니다`);
     queryClient.setQueryData('user', { username, rolename });
+    queryClient.setQueryData('auth', true);
     onCancel();
   };
-
   const { mutate } = useMutate({ action: login, callback: successCallback });
-
   const handleOnLogin = (): void => {
-    if (idInput.current === null || passwordInput.current === null) {
-      return;
-    }
-    mutate({ username: idInput.current.value, password: passwordInput.current.value });
+    mutate({ ...Object.fromEntries(Object.entries(values).map(([k, v]) => [k, v.value])) });
   };
 
   return (
@@ -90,8 +90,18 @@ function LoginModal({ onCancel }: { onCancel: () => void }): ReactElement {
         <Text size={24} weight={700}>
           로그인
         </Text>
-        <ModalInput ref={idInput} title="ID" placeholder={'ID를 입력하세요...'}></ModalInput>
-        <ModalInput ref={passwordInput} title="Password" placeholder={'비밀번호를 입력하세요...'}></ModalInput>
+        <ModalInput
+          value={values.username.value as string}
+          title="ID"
+          onChange={values.username.onChange}
+          errorMessage={values.username.errorMessage}
+        />
+        <ModalInput
+          value={values.password.value as string}
+          title="비밀번호"
+          onChange={values.password.onChange}
+          errorMessage={values.password.errorMessage}
+        />
         <div>
           <LoginButton onClick={handleOnLogin}>로그인</LoginButton>
           <ExitButton color={'--color-red'} onClick={onCancel}>

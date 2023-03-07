@@ -1,13 +1,13 @@
 import { ReactElement } from 'react';
-import TableColumn from '@type/table';
+import { useLocation } from 'react-router-dom';
 import ButtonColumn from '@components/Columns/ButtonColumn';
 import NumberColumn from '@components//Columns/NumberColumn';
 import TextColumn from '@components//Columns/TextColumn';
 import Table from '@components/Tables/Table';
-import { BomDtoType } from '@type/dto.type';
 import InputColumn from '@components/Columns/InputColumn';
-import { useLocation } from 'react-router-dom';
 import LinkColumn from '@components/Columns/LinkColumn';
+import { BomDtoType } from '@type/dto.type';
+import TableColumn from '@type/table';
 
 const bomTableFormat: Array<TableColumn<BomDtoType>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },

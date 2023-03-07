@@ -1,6 +1,6 @@
-import { ReactProps, StyledProps } from '@type/props';
 import { forwardRef, ReactElement, Ref } from 'react';
 import styled from 'styled-components';
+import { ReactProps, StyledProps } from '@type/props';
 
 interface Props {
   color?: string;

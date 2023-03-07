@@ -1,8 +1,8 @@
 import { ReactElement } from 'react';
-import TableColumn from '@type/table';
 import ButtonColumn from '@components/Columns/ButtonColumn';
 import NumberColumn from '@components/Columns/NumberColumn';
 import TextColumn from '@components/Columns/TextColumn';
+import TableColumn from '@type/table';
 
 import useMutate from '@hooks/useMutate';
 import { deleteUser } from '@fetches/account';

@@ -1,7 +1,6 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-import ImageButton from './ImageButton';
-
+import ImageButton from '@components/ImageButton';
 import add from '@images/add.svg';
 import top from '@images/top.svg';
 

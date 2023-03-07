@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import LoginButton from '@components/LoginButton';
 import NavButton from '@components/NavButton';
 import SearchInput from '@components/SearchInput';
-import UserButton from './UserButton';
+import UserButton from '@components/UserButton';
 
 const Wrapper = styled.div`
   position: relative;

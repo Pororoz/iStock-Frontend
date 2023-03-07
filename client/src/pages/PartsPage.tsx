@@ -1,12 +1,12 @@
+import { ReactElement, useState } from 'react';
+import { useQuery } from 'react-query';
 import CreatePartModal from '@components/Modals/CreatePartModal';
 import UpdatePartModal from '@components/Modals/UpdatePartModal';
 import SideButton from '@components/SideButton';
 import PartTable from '@components/Tables/PartTable';
 import { getPart } from '@fetches/part';
-import { PartDtoType } from '@type/dto.type';
 import { convertStringToDate } from '@utils/common';
-import { ReactElement, useState } from 'react';
-import { useQuery } from 'react-query';
+import { PartDtoType } from '@type/dto.type';
 
 function PartsPage(): ReactElement {
   const { data } = useQuery('part', getPart(''), {

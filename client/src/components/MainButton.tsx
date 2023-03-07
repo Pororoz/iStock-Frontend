@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-import { ReactProps } from '@type/props';
 import Text from '@components/Text';
+import { ReactProps } from '@type/props';
 
 interface Props {
   onClick?: () => void;

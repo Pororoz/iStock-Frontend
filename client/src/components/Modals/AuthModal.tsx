@@ -1,15 +1,13 @@
-import useMutate from '@hooks/useMutate';
 import { ReactElement, RefObject, useEffect, useRef, useState } from 'react';
-
-import SelectInput from '../ModalInputs/SelectInput';
-import Modal from '@components/Modals/Modal';
+import { toast } from 'react-toastify';
 import Text from '@components/Text';
-
+import Modal from '@components/Modals/Modal';
+import RequiredInput from '@components/ModalInputs/RequiredInput';
+import SelectInput from '@components/ModalInputs/SelectInput';
 import { createUser, updateUser } from '@fetches/account';
 import useInput from '@hooks/useInput';
-import RequiredInput from '@components/ModalInputs/RequiredInput';
+import useMutate from '@hooks/useMutate';
 import { checkLength, checkEmpty, checkRequired } from '@utils/common';
-import { toast } from 'react-toastify';
 import { AccountDtoType } from '@type/dto.type';
 
 const ROLES = ['ROLE_ADMIN', 'ROLE_USER'];
