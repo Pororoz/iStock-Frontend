@@ -1,11 +1,12 @@
-import AccountTable from '@components/Tables/AccountTable';
 import { ReactElement, useState } from 'react';
 import { useQuery } from 'react-query';
+import AccountTable from '@components/Tables/AccountTable';
 import SideButton from '@components/SideButton';
 import AuthModal from '@components/Modals/AuthModal';
-import { AccountDtoType } from '@type/dto.type';
-import { convertStringToDate } from '@utils/common';
 import { getUsers } from '@fetches/account';
+
+import { convertStringToDate } from '@utils/common';
+import { AccountDtoType } from '@type/dto.type';
 
 function AccountsPage(): ReactElement {
   const [hasModal, setHasModal] = useState(false);

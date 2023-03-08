@@ -1,4 +1,4 @@
-import { PartIoStatus, ProductIoStatus } from './io';
+import { PartIoStatus, ProductIoStatus } from '@type/io';
 
 export interface AccountDbType {
   userId: number;

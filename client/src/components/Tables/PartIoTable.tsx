@@ -1,13 +1,13 @@
 import { ReactElement } from 'react';
-import TableColumn from '@type/table';
 import ButtonColumn from '@components/Columns/ButtonColumn';
 import NumberColumn from '@components/Columns/NumberColumn';
 import TextColumn from '@components/Columns/TextColumn';
 import Table from '@components/Tables/Table';
-import { PartIoDtoType } from '@type/dto.type';
 import LinkColumn from '@components/Columns/LinkColumn';
-import { PartIoStatus } from '@type/io';
 import { getIoStatus } from '@utils/getIoStatus';
+import { PartIoDtoType } from '@type/dto.type';
+import TableColumn from '@type/table';
+import { PartIoStatus } from '@type/io';
 
 const calcDisabledProps = (status: PartIoStatus): boolean => {
   return getIoStatus(status) !== '대기';

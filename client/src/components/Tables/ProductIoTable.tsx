@@ -1,12 +1,12 @@
 import { ReactElement } from 'react';
-import TableColumn from '@type/table';
 import ButtonColumn from '@components/Columns/ButtonColumn';
 import NumberColumn from '@components/Columns/NumberColumn';
 import TextColumn from '@components/Columns/TextColumn';
 import Table from '@components/Tables/Table';
+import { getIoStatus } from '@utils/getIoStatus';
 import { ProductIoDtoType } from '@type/dto.type';
 import { ProductIoStatus } from '@type/io';
-import { getIoStatus } from '@utils/getIoStatus';
+import TableColumn from '@type/table';
 
 const calcDisabledProps = (status: ProductIoStatus): boolean => {
   return getIoStatus(status) !== '대기';

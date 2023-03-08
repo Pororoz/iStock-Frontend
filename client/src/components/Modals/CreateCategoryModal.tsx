@@ -1,9 +1,9 @@
-import ModalInput from '@components/ModalInputs/ModalInput';
 import { ReactElement } from 'react';
-import Modal from './Modal';
+import Modal from '@components/Modals/Modal';
+import ModalInput from '@components/ModalInputs/ModalInput';
 import Text from '@components/Text';
-import useMutate from '@hooks/useMutate';
 import { createCategory } from '@fetches/category';
+import useMutate from '@hooks/useMutate';
 import useModalInput from '@hooks/useModalInput';
 import { lengthValidator } from '@utils/validator';
 

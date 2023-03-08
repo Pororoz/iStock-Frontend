@@ -1,7 +1,6 @@
 import { ReactElement } from 'react';
 import { UseMutateFunction } from 'react-query';
 import { AxiosResponse } from 'axios';
-
 import TextButton from '@components/TextButton';
 
 function DeleteButton({ onDelete }: { onDelete: UseMutateFunction<AxiosResponse, any> }): ReactElement {

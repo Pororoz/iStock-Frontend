@@ -1,11 +1,11 @@
-import ModalInput from '@components/ModalInputs/ModalInput';
 import { ReactElement } from 'react';
-import Modal from './Modal';
+import Modal from '@components/Modals/Modal';
+import ModalInput from '@components/ModalInputs/ModalInput';
 import Text from '@components/Text';
+import { updateProduct } from '@fetches/product';
 import useMutate from '@hooks/useMutate';
 import useModalInput from '@hooks/useModalInput';
 import { required, lengthValidator } from '@utils/validator';
-import { updateProduct } from '@fetches/product';
 import { ProductDtoType } from '@type/dto.type';
 
 interface Props {

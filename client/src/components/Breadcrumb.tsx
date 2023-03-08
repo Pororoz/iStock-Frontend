@@ -1,7 +1,7 @@
-import { usePathArray } from '@hooks/usePathArray';
 import { ReactElement } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { usePathArray } from '@hooks/usePathArray';
 
 const Wrapper = styled.div`
   font-family: 'Noto Sans KR';
