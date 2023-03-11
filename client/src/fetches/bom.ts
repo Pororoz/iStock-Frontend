@@ -18,7 +18,7 @@ export const createBom = async (parameter: CreateBomDto): Promise<AxiosResponse<
 type UpdateBomDto = Omit<BomDbType, 'createdAt' | 'updatedAt'>;
 
 export const updateBom = async (parameter: UpdateBomDto): Promise<AxiosResponse<ApiResponse<UpdateBomDto>>> => {
-  return await axios.post<ApiResponse<UpdateBomDto>>('/api/v1/bom', parameter);
+  return await axios.put<ApiResponse<UpdateBomDto>>('/api/v1/bom', parameter);
 };
 
 export const deleteBom = (id: number): (() => Promise<AxiosResponse<ApiResponse<BomDtoType>, any>>) => {
