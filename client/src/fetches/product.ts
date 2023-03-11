@@ -5,7 +5,9 @@ import { ProductDtoType } from '@type/dto.type';
 
 export const getProduct = (categoryId: number) => {
   return async (): Promise<AxiosResponse<ApiResponse<ApiData<ProductDbType[]>>, any>> => {
-    return await axios.get<ApiResponse<ApiData<ProductDbType[]>>>(`/api/v1/products?category-id=${categoryId}`);
+    return await axios.get<ApiResponse<ApiData<ProductDbType[]>>>(
+      `/api/v1/products/with/subassy?category-id=${categoryId}`,
+    );
   };
 };
 
