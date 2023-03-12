@@ -22,8 +22,6 @@ export type CategoryDtoType = ClientDtoType<CategoryDbType>;
 export type ProductDtoType = ClientDtoType<ProductDbType>;
 export type BomDtoType = ClientDtoType<BomDbType>;
 export type PartDtoType = ClientDtoType<PartDbType>;
-export type PartIoDtoType = ClientDtoType<PartIoDbType> &
-  Pick<ProductIoDbType, 'productId'> &
-  Pick<ProductDbType, 'productName' | 'companyName' | 'categoryId'>;
-export type ProductIoDtoType = ProductIoDbType & Pick<ProductDbType, 'productName'>;
+export type PartIoDtoType = ClientDtoType<PartIoDbType>;
+export type ProductIoDtoType = ClientDtoType<ProductIoDbType>;
 export type AccountServerDtoType = AccountDtoType;

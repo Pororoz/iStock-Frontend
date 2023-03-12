@@ -3,7 +3,6 @@ import ButtonColumn from '@components/Columns/ButtonColumn';
 import NumberColumn from '@components/Columns/NumberColumn';
 import TextColumn from '@components/Columns/TextColumn';
 import Table from '@components/Tables/Table';
-import LinkColumn from '@components/Columns/LinkColumn';
 import { getIoStatus } from '@utils/getIoStatus';
 import { PartIoDtoType } from '@type/dto.type';
 import TableColumn from '@type/table';
@@ -20,14 +19,6 @@ const partIoTableFormat: Array<TableColumn<PartIoDtoType>> = [
   { key: '입고', component: ({ row }) => <TextColumn>{row.quantity >= 0 ? row.quantity : ''}</TextColumn> },
   { key: '출고', component: ({ row }) => <TextColumn>{row.quantity < 0 ? row.quantity : ''}</TextColumn> },
   { key: '상태', component: ({ row }) => <TextColumn>{row.status}</TextColumn> },
-  {
-    key: '비고',
-    component: ({ row }) => <LinkColumn to={`/items/${row.categoryId}/${row.productId}/log`}>{row.name}</LinkColumn>,
-  },
-  {
-    key: '거래처 이름',
-    component: ({ row }) => <TextColumn>{row.companyName}</TextColumn>,
-  },
   {
     key: '확정',
     component: ({ row }) => (

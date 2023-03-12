@@ -62,18 +62,31 @@ export interface BomDbType {
 
 export interface PartIoDbType {
   partIoId: number;
+  partId: number;
+
   quantity: number;
   status: PartIoStatus;
   createdAt: string;
   updatedAt: string;
-  partId: number;
+
+  productIoId?: number;
+
+  partName?: string;
+  partNumber?: string;
 }
 
 export interface ProductIoDbType {
   productIoId: number;
+  productId: number;
+
   quantity: number;
   status: ProductIoStatus;
   createdAt: string;
   updatedAt: string;
-  productId: number;
+
+  superId?: number;
+
+  productName?: string;
+  productNumber?: string;
+  isReady?: boolean;
 }

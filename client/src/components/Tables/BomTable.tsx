@@ -14,11 +14,10 @@ import TableColumn from '@type/table';
 
 const bomTableFormat = (onUpdate: (row: BomDtoType) => void): Array<TableColumn<BomDtoType>> => [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
-  { key: '소요량', component: ({ row }) => <TextColumn>{row.quantity}</TextColumn> },
   { key: 'Location No.', component: ({ row }) => <TextColumn>{row.locationNumber}</TextColumn> },
   { key: '품명', component: ({ row }) => <TextColumn>{row.part?.partName}</TextColumn> },
   { key: '규격', component: ({ row }) => <TextColumn>{row.part?.spec}</TextColumn> },
-  { key: '단가', component: ({ row }) => <NumberColumn>{row.part?.price}</NumberColumn> },
+  { key: '소요량', component: ({ row }) => <TextColumn>{row.quantity}</TextColumn> },
   { key: '재고', component: ({ row }) => <NumberColumn>{row.part?.stock}</NumberColumn> },
   {
     key: '입고(출고)',
@@ -38,6 +37,7 @@ const bomTableFormat = (onUpdate: (row: BomDtoType) => void): Array<TableColumn<
       <NumberColumn>{row.part != null ? (row.part?.stock < 0 ? row.part?.stock : 'N/A') : 'N/A'}</NumberColumn>
     ),
   },
+  { key: '단가', component: ({ row }) => <NumberColumn>{row.part?.price}</NumberColumn> },
   { key: '코드번호', component: ({ row }) => <TextColumn>{row.codeNumber}</TextColumn> },
   { key: '비고', component: ({ row }) => <TextColumn>{row.memo}</TextColumn> },
   {
