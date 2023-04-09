@@ -7,6 +7,8 @@ import { getIoStatus } from '@utils/getIoStatus';
 import { PartIoDtoType } from '@type/dto.type';
 import TableColumn from '@type/table';
 import { PartIoStatus } from '@type/io';
+import useMutate from '@hooks/useMutate';
+import { cancelPartIo, confirmPartIo } from '@fetches/purchase';
 
 const calcDisabledProps = (status: PartIoStatus): boolean => {
   return getIoStatus(status) !== '대기';
@@ -21,31 +23,37 @@ const partIoTableFormat: Array<TableColumn<PartIoDtoType>> = [
   { key: '상태', component: ({ row }) => <TextColumn>{row.status}</TextColumn> },
   {
     key: '확정',
-    component: ({ row }) => (
-      <ButtonColumn
-        color="--color-blue"
-        disabled={calcDisabledProps(row.status)}
-        onClick={() => {
-          console.log(`confirm ${row.partIoId}`);
-        }}
-      >
-        확정
-      </ButtonColumn>
-    ),
+    component: ({ row }) => {
+      const { mutate } = useMutate({ key: 'partIo', action: async () => await confirmPartIo(row.partIoId) });
+      return (
+        <ButtonColumn
+          color="--color-blue"
+          disabled={calcDisabledProps(row.status)}
+          onClick={() => {
+            mutate({});
+          }}
+        >
+          확정
+        </ButtonColumn>
+      );
+    },
   },
   {
     key: '취소',
-    component: ({ row }) => (
-      <ButtonColumn
-        color="--color-red"
-        disabled={calcDisabledProps(row.status)}
-        onClick={() => {
-          console.log(`cancel ${row.partIoId}`);
-        }}
-      >
-        취소
-      </ButtonColumn>
-    ),
+    component: ({ row }) => {
+      const { mutate } = useMutate({ key: 'partIo', action: async () => await cancelPartIo(row.partIoId) });
+      return (
+        <ButtonColumn
+          color="--color-red"
+          disabled={calcDisabledProps(row.status)}
+          onClick={() => {
+            mutate({});
+          }}
+        >
+          취소
+        </ButtonColumn>
+      );
+    },
   },
 ];
 

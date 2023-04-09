@@ -10,6 +10,7 @@ import useMutate from '@hooks/useMutate';
 import { useConfirm } from '@utils/common';
 import { PartDtoType } from '@type/dto.type';
 import TableColumn from '@type/table';
+import { purchasePart } from '@fetches/purchase';
 
 const partTableFormat = (onUpdate: (row: PartDtoType) => void): Array<TableColumn<PartDtoType>> => [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
@@ -19,15 +20,18 @@ const partTableFormat = (onUpdate: (row: PartDtoType) => void): Array<TableColum
   { key: '재고', component: ({ row }) => <NumberColumn>{row.stock}</NumberColumn> },
   {
     key: '입고(출고)',
-    component: ({ row }) => (
-      <InputColumn
-        onSubmit={(input: number) => {
-          console.log(`produce ${input} ${row.partName}`);
-        }}
-      >
-        {'입고(출고)'}
-      </InputColumn>
-    ),
+    component: ({ row }) => {
+      const { mutate } = useMutate({ key: 'productIo', action: purchasePart(row.partId) });
+      return (
+        <InputColumn
+          onSubmit={(input: number) => {
+            mutate({ quantity: input });
+          }}
+        >
+          {'입고(출고)'}
+        </InputColumn>
+      );
+    },
   },
   { key: '구매', component: ({ row }) => <NumberColumn>{row.stock < 0 ? row.stock : 'N/A'}</NumberColumn> },
   {

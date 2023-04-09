@@ -7,6 +7,8 @@ import { getIoStatus } from '@utils/getIoStatus';
 import { ProductIoDtoType } from '@type/dto.type';
 import { ProductIoStatus } from '@type/io';
 import TableColumn from '@type/table';
+import { cancelProductIo, confirmProductIo } from '@fetches/production';
+import useMutate from '@hooks/useMutate';
 
 const calcDisabledProps = (status: ProductIoStatus): boolean => {
   return getIoStatus(status) !== '대기';
@@ -21,31 +23,37 @@ const productIoTableFormat: Array<TableColumn<ProductIoDtoType>> = [
   { key: '상태', component: ({ row }) => <TextColumn>{row.status}</TextColumn> },
   {
     key: '확정',
-    component: ({ row }) => (
-      <ButtonColumn
-        color="--color-blue"
-        disabled={calcDisabledProps(row.status)}
-        onClick={() => {
-          console.log(`confirm ${row.productIoId}`);
-        }}
-      >
-        확정
-      </ButtonColumn>
-    ),
+    component: ({ row }) => {
+      const { mutate } = useMutate({ key: 'productIo', action: async () => await confirmProductIo(row.productIoId) });
+      return (
+        <ButtonColumn
+          color="--color-blue"
+          disabled={calcDisabledProps(row.status)}
+          onClick={() => {
+            mutate({});
+          }}
+        >
+          확정
+        </ButtonColumn>
+      );
+    },
   },
   {
     key: '취소',
-    component: ({ row }) => (
-      <ButtonColumn
-        color="--color-red"
-        disabled={calcDisabledProps(row.status)}
-        onClick={() => {
-          console.log(`cancel ${row.productIoId}`);
-        }}
-      >
-        취소
-      </ButtonColumn>
-    ),
+    component: ({ row }) => {
+      const { mutate } = useMutate({ key: 'productIo', action: async () => await cancelProductIo(row.productIoId) });
+      return (
+        <ButtonColumn
+          color="--color-red"
+          disabled={calcDisabledProps(row.status)}
+          onClick={() => {
+            mutate({});
+          }}
+        >
+          취소
+        </ButtonColumn>
+      );
+    },
   },
 ];
 

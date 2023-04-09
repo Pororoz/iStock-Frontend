@@ -11,6 +11,7 @@ import useMutate from '@hooks/useMutate';
 import { useConfirm } from '@utils/common';
 import { ProductDtoType } from '@type/dto.type';
 import TableColumn from '@type/table';
+import { produceProduct } from '@fetches/production';
 
 const productTableFormat = (onUpdate: (row: ProductDtoType) => void): Array<TableColumn<ProductDtoType>> => [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
@@ -21,15 +22,18 @@ const productTableFormat = (onUpdate: (row: ProductDtoType) => void): Array<Tabl
   { key: '재고', component: ({ row }) => <NumberColumn>{row.stock}</NumberColumn> },
   {
     key: '입고(출고)',
-    component: ({ row }) => (
-      <InputColumn
-        onSubmit={(input: number) => {
-          console.log(`produce ${input} ${row.productName}`);
-        }}
-      >
-        {'입고(출고)'}
-      </InputColumn>
-    ),
+    component: ({ row }) => {
+      const { mutate } = useMutate({ key: 'productIo', action: produceProduct(row.productId) });
+      return (
+        <InputColumn
+          onSubmit={(input: number) => {
+            mutate({ quantity: input });
+          }}
+        >
+          {'입고(출고)'}
+        </InputColumn>
+      );
+    },
   },
   {
     key: 'SUB ASSY',
