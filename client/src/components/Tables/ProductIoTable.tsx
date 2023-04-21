@@ -14,7 +14,7 @@ const calcDisabledProps = (status: ProductIoStatus): boolean => {
 
 const productIoTableFormat: Array<TableColumn<ProductIoDtoType>> = [
   { key: 'No.', component: ({ i }) => <NumberColumn>{i + 1}</NumberColumn> },
-  { key: '수정일', component: ({ row }) => <TextColumn>{row.updatedAt.toLocaleDateString()}</TextColumn> },
+  { key: '수정일', component: ({ row }) => <TextColumn>{row.updatedAt}</TextColumn> },
   { key: '변동량', component: ({ row }) => <TextColumn>{row.quantity}</TextColumn> },
   { key: '입고', component: ({ row }) => <TextColumn>{row.quantity >= 0 ? row.quantity : ''}</TextColumn> },
   { key: '출고', component: ({ row }) => <TextColumn>{row.quantity < 0 ? row.quantity : ''}</TextColumn> },

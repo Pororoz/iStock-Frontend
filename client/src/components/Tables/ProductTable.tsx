@@ -34,7 +34,7 @@ const productTableFormat = (onUpdate: (row: ProductDtoType) => void): Array<Tabl
   {
     key: 'SUB ASSY',
     component: ({ row }) => (
-      <TextColumn>{row.subAssy.map((el) => `${el.partName}(${el.stock})`).join(', ')}</TextColumn>
+      <TextColumn>{row.subAssy?.map((el) => `${el.partName}(${el.stock})`).join(', ')}</TextColumn>
     ),
   },
   {
