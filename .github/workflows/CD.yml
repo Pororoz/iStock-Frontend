@@ -50,7 +50,7 @@ jobs:
           password: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Docker images build 및 GitHub Container Registry로 push
-        uses: docker/build-push-action@v3.2.0
+        uses: docker/build-push-action@v4
         with:
           push: true
           platforms: linux/arm64/v8,linux/arm64
