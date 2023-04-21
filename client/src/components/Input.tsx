@@ -1,4 +1,4 @@
-import { forwardRef, ReactElement, Ref } from 'react';
+import { ReactElement, Ref } from 'react';
 import styled from 'styled-components';
 import { ReactProps, StyledProps } from '@type/props';
 
@@ -9,6 +9,7 @@ interface Props {
   width?: number;
   placeholder?: string;
   readonly?: boolean;
+  ref?: Ref<HTMLInputElement>;
 }
 
 const Wrapper = styled.div<Props>`
@@ -40,10 +41,7 @@ const StyledInput = styled.input<Props>`
   }
 `;
 
-function Input(
-  { className, children, ...props }: StyledProps<ReactProps<Props>>,
-  ref: Ref<HTMLInputElement>,
-): ReactElement {
+function Input({ className, children, ref, ...props }: StyledProps<ReactProps<Props>>): ReactElement {
   return (
     <Wrapper className={className} {...props}>
       {children}
@@ -52,4 +50,4 @@ function Input(
   );
 }
 
-export default forwardRef<HTMLInputElement, Props>(Input);
+export default Input;

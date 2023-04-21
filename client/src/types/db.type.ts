@@ -38,6 +38,7 @@ export interface ProductDbType {
 
 export interface BomDbType {
   bomId: number;
+  name: string;
   locationNumber: string;
   codeNumber: string;
   quantity: number;
@@ -60,6 +61,7 @@ export interface PartDbType {
 
 export interface PartIoDbType {
   partIoId: number;
+  name: string;
   quantity: number;
   status: PartIoStatus;
   createdAt: string;
