@@ -73,6 +73,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
+            echo ${{ secrets.ACCESS_TOKEN }} | docker login https://ghcr.io -u pororoz --password-stdin
             docker pull ghcr.io/${{ env.ORGANIZATION }}/${{ env.REPOSITORY }}:latest
             docker run -it -d -p 3000:3000 --name react
             docker image prune
