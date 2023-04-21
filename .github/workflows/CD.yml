@@ -53,7 +53,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          platforms: linux/arm64/v8,linux/arm64
+          platforms: linux/arm64/v8
           tags: |
             ghcr.io/${{ env.ORGANIZATION }}/${{ env.REPOSITORY }}:latest
             ghcr.io/${{ env.ORGANIZATION }}/${{ env.REPOSITORY }}:${{ steps.version_name.outputs.version }}
