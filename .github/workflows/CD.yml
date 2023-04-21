@@ -2,7 +2,7 @@ name: CD
 on:
   push:
     branches:
-      - main
+      - 62-feat-workflow-action-버전-업데이트
 
 env:
   REPOSITORY: istock-frontend
