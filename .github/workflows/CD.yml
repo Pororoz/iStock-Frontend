@@ -75,18 +75,6 @@ jobs:
           script: |
             echo ${{ secrets.ACCESS_TOKEN }} | docker login https://ghcr.io -u pororoz --password-stdin
             docker pull ghcr.io/${{ env.ORGANIZATION }}/${{ env.REPOSITORY }}:latest
-            docker run -it -d -p 3000:3000 --name react
+            docker run -d -it -p 3000:3000 --name react ghcr.io/${{ env.ORGANIZATION }}/${{ env.REPOSITORY }}
             docker image prune
             docker logout https://ghcr.io
-
-      - name: Commit message에 명시된 버전 가져오기
-        run: echo "version=$(echo '${{ github.event.head_commit.message }}' | egrep -o 'v[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')" >> $GITHUB_OUTPUT
-        id: version_name
-
-      - name: GitHub Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.version_name.outputs.version }}
-          release_name: ${{ steps.version_name.outputs.version }}
