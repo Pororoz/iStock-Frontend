@@ -50,10 +50,10 @@ jobs:
           password: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Docker images build 및 GitHub Container Registry로 push
-        uses: docker/build-push-action@v3.2.0
+        uses: docker/build-push-action@v4
         with:
           push: true
-          platforms: linux/arm64/v8,linux/arm64
+          platforms: linux/arm64/v8
           tags: |
             ghcr.io/${{ env.ORGANIZATION }}/${{ env.REPOSITORY }}:latest
             ghcr.io/${{ env.ORGANIZATION }}/${{ env.REPOSITORY }}:${{ steps.version_name.outputs.version }}
@@ -76,6 +76,7 @@ jobs:
           script: |
             echo ${{ secrets.ACCESS_TOKEN }} | docker login https://ghcr.io -u pororoz --password-stdin
             docker pull ghcr.io/${{ env.ORGANIZATION }}/${{ env.REPOSITORY }}:latest
+            docker rm react
             docker run -d -it -p 3000:3000 --name react ghcr.io/${{ env.ORGANIZATION }}/${{ env.REPOSITORY }}
             docker image prune
             docker logout https://ghcr.io
